@@ -11,15 +11,15 @@ AR = ar rcs
 
 # Colors
 
-DEF_COLOR = \033[0;39m
-GRAY = \033[0;90m
-RED = \033[0;91m
-GREEN = \033[0;92m
-YELLOW = \033[0;93m
-BLUE = \033[0;94m
-MAGENTA = \033[0;95m
-CYAN = \033[0;96m
-WHITE = \033[0;97m
+DEF_COLOR = $(shell tput sgr0)
+GRAY = $(shell tput setaf 0)
+RED = $(shell tput setaf 1)
+GREEN = $(shell tput setaf 2)
+YELLOW = $(shell tput setaf 3)
+BLUE = $(shell tput setaf 4)
+MAGENTA = $(shell tput setaf 5)
+CYAN = $(shell tput setaf 6)
+WHITE = $(shell tput setaf 7)
 
 #Sources
 	
