@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/02/20 17:19:22 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:12:32 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,18 @@
 		unset with no options
 		env with no options or arguments
 		exit with no options
-	
+
+Resources
+Video walkthrough
+	https://lzcorp-my.sharepoint.com/personal/thelazyprogrammer_lzcorp_onmicrosoft_com/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2Fthelazyprogrammer%5Flzcorp%5Fonmicrosoft%5Fcom%2FDocuments%2FPublic%20ALX%20Resources%2FVideo%20Tutorials%2FPLD%20Sessions%2FCodeMinds
+
+Flow chart
+	https://whimsical.com/minishell-architecture-big-picture-7b9N8PL3qHrddbs977mQ2J
+
+Video 
+	https://www.youtube.com/watch?v=2xayf6AMNtU
+
+
 */
 
 int main(int ac, char **av)
