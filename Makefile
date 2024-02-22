@@ -62,4 +62,7 @@ re:			fclean all
 norm:
 			@norminette $(SRC) $(INCLUDE) $(LIBFT)
 
+test:
+			@make && ./minishell
+
 .PHONY: all clean fclean re norm
