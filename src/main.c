@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/02/22 13:26:41 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:50:52 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,30 +134,44 @@ Resurces read/seen
 (process management) https://www.evernote.com/shard/s594/client/snv?isnewsnv=true&noteGuid=e6d2df45-e604-b2d2-084a-fa35a7a7a69f&noteKey=q9NOiJqlklzDUAu2MsGPUW4IuUpWa6fhNEowLdfHGo5dhHqz54F94V76Rw&sn=https%3A%2F%2Fwww.evernote.com%2Fshard%2Fs594%2Fsh%2Fe6d2df45-e604-b2d2-084a-fa35a7a7a69f%2Fq9NOiJqlklzDUAu2MsGPUW4IuUpWa6fhNEowLdfHGo5dhHqz54F94V76Rw&title=PROCESS%2BMANAGEMENT
 
 */
+	// while (ft_strncmp(input, "EOF", ft_strlen(input)))
+	// {
+	// 	add_history(input);
+	// 	free(input);
+	// 	input = readline("minishell$> ");	
+	// }
+	// if (ft_setup(&data))
+	// 	return (1);
+	// printf("History:\n");
+	// for (int i = history_length; i > 0; i--){
+	// 	HIST_ENTRY *entry = history_get(i);
+	// 	printf("%d: %s\n", i, entry->line);
+	// }
+
+
+void leaks(){
+	system("leaks -q minishell");
+}
 
 int main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
-	(void)env;
+	t_data data;
+	// atexit(leaks);
 
 	char *input;
+	// input = readline("minishell$ ");
+	input = ft_strdup("cat -e < infile.txt | cat >> outfile.txt");
+	ft_parse_commands(&data, env, ac, av);
+	ft_read(input, &data);
+	if (data.here_doc == true)
+		ft_here_doc(&data);
+	else
+		data.command = ft_strdup(input);
+	add_history(data.command); // <- FREE THIS
 	
-	input = readline("minishell$> ");
-	while (ft_strncmp(input, "EOF", ft_strlen(input)))
-	{
-		add_history(input);
-		free(input);
-		input = readline("minishell$> ");	
-	}
-	free(input);
-
-	printf("History:\n");
-	for (int i = history_length; i > 0; i--){
-		HIST_ENTRY *entry = history_get(i);
-		printf("%d: %s\n", i, entry->line);
-	}
-	
-	
+	ft_tokenization(&data);
+	// free(data.command);
+	// free(input);
+	// free(data.table);
 	return (0);
 }
