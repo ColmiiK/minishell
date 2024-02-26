@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 12:00:16 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/02/26 13:42:39 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:44:48 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Set up table of commands
 
 void ft_pipe_token(t_data *data, char *next_cmd) // Redirect STD_OUT to STD_IN
 {
-		
+	
 }
 
 void ft_input_token(t_data *data, char *infile) // Redirect STD_IN to INFILE
@@ -48,7 +48,7 @@ void ft_output_token(t_data *data, char *outfile, int mode) // Redirect STD_OUT 
 }
 
 
-void ft_special_tokens(char **tokens, t_data *data)
+void ft_special_tokens(char **tokens, t_data *data) // Check for special characters
 {
 	int i;
 
@@ -66,25 +66,22 @@ void ft_special_tokens(char **tokens, t_data *data)
 	}
 }
 
-int ft_syntax_tokens(char **tokens)
+int ft_syntax_tokens(char **tokens) // Check for syntax correctness
 {
 	
 }
 
-void ft_parse_tokens(char **tokens)
+void ft_parse_tokens(char **tokens, char **paths, t_commands *table)
 {
-	int i;
-
 	if (ft_syntax_tokens(tokens))
 		perror("Error:\nIncorrect syntax.");
-	i = -1;
 	while (tokens[++i])
 	{
-		
+
 	}
 }
 
-void ft_tokenization(t_data *data)
+void ft_tokenization(t_data *data, char **env)
 {
 	printf("minishell$ %s\n", data->command);
 	char *str;
@@ -99,8 +96,9 @@ void ft_tokenization(t_data *data)
 		str = ft_strtok(NULL, " \t");
 	}
 	data->tokens[i] = NULL;
-	ft_special_tokens(data->tokens, data);
-	// ft_parse_tokens(data->tokens);
+	ft_parse_envp(data, env);
+	// ft_special_tokens(data->tokens, data);
+	// ft_parse_tokens(data->tokens, data->path, data->table);
 	for (int x = 0; data->tokens[x]; x++)
 		printf("%s\n", data->tokens[x]);
 }

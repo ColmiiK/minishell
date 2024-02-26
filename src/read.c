@@ -6,29 +6,11 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:47:58 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/02/26 11:51:40 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:42:26 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-/*
--> READ
-Start of loop
-Display default prompt (minishell$ ) [readline()]
-	if here_doc exists
-		Capture it
-		if it ends with a pipe
-			Display prompt for further reading (> )
-		if it doesn't
-			Save the history [add_history()]
-	if it doesn't
-		if it ends with a pipe
-			Display prompt for further reading (> )
-		if it doesn't
-			Save the history [add_history()]
-Send the input to EVALUATE
-*/
 
 void ft_read(char *input, t_data *data)
 {
@@ -49,7 +31,7 @@ void ft_read(char *input, t_data *data)
 		data->here_doc_pipe = false;
 }
 
-void ft_here_doc(t_data *data)
+void ft_here_doc(t_data *data) // Checks if there is a here_doc
 {
 	char *input;
 	
@@ -77,8 +59,9 @@ void ft_here_doc(t_data *data)
 			data->command = ft_strjoin(data->command, "\n");
 			free(input);
 		}
-		input = readline("> ");
+		input = readline("> "); // Capture the command after the EOF
 		data->command = ft_strjoin(data->command, input);
 		data->command = ft_strjoin(data->command, "\n");
+		free(input);
 	}
 }

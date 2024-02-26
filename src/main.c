@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/02/26 13:50:52 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:43:21 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,12 +156,15 @@ void leaks(){
 int main(int ac, char **av, char **env)
 {
 	t_data data;
+	char *input;
+
+	(void)ac;
+	(void)av;
 	// atexit(leaks);
 
-	char *input;
 	// input = readline("minishell$ ");
 	input = ft_strdup("cat -e < infile.txt | cat >> outfile.txt");
-	ft_parse_commands(&data, env, ac, av);
+
 	ft_read(input, &data);
 	if (data.here_doc == true)
 		ft_here_doc(&data);
@@ -169,7 +172,9 @@ int main(int ac, char **av, char **env)
 		data.command = ft_strdup(input);
 	add_history(data.command); // <- FREE THIS
 	
-	ft_tokenization(&data);
+	ft_tokenization(&data, env);
+
+	
 	// free(data.command);
 	// free(input);
 	// free(data.table);

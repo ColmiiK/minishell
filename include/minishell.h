@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/02/26 13:49:34 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:33:25 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,13 @@ typedef struct s_data
 	char *outfile;
 	char *mode;
 	char **path;
-	char ***args;
-	bool flag;
 	t_commands *table;
 
 }	t_data;
 
 void ft_read(char *input, t_data *data);
 void ft_here_doc(t_data *data);
-void ft_tokenization(t_data *data);
-void	ft_parse_commands(t_data *data, char **envp, int ac, char **av);
+void ft_tokenization(t_data *data, char **env);
+void	ft_parse_envp(t_data *data, char **envp);
 
 #endif
