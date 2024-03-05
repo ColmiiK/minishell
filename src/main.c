@@ -155,28 +155,6 @@ void leaks(){
 
 int main(int ac, char **av, char **env)
 {
-	t_data data;
-	char *input;
-
-	(void)ac;
-	(void)av;
 	// atexit(leaks);
 
-	// input = readline("minishell$ ");
-	input = ft_strdup("cat -e < infile.txt | cat >> outfile.txt");
-
-	ft_read(input, &data);
-	if (data.here_doc == true)
-		ft_here_doc(&data);
-	else
-		data.command = ft_strdup(input);
-	add_history(data.command); // <- FREE THIS
-	
-	ft_tokenization(&data, env);
-
-	
-	// free(data.command);
-	// free(input);
-	// free(data.table);
-	return (0);
 }
