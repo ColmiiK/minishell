@@ -23,7 +23,7 @@ WHITE = $(shell tput setaf 7)
 
 #Sources
 	
-SRC_FILES = main read token parsing
+SRC_FILES = main
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
