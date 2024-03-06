@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/05 20:35:16 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:21:21 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,87 +135,6 @@ Resurces read/seen
 
 */
 
-
-/*
- cat -e < infile.txt
- cat -e > outifle.txt
- cat -e >> outfile.txt
- << EOF cat -e
- << EOF cat -e |
-*/
-
-
-char *ft_here_doc(char *prompt) // Capturar el here_doc
-{
-	char *temp;
-	char *joined;
-	char *delimiter;
-	int len;
-
-	prompt += 3;
-	delimiter = ft_strtok(prompt, " ");
-	len = ft_strlen(delimiter);		
-	joined = ft_calloc(1, 1);
-	if (!joined)
-		return (NULL);
-	temp = readline("> ");
-	while (ft_strncmp(temp, delimiter, len))
-	{
-		joined = ft_strjoin(joined, temp);
-		joined = ft_strjoin(joined, "\n");
-		temp = readline("> ");
-	}
-	return (joined);
-}
-
-char **ft_parsing(char *prompt)
-{
-	char **cmds;
-	char *test;
-	int i;
-
-	if (ft_strnstr(prompt, "<<", 3))
-		test = ft_here_doc(prompt);	
-	(void)test;
-	cmds = ft_split(prompt, '|');
-	i = -1;
-	while (cmds[++i])
-		cmds[i] = ft_strtrim(cmds[i], " ");
-	cmds[i] = NULL;
-	return (cmds); 	
-}
-
-char **ft_redirections(char **cmds) // Capturar redirecciones
-{
-	char **redirect;
-	int i;
-
-	redirect = ft_calloc(1, 1);
-	i = -1;
-	while (cmds[++i])
-	{
-		if (ft_strchr(cmds[i], '<'))
-		{
-			redirect[i] = ft_strjoin("IN:", ft_strnstr(cmds[i], "<", ft_strlen(cmds[i])) + 2); // Hacer que solo coja una palabra, no todo el string a partir de ahí
-		}
-		else
-			redirect[i] = ft_strdup("IN:0");
-		if (ft_strchr(cmds[i], '>'))
-		{
-			redirect[i] = ft_strjoin(redirect[i], " OUT:");
-			redirect[i] = ft_strjoin(redirect[i], ft_strnstr(cmds[i], ">", ft_strlen(cmds[i])) + 2); // Hacer que solo coja una palabra, no todo el string a partir de ahí
-		}
-		else
-			redirect[i] = ft_strjoin(redirect[i], " OUT:1");
-		redirect[i][ft_strlen(redirect[i])] = 0;
-	}
-	i = 0;
-	while (redirect[i])
-		i++;
-	redirect[i] = NULL; // Se sigue imprimiendo, esto no parece funcionar
-	return (redirect);
-}
-
 int main(int ac, char **av, char **env)
 {
 	t_data data;
@@ -231,6 +150,7 @@ int main(int ac, char **av, char **env)
 		prompt = readline("minishell$ ");
 		data.cmds = ft_parsing(prompt);
 		data.redirect = ft_redirections(data.cmds);
+		
 		for (int i = 0; data.cmds[i]; i++)
 			printf("CMDS -> %s\n", data.cmds[i]);
 		for (int i = 0; data.redirect[i]; i++)
