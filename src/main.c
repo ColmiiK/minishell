@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/06 15:21:21 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:40:17 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,14 @@ Resurces read/seen
 
 */
 
+void ft_debug_print(t_data data)
+{
+	for (int i = 0; data.cmds[i]; i++)
+		printf("CMDS -> %s\n", data.cmds[i]);
+	for (int i = 0; data.redirect[i]; i++)
+		printf("REDIRECT -> %s\n", data.redirect[i]);
+}
+
 int main(int ac, char **av, char **env)
 {
 	t_data data;
@@ -144,18 +152,17 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	
-
 	while (true)
 	{
 		prompt = readline("minishell$ ");
+		// prompt = ft_strdup("cat -e < infile.txt | ls -lah >> outfile.txt");
 		data.cmds = ft_parsing(prompt);
 		data.redirect = ft_redirections(data.cmds);
+		data.cmds = ft_clean_cmds(data.cmds);
 		
-		for (int i = 0; data.cmds[i]; i++)
-			printf("CMDS -> %s\n", data.cmds[i]);
-		for (int i = 0; data.redirect[i]; i++)
-			printf("REDIRECT -> %s\n", data.redirect[i]);
-		printf("\n");
+		ft_debug_print(data);
+		
+		ft_annihilation(data, prompt);
 	}
-
+	return (0);
 }
