@@ -1,68 +1,59 @@
-#Variables
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: frangome <frangome@student.42malaga.com    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/03 17:25:34 by frangome          #+#    #+#              #
+#    Updated: 2023/09/02 19:16:20 by frangome         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-NAME = minishell
-INCLUDE = include
-LIBFT = lib/libft
-SRC_DIR = src/
-OBJ_DIR = obj/
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
-AR = ar rcs
-
-# Colors
-
-DEF_COLOR = $(shell tput sgr0)
-GRAY = $(shell tput setaf 0)
-RED = $(shell tput setaf 1)
-GREEN = $(shell tput setaf 2)
-YELLOW = $(shell tput setaf 3)
-BLUE = $(shell tput setaf 4)
-MAGENTA = $(shell tput setaf 5)
-CYAN = $(shell tput setaf 6)
-WHITE = $(shell tput setaf 7)
-
-#Sources
-	
-SRC_FILES = main read token parsing
-
-SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
-OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
-OBJF = .cache_exists
-
-###
-
-all:		$(NAME)
-
-$(NAME):	$(OBJ)
-			@make -C $(LIBFT)
-			@$(CC) -lreadline -I./$(INCLUDE) $(CFLAGS) $(OBJ) -L$(LIBFT) -lft -o $(NAME)
-			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
-			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-			@$(CC) -I./$(INCLUDE) $(CFLAGS) -c $< -o $@
-
-$(OBJF):
-			@mkdir -p $(OBJ_DIR)
-
+# Nombre del programa
+NAME       = Minishell
+# Flags de compilacion
+FLAGS      = -Wall -Wextra -Werror -g -Ofast
+# Directorios
+SRC_DIR    = ./srcs/
+OBJ_DIR    = ./obj/
+INC_DIR    = ./includes/
+LIBFT_DIR  = ./libft/
+# Archivos fuentes y objetos
+SRC_FILES  = main.c utils.c
+OBJ_FILES  = $(notdir $(SRC_FILES:.c=.o))
+# Direcciones
+SRC        = $(addprefix $(SRC_DIR),$(SRC_FILES))
+OBJ        = $(addprefix $(OBJ_DIR),$(OBJ_FILES))
+LIBFT      = $(addprefix $(LIBFT_DIR),libft.a)
+# Linkers
+LNK        = -Ofast 
+# Se compila el archivo binario (ejecutable).
+all: obj $(LIBFT) $(NAME)
+# Crea la carpeta donde estará los objetos.
+obj:
+	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@gcc $(FLAGS) -I $(INC_DIR) -o $@ -c $(SRC_DIR)$(notdir $<)
+# Compila la biblioteca libft.a
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
+# Se compila los objetos con las librerías y archivos
+$(NAME): $(OBJ)
+	@echo "(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧ Compilando, espere unos segundos..."
+	@gcc $(OBJ) $(LNK) -L$(LIBFT_DIR) -lft -lm -o $(NAME)
+	@echo "(•̀ᴗ•́)و $(NAME) generado!"
+# Remueve todos los archivos objetos
 clean:
-			@rm -rf $(OBJ_DIR)
-			@make clean -C $(LIBFT)
-			@echo "$(BLUE)$(NAME) object files cleaned!$(DEF_COLOR)"
-
-fclean:		
-			@rm -rf $(OBJ_DIR)
-			@rm -f $(NAME)
-			@make fclean -C $(LIBFT)
-			@echo "$(BLUE)$(NAME) executable cleaned!$(DEF_COLOR)"
-
-re:			fclean all
-			@echo "$(MAGENTA)$(NAME) recompiled!$(DEF_COLOR)"
-
-norm:
-			@norminette $(SRC) $(INCLUDE) $(LIBFT)
-
-test:
-			@make && ./minishell
-
-.PHONY: all clean fclean re norm
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@echo "¯\_(ツ)_/¯ Objetos removidos!"
+# Remueve todos los archivos objetos, binarios y sus respectivas carpetas
+fclean: clean
+	@rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@echo "(╯°□°）╯︵ ┻━┻ $(NAME) removido!"
+# Hace un re-make (como si se hubiera ejecutado Make por primera vez)
+re: fclean all
+# Le dice al make que estos nombres no son archivos
+.PHONY: all clean fclean re
