@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/07 13:31:17 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:06:10 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,34 @@ static char *ft_here_doc_pipe(char *sub, char *str)
 	free(input);
 	return (str);
 }
+
+static char *ft_fix_prompt(char *prompt)
+{
+	char *fixed;
+	char *joined;
+	char *temp;
+	int i;
+
+	if (!ft_strncmp(prompt, "<<", 2))
+		return (ft_strdup(prompt));
+	i = 0;
+	while (prompt[i] != '<')
+		i++;
+	fixed = (char *)malloc(i * sizeof(char));
+	if (!fixed)
+		return (0);
+	ft_strlcpy(fixed, prompt, i);
+	temp = ft_strjoin(" ", fixed);
+	free(fixed);
+	while (prompt[i] != '<')
+		i++;
+	joined = ft_strjoin(prompt, temp);
+	fixed = strdup(joined + i);
+	free(temp);
+	free(joined);
+	return (fixed);
+}
+
 // Here_doc
 static char *ft_here_doc(char *prompt, bool pipe)
 {
@@ -76,14 +104,16 @@ static char *ft_here_doc(char *prompt, bool pipe)
 	char *sub;
 
 	str = NULL;
+	prompt = ft_fix_prompt(prompt);
 	before = ft_strdup(prompt);
-	ft_here_doc_loop(prompt + 3);
+	ft_here_doc_loop(ft_strnstr(prompt, "<<", ft_strlen(prompt)) + 3);
 	sub = ft_strnstr(before, ft_strtok(NULL, " "), ft_strlen(before));
 	if (pipe)
 		str = ft_here_doc_pipe(sub, str);
 	else
 		str = ft_strjoin(sub, " < .here_doc");
 	free(before);
+	free(prompt);
 	return (str);
 }
 // Splitear el prompt para la tabla de comandos
@@ -94,7 +124,7 @@ char **ft_parsing(char *prompt)
 	char *str;
 	int i;
 
-	if (ft_strnstr(prompt, "<<", 3))
+	if (ft_strnstr(prompt, "<<", ft_strlen(prompt)))
 	{
 		if (ft_strrchr(prompt, '|'))
 			str = ft_here_doc(prompt, true);

@@ -143,9 +143,9 @@ void ft_debug_print(t_data data)
 	printf("\nREDIRECT:\n");
 	for (int i = 0; data.redirect[i]; i++)
 		printf("%s\n", data.redirect[i]);
-	printf("\nENV:\n");
-	for (int i = 0; data.env[i]; i++)
-		printf("%s\n", data.env[i]);
+	// printf("\nENV:\n");
+	// for (int i = 0; data.env[i]; i++)
+	// 	printf("%s\n", data.env[i]);
 }
 
 
@@ -171,6 +171,7 @@ int main(int ac, char **av, char **env)
 		ft_clean_double_ptr(data.cmds);
 		ft_clean_double_ptr(data.redirect);
 		free(prompt);
+		break;
 	}
 	ft_clean_double_ptr(data.env);
 	return (0);
