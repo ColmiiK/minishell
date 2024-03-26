@@ -6,13 +6,13 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 18:36:00 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/26 18:40:45 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/26 19:08:02 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char *ft_strjoin_ex(char *s1, char *s2, int del)
+char	*ft_strjoin_ex(char *s1, char *s2, int del)
 {
 	char	*joined;
 	size_t	len;

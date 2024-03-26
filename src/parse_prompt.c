@@ -6,31 +6,20 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/26 14:06:10 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/26 19:08:48 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// Crea un archivo temporal para el here_doc
-static void ft_here_doc_temp(char *str)
-{
-	int fd;
-
-	fd = open(".here_doc",  O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	write(fd, str, (ft_strlen(str) - 1) * sizeof(char));
-	close(fd);
-	free(str);
-}
 
 // Bucle del here_doc
 static void ft_here_doc_loop(char *prompt)
 {
 	char *temp;
 	char *joined;
-	char *new_joined;
 	char *delimiter;
 	int len;
+	int fd;
 
 	delimiter = ft_strtok(prompt, " ");
 	len = ft_strlen(delimiter);		
@@ -40,39 +29,32 @@ static void ft_here_doc_loop(char *prompt)
 	temp = readline("> ");
 	while (ft_strncmp(temp, delimiter, len))
 	{
-		new_joined = ft_strjoin(joined, temp);
-		free(joined);
-		joined = new_joined;
-		new_joined = ft_strjoin(joined, "\n");
-		free(joined);
-		joined = new_joined;
-		free(temp);
+		joined = ft_strjoin_ex(joined, temp, 3);
+		joined = ft_strjoin_ex(joined, "\n", 1);
 		temp = readline("> ");
 	}
 	free(temp);
-	ft_here_doc_temp(joined);
+	fd = open(".here_doc",  O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	write(fd, joined, (ft_strlen(joined) - 1) * sizeof(char));
+	close(fd);
+	free(joined);
 }
 
 static char *ft_here_doc_pipe(char *sub, char *str)
 {
 	char *input;
 	char *trimmed;
-	char *temp;
 	
 	input = readline("> ");
 	trimmed = ft_strtrim(sub, "| ");
-	temp = ft_strjoin(trimmed, " < .here_doc | ");
-	free(trimmed);
-	str = ft_strjoin(temp, input);
-	free(temp);
-	free(input);
+	trimmed = ft_strjoin_ex(trimmed, " < .here_doc | ", 1);
+	str = ft_strjoin_ex(trimmed, input, 3);
 	return (str);
 }
 
 static char *ft_fix_prompt(char *prompt)
 {
 	char *fixed;
-	char *joined;
 	char *temp;
 	int i;
 
@@ -85,15 +67,13 @@ static char *ft_fix_prompt(char *prompt)
 	if (!fixed)
 		return (0);
 	ft_strlcpy(fixed, prompt, i);
-	temp = ft_strjoin(" ", fixed);
-	free(fixed);
+	fixed = ft_strjoin_ex(" ", fixed, 2);
 	while (prompt[i] != '<')
 		i++;
-	joined = ft_strjoin(prompt, temp);
-	fixed = strdup(joined + i);
-	free(temp);
-	free(joined);
-	return (fixed);
+	fixed = ft_strjoin_ex(prompt, fixed, 2);
+	temp = ft_strdup(fixed + i);
+	free(fixed);
+	return (temp);
 }
 
 // Here_doc
