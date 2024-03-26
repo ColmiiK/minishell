@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/01/18 15:44:20 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:40:23 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,6 +291,18 @@ char				*ft_substr(char const *s, unsigned int start, size_t len);
  * @return char*
  */
 char				*ft_strjoin(char const *s1, char const *s2);
+
+/**
+ * @brief Concatenates two strings into a third, new dynamically allocated one,
+ * returning said string and possibly freeing the passed strings
+ *
+ * @param s1 First string to concatenate
+ * @param s2 Second string to concatenate
+ * @param del Which string to free, 0 being none, 1 being the first, 2 being
+ * the second one and 3 being both
+ * @return char*
+ */
+char				*ft_strjoin_ex(char *s1, char *s2, int del);
 
 /**
  * @brief Removes selected characters from the beginning and end of a string,
