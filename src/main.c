@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -137,11 +137,17 @@ Resurces read/seen
 
 void ft_debug_print(t_data data)
 {
+	printf("\nCMDS:\n");
 	for (int i = 0; data.cmds[i]; i++)
-		printf("CMDS -> %s\n", data.cmds[i]);
+		printf("%s\n", data.cmds[i]);
+	printf("\nREDIRECT:\n");
 	for (int i = 0; data.redirect[i]; i++)
-		printf("REDIRECT -> %s\n", data.redirect[i]);
+		printf("%s\n", data.redirect[i]);
+	printf("\nENV:\n");
+	for (int i = 0; data.env[i]; i++)
+		printf("%s\n", data.env[i]);
 }
+
 
 int main(int ac, char **av, char **env)
 {
@@ -150,8 +156,8 @@ int main(int ac, char **av, char **env)
 	
 	(void)ac;
 	(void)av;
-	(void)env;
-	
+
+	data.env = ft_parse_env(env);
 	while (true)
 	{
 		prompt = readline("minishell$ ");
@@ -161,8 +167,11 @@ int main(int ac, char **av, char **env)
 		data.cmds = ft_clean_cmds(data.cmds);
 		
 		ft_debug_print(data);
-		
-		ft_annihilation(data, prompt);
+
+		ft_clean_double_ptr(data.cmds);
+		ft_clean_double_ptr(data.redirect);
+		free(prompt);
 	}
+	ft_clean_double_ptr(data.env);
 	return (0);
 }
