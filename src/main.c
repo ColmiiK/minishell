@@ -148,6 +148,90 @@ void ft_debug_print(t_data data)
 	// 	printf("%s\n", data.env[i]);
 }
 
+int ft_determine_in_fd(char *str)
+{
+	int i;
+	int fd;
+
+	i = -1;
+	while (str[++i] != ':')
+		;
+	if (ft_isdigit(str[i + 1]))
+		return (ft_atoi(str + i));
+	fd = open(str + i + 1, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	return (fd);
+}
+
+int ft_determine_out_fd(char *str)
+{
+	int i;
+	int fd;
+
+	i = -1;
+	while (str[++i] != ':')
+		;
+	if (ft_isdigit(str[i + 1]))
+		return (ft_atoi(str + i));
+	if (str[i - 1] == 'A')
+	{
+		fd = open(str + i + 1, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd == -1)
+			return (-1);
+		return (fd);
+	}
+	fd = open(str + i + 1, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		return (-1);
+	return (fd);
+}
+
+int ft_setup_struct(t_data *data, char **cmds, char **redirect)
+{
+	int i;
+
+	data->cmds = malloc(sizeof(t_cmd));
+	if (!data->cmds)
+		return (1);
+	i = -1;
+	while (cmds[++i])
+	{
+		data->cmds->cmd = ft_strdup(cmds[i]);
+		data->cmds->args = ft_strdup(ft_strnstr(cmds[i], " ", ft_strlen(cmds[i])));
+		data->cmds->redirect = malloc(sizeof(t_redirect));
+		if (!data->cmds->redirect)
+			return (1);
+		data->cmds->redirect->in_fd = ft_determine_in_fd(redirect[i]);
+		data->cmds->redirect->out_fd = ft_determine_out_fd(redirect[i]);
+		if (data->cmds->redirect->in_fd == -1 || data->cmds->redirect->out_fd == -1)
+			return (1);
+		data->cmds->next = malloc(sizeof(t_cmd));
+		if (!data->cmds->next)
+			return (1);
+		data->cmds = data->cmds->next;
+	}
+	return (0);
+}
+
+int ft_parsing_loop(t_data *data)
+{
+	char *prompt;
+	char **cmds;
+	char **redirect;
+
+	prompt = readline("minishell$ ");
+	// prompt = ft_strdup("cat -e < infile.txt | ls -lah >> outfile.txt");
+	cmds = ft_parsing(prompt);
+	redirect = ft_redirections(cmds);
+	cmds = ft_clean_cmds(cmds);
+	if (ft_setup_struct(data, cmds, redirect))
+		return (1);
+	ft_clean_double_ptr(cmds);
+	ft_clean_double_ptr(redirect);
+	return (0);
+}
+
 
 int main(int ac, char **av, char **env)
 {
@@ -160,16 +244,14 @@ int main(int ac, char **av, char **env)
 	data.env = ft_parse_env(env);
 	while (true)
 	{
-		prompt = readline("minishell$ ");
-		// prompt = ft_strdup("cat -e < infile.txt | ls -lah >> outfile.txt");
-		data.cmds = ft_parsing(prompt);
-		data.redirect = ft_redirections(data.cmds);
-		data.cmds = ft_clean_cmds(data.cmds);
-		
-		ft_debug_print(data);
+		if (ft_parsing_loop(&data))
+			return (1);
 
-		ft_clean_double_ptr(data.cmds);
-		ft_clean_double_ptr(data.redirect);
+
+		
+		// ft_debug_print(data);
+
+
 		free(prompt);
 		break;
 	}

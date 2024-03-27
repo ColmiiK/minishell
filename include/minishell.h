@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/26 11:22:05 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:19:20 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,33 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+typedef struct s_env
+{
+	char		*var;
+	t_env		*next;
+
+}	t_env;
+
+typedef struct s_redirect
+{
+	int			in_fd;
+	int			out_fd;
+
+}	t_redirect;
+
+typedef struct s_cmd
+{
+	char		*cmd;
+	char		*args;
+	t_redirect	*redirect;
+	t_cmd		*next;
+
+}	t_cmd;
+
 typedef struct s_data
 {
-	char **cmds;
-	char **redirect;
-	char **env;
+	t_cmd		*cmds;
+	t_env		*env;
 	
 }	t_data;
 
