@@ -20,12 +20,15 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int call_buildin( char **cmds)
+int call_buildins(t_data data)
 {
-    if(!ft_strncmp(cmds[0], "env", 3))
-    {
-        ft_env(VAR ENTORNO);
-    }
-
+    if(!ft_strncmp(data->cmds[0], "env", 3))
+        ft_env(data->env);
+	if(!ft_strncmp(data->cmds[0], "echo", 3))
+        ft_echo(data->cmds);
+	if(!ft_strncmp(data->cmds[0], "pwd", 3))
+        ft_pwd(data->cmds);
+	if(!ft_strncmp(data->cmds[0], "cd", 2))
+        ft_cd(data->cmds, data->env);
 }
 

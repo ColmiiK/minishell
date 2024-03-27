@@ -5,13 +5,13 @@
 //PATH_MAX comes from limits.h
 //getcwd comes from unistd.h
 
-void		ft_pwd(void)
+void		ft_pwd(chart **redirect)
 {
-	char	cwd[PATH_MAX];
+	char	pwd[PATH_MAX];
 
-	if (getcwd(cwd, PATH_MAX))
+	if (getcwd(pwd, PATH_MAX))
 	{
-		ft_putendl_fd(cwd, 1);
+		ft_putendl_fd(pwd, redirect[0][0]);
 	}
 	else
 		return;
