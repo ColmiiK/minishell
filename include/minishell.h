@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/27 17:19:20 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/27 19:06:37 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 typedef struct s_env
 {
 	char		*var;
-	t_env		*next;
+	struct s_env		*next;
 
 }	t_env;
 
@@ -36,7 +36,7 @@ typedef struct s_cmd
 	char		*cmd;
 	char		*args;
 	t_redirect	*redirect;
-	t_cmd		*next;
+	struct s_cmd		*next;
 
 }	t_cmd;
 

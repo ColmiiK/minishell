@@ -135,83 +135,25 @@ Resurces read/seen
 
 */
 
-void ft_debug_print(t_data data)
-{
-	printf("\nCMDS:\n");
-	for (int i = 0; data.cmds[i]; i++)
-		printf("%s\n", data.cmds[i]);
-	printf("\nREDIRECT:\n");
-	for (int i = 0; data.redirect[i]; i++)
-		printf("%s\n", data.redirect[i]);
-	// printf("\nENV:\n");
-	// for (int i = 0; data.env[i]; i++)
-	// 	printf("%s\n", data.env[i]);
-}
 
-int ft_determine_in_fd(char *str)
+t_cmd *ft_setup_cmds(char **cmds)
 {
 	int i;
-	int fd;
+	t_cmd *current;
+	t_cmd **head;
 
-	i = -1;
-	while (str[++i] != ':')
-		;
-	if (ft_isdigit(str[i + 1]))
-		return (ft_atoi(str + i));
-	fd = open(str + i + 1, O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	return (fd);
-}
-
-int ft_determine_out_fd(char *str)
-{
-	int i;
-	int fd;
-
-	i = -1;
-	while (str[++i] != ':')
-		;
-	if (ft_isdigit(str[i + 1]))
-		return (ft_atoi(str + i));
-	if (str[i - 1] == 'A')
-	{
-		fd = open(str + i + 1, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd == -1)
-			return (-1);
-		return (fd);
-	}
-	fd = open(str + i + 1, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-		return (-1);
-	return (fd);
-}
-
-int ft_setup_struct(t_data *data, char **cmds, char **redirect)
-{
-	int i;
-
-	data->cmds = malloc(sizeof(t_cmd));
-	if (!data->cmds)
-		return (1);
+	head = &current;
 	i = -1;
 	while (cmds[++i])
 	{
-		data->cmds->cmd = ft_strdup(cmds[i]);
-		data->cmds->args = ft_strdup(ft_strnstr(cmds[i], " ", ft_strlen(cmds[i])));
-		data->cmds->redirect = malloc(sizeof(t_redirect));
-		if (!data->cmds->redirect)
-			return (1);
-		data->cmds->redirect->in_fd = ft_determine_in_fd(redirect[i]);
-		data->cmds->redirect->out_fd = ft_determine_out_fd(redirect[i]);
-		if (data->cmds->redirect->in_fd == -1 || data->cmds->redirect->out_fd == -1)
-			return (1);
-		data->cmds->next = malloc(sizeof(t_cmd));
-		if (!data->cmds->next)
-			return (1);
-		data->cmds = data->cmds->next;
+		current = malloc(sizeof(t_cmd));
+		if (!current)
+			return (NULL);
+		current->cmd = ft_strdup(cmds[i]);
+		current = current->next;
 	}
-	return (0);
+	current->next = NULL;
+	return (*head);
 }
 
 int ft_parsing_loop(t_data *data)
@@ -225,10 +167,12 @@ int ft_parsing_loop(t_data *data)
 	cmds = ft_parsing(prompt);
 	redirect = ft_redirections(cmds);
 	cmds = ft_clean_cmds(cmds);
-	if (ft_setup_struct(data, cmds, redirect))
-		return (1);
+
+	data->cmds = ft_setup_cmds(cmds);
+
 	ft_clean_double_ptr(cmds);
 	ft_clean_double_ptr(redirect);
+	free(prompt);
 	return (0);
 }
 
@@ -236,12 +180,11 @@ int ft_parsing_loop(t_data *data)
 int main(int ac, char **av, char **env)
 {
 	t_data data;
-	char *prompt;
 	
 	(void)ac;
 	(void)av;
+	(void)env;
 
-	data.env = ft_parse_env(env);
 	while (true)
 	{
 		if (ft_parsing_loop(&data))
@@ -249,12 +192,7 @@ int main(int ac, char **av, char **env)
 
 
 		
-		// ft_debug_print(data);
-
-
-		free(prompt);
 		break;
 	}
-	ft_clean_double_ptr(data.env);
 	return (0);
 }
