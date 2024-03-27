@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_2.c                                          :+:      :+:    :+:   */
+/*   parse_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/07 13:34:30 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/26 19:16:37 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ static char *ft_capture_files(char *cmd, char *re)
 	{
 		if (ft_strnstr(cmd, ">>", ft_strlen(cmd)))
 		{
-			re = ft_upd(re, ft_strjoin(re, " OUT(A):"));
-			re = ft_upd(re, ft_strjoin(re, ft_strnstr(cmd, ">", ft_strlen(cmd)) + 3));
+			re = ft_strjoin_ex(re, " OUT(A):", 1);
+			re = ft_strjoin_ex(re, ft_strnstr(cmd, ">", ft_strlen(cmd)) + 3, 1);
 		}
 		else
 		{
-			re = ft_upd(re, ft_strjoin(re, " OUT:"));
-			re = ft_upd(re, ft_strjoin(re, ft_strnstr(cmd, ">", ft_strlen(cmd)) + 2));
+			re = ft_strjoin_ex(re, " OUT:", 1);
+			re = ft_strjoin_ex(re, ft_strnstr(cmd, ">", ft_strlen(cmd)) + 2, 1);
 		}
 	}
 	else
-		re = ft_upd(re, ft_strjoin(re, " OUT:1"));
+		re = ft_strjoin_ex(re, " OUT:1", 1);
 	re[ft_strlen(re)] = 0;
 	return (re);
 }
