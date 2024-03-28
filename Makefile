@@ -23,7 +23,11 @@ WHITE = $(shell tput setaf 7)
 
 #Sources
 	
-SRC_FILES = main parse_prompt parse_redirect parse_env cleanup
+SRC_FILES = main cleanup \
+			parse/loop \
+			parse/prompt_heredoc \
+			parse/redirections \
+			parse/setup_nodes \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -39,6 +43,7 @@ $(NAME):	$(OBJ)
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
+			@mkdir -p $(dir $@)
 			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
 			@$(CC) -I./$(INCLUDE) $(CFLAGS) -c $< -o $@
 

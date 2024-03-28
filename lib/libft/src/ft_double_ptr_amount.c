@@ -1,15 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_env.c                                        :+:      :+:    :+:   */
+/*   ft_double_ptr_amount.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 11:09:30 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/27 18:55:01 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/03/28 11:28:11 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/03/28 11:28:31 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <libft.h>
 
+int	ft_double_ptr_amount(char **ptr)
+{
+	int	i;
 
+	i = 0;
+	while (ptr[i])
+		i++;
+	return (i);
+}

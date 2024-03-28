@@ -6,13 +6,12 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/27 17:49:10 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:12:58 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// Bucle del here_doc
 static void ft_here_doc_loop(char *prompt)
 {
 	char *temp;
@@ -76,7 +75,6 @@ static char *ft_fix_prompt(char *prompt)
 	return (temp);
 }
 
-// Here_doc
 static char *ft_here_doc(char *prompt, bool pipe)
 {
 	char *str;
@@ -96,7 +94,7 @@ static char *ft_here_doc(char *prompt, bool pipe)
 	free(prompt);
 	return (str);
 }
-// Splitear el prompt para la tabla de comandos
+
 char **ft_parsing(char *prompt)
 {
 	char **cmds;

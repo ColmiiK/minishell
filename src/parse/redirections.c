@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/27 20:08:01 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:12:47 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static char *ft_upd(char *redirect, char *new_value)
 	return new_value;
 }
 
-// Rellenar el string de redirección con la info si la hay, o default si no
 static char *ft_capture_files(char *cmd, char *re)
 {
 	if (ft_strchr(cmd, '<'))
@@ -43,7 +42,7 @@ static char *ft_capture_files(char *cmd, char *re)
 	re[ft_strlen(re)] = 0;
 	return (re);
 }
-// Crear array con redirecciones
+
 char **ft_redirections(char **cmds)
 {
 	char **redirect;

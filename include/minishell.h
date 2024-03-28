@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/27 19:06:37 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:19:25 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,31 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	t_cmd		*cmds;
+	int 		n_of_cmds;
+
 	t_env		*env;
-	
+
 }	t_data;
 
-// Parse
-char **ft_parse_env(char **env);
+// Main parsing loop
+int ft_parsing_loop(t_data *data);
+
+// Parses env to the list
+t_env *ft_parse_env(char **env);
+// Parses commands and arguments
 char **ft_parsing(char *prompt);
+// Parses redirections
 char **ft_redirections(char **cmds);
+// Cleans commands
 char **ft_clean_cmds(char **cmds);
-// CLeanup
+// Setup nodes for the list
+t_cmd *ft_setup_nodes(char **cmds, char **redirect);
+
+// Free double pointer used in parsing
 void ft_clean_double_ptr(char **ptr);
+// Free commands, arguments and redirections for next loop
+void ft_annihilation(t_data *data);
+// Free env list at the end of execution
+void ft_cleanup_env(t_env *env);
 
 #endif

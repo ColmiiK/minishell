@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/26 18:40:23 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:30:13 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -529,5 +529,16 @@ void				*ft_realloc(void *ptr, size_t new_size);
  * or NULL if no token is found.
  */
 char				*ft_strtok(char *str, char *del);
+
+/**
+ * @brief Returns the number of elements in a 2D array.
+ * 
+ * This function takes a 2D array as input and returns the number of
+ * elements in the array.
+ * 
+ * @param ptr The 2D array to be counted.
+ * @return The number of elements in the array.
+ */
+int					ft_double_ptr_amount(char **ptr);
 
 #endif
