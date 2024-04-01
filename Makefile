@@ -58,6 +58,7 @@ clean:
 fclean:		
 			@rm -rf $(OBJ_DIR)
 			@rm -f $(NAME)
+			@rm -rf $(NAME).dSYM
 			@make fclean -C $(LIBFT)
 			@echo "$(BLUE)$(NAME) executable cleaned!$(DEF_COLOR)"
 
@@ -68,6 +69,6 @@ norm:
 			@norminette $(SRC) $(INCLUDE) $(LIBFT)
 
 test:
-			@make && ./minishell
+			@make && ./valgrind.sh
 
 .PHONY: all clean fclean re norm

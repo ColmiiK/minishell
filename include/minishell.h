@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/01 10:43:02 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:11:30 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ void	ft_clean_double_ptr(char **ptr);
 void	ft_annihilation(t_data *data);
 // Free env list at the end of execution
 void	ft_cleanup_env(t_env *env);
+// Write given error message and return error (1)
+int		ft_perror(char *str);
 
 #endif

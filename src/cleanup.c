@@ -6,11 +6,17 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/01 10:50:36 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/01 16:14:00 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	ft_perror(char *str)
+{
+	perror(str);
+	return(1);
+}
 
 void	ft_clean_double_ptr(char **ptr)
 {
@@ -32,12 +38,16 @@ void	ft_annihilation(t_data *data)
 	{
 		free(data->cmds->cmd);
 		free(data->cmds->args);
+		close(data->cmds->redirect->in_fd);
+		close(data->cmds->redirect->out_fd);
 		free(data->cmds->redirect);
 		prev = data->cmds;
 		if (data->cmds->next)
 			data->cmds = data->cmds->next;
 		free(prev);
 	}
+	// if (unlink(".here_doc") == -1)
+	// 	ft_perror("Error unlinking file");
 }
 
 void	ft_cleanup_env(t_env *env)
