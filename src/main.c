@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -6,15 +6,15 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/07 13:40:17 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/01 10:52:20 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void ft_debug(t_data data)
+void	ft_debug(t_data data)
 {
-	t_cmd *current;
+	t_cmd	*current;
 
 	current = data.cmds;
 	while (current)
@@ -27,10 +27,10 @@ void ft_debug(t_data data)
 	}
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	t_data data;
-	
+	t_data	data;
+
 	(void)ac;
 	(void)av;
 	data.env = ft_parse_env(env);
@@ -38,11 +38,9 @@ int main(int ac, char **av, char **env)
 	{
 		if (ft_parsing_loop(&data))
 			return (1);
-		
 		ft_debug(data);
-		
 		ft_annihilation(&data);
-		break;
+		break ;
 	}
 	ft_cleanup_env(data.env);
 	return (0);

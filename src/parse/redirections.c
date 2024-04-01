@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_redirect.c                                   :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/28 12:12:47 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/01 10:51:20 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char *ft_upd(char *redirect, char *new_value)
+static char	*ft_upd(char *redirect, char *new_value)
 {
 	free(redirect);
-	return new_value;
+	return (new_value);
 }
 
-static char *ft_capture_files(char *cmd, char *re)
+static char	*ft_capture_files(char *cmd, char *re)
 {
 	if (ft_strchr(cmd, '<'))
-		re = ft_upd(re, ft_strjoin("IN:", ft_strnstr(cmd, "<", ft_strlen(cmd)) + 2));
+		re = ft_upd(re, ft_strjoin("IN:",
+					ft_strnstr(cmd, "<", ft_strlen(cmd)) + 2));
 	else
 		re = ft_upd(re, ft_strdup("IN:0"));
 	if (ft_strchr(cmd, '>'))
@@ -43,15 +44,15 @@ static char *ft_capture_files(char *cmd, char *re)
 	return (re);
 }
 
-char **ft_redirections(char **cmds)
+char	**ft_redirections(char **cmds)
 {
-	char **redirect;
-	int i;
+	char	**redirect;
+	int		i;
 
 	i = 0;
 	while (cmds[i])
 		i++;
-	redirect = ft_calloc(i + 1, sizeof(char*));
+	redirect = ft_calloc(i + 1, sizeof(char *));
 	i = -1;
 	while (cmds[++i])
 		redirect[i] = ft_capture_files(cmds[i], redirect[i]);
@@ -62,12 +63,12 @@ char **ft_redirections(char **cmds)
 	return (redirect);
 }
 
-static char *ft_trim_redirect(char *str, char chr)
+static char	*ft_trim_redirect(char *str, char chr)
 {
-	char *ptr;
-	char *trimmed;
-	int len;
-	
+	char	*ptr;
+	char	*trimmed;
+	int		len;
+
 	ptr = ft_strrchr(str, chr);
 	if (ptr)
 	{
@@ -80,17 +81,17 @@ static char *ft_trim_redirect(char *str, char chr)
 	return (str);
 }
 
-char **ft_clean_cmds(char **cmds)
+char	**ft_clean_cmds(char **cmds)
 {
-	char *temp;
-	int i;
+	char	*temp;
+	int		i;
 
 	i = -1;
 	while (cmds[++i])
 	{
 		if (ft_strrchr(cmds[i], '<'))
 		{
-			temp = cmds[i];	
+			temp = cmds[i];
 			cmds[i] = ft_trim_redirect(temp, '<');
 			free(temp);
 		}

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_prompt.c                                     :+:      :+:    :+:   */
+/*   prompt_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/28 12:12:58 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/01 10:47:06 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void ft_here_doc_loop(char *prompt)
+static void	ft_here_doc_loop(char *prompt)
 {
-	char *temp;
-	char *joined;
-	char *delimiter;
-	int len;
-	int fd;
+	char	*temp;
+	char	*joined;
+	char	*delimiter;
+	int		len;
+	int		fd;
 
 	delimiter = ft_strtok(prompt, " ");
-	len = ft_strlen(delimiter);		
+	len = ft_strlen(delimiter);
 	joined = ft_calloc(1, 1);
 	if (!joined)
 		return ;
@@ -33,17 +33,17 @@ static void ft_here_doc_loop(char *prompt)
 		temp = readline("> ");
 	}
 	free(temp);
-	fd = open(".here_doc",  O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(".here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	write(fd, joined, (ft_strlen(joined) - 1) * sizeof(char));
 	close(fd);
 	free(joined);
 }
 
-static char *ft_here_doc_pipe(char *sub, char *str)
+static char	*ft_here_doc_pipe(char *sub, char *str)
 {
-	char *input;
-	char *trimmed;
-	
+	char	*input;
+	char	*trimmed;
+
 	input = readline("> ");
 	trimmed = ft_strtrim(sub, "| ");
 	trimmed = ft_strjoin_ex(trimmed, " < .here_doc | ", 1);
@@ -51,11 +51,11 @@ static char *ft_here_doc_pipe(char *sub, char *str)
 	return (str);
 }
 
-static char *ft_fix_prompt(char *prompt)
+static char	*ft_fix_prompt(char *prompt)
 {
-	char *fixed;
-	char *temp;
-	int i;
+	char	*fixed;
+	char	*temp;
+	int		i;
 
 	if (!ft_strncmp(prompt, "<<", 2))
 		return (ft_strdup(prompt));
@@ -75,11 +75,11 @@ static char *ft_fix_prompt(char *prompt)
 	return (temp);
 }
 
-static char *ft_here_doc(char *prompt, bool pipe)
+static char	*ft_here_doc(char *prompt, bool pipe)
 {
-	char *str;
-	char *before;
-	char *sub;
+	char	*str;
+	char	*before;
+	char	*sub;
 
 	str = NULL;
 	prompt = ft_fix_prompt(prompt);
@@ -95,12 +95,12 @@ static char *ft_here_doc(char *prompt, bool pipe)
 	return (str);
 }
 
-char **ft_parsing(char *prompt)
+char	**ft_parsing(char *prompt)
 {
-	char **cmds;
-	char *temp;
-	char *str;
-	int i;
+	char	**cmds;
+	char	*temp;
+	char	*str;
+	int		i;
 
 	if (ft_strnstr(prompt, "<<", ft_strlen(prompt)))
 	{

@@ -6,17 +6,17 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/28 12:19:51 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/01 10:45:05 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int ft_determine_in_fd(char *redirect)
+static int	ft_determine_in_fd(char *redirect)
 {
-	int fd;
-	int i;
-	char *str;
+	int		fd;
+	int		i;
+	char	*str;
 
 	redirect = ft_strchr(redirect, ':');
 	redirect++;
@@ -32,9 +32,9 @@ static int ft_determine_in_fd(char *redirect)
 	return (fd);
 }
 
-static int ft_determine_out_fd(char *redirect)
+static int	ft_determine_out_fd(char *redirect)
 {
-	int fd;
+	int		fd;
 
 	redirect = ft_strrchr(redirect, ':');
 	redirect++;
@@ -47,11 +47,11 @@ static int ft_determine_out_fd(char *redirect)
 	return (fd);
 }
 
-static t_cmd *ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
+static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
 {
-	int i;
-	int j;
-	t_cmd *current;
+	int		i;
+	int		j;
+	t_cmd	*current;
 
 	i = -1;
 	current = head;
@@ -73,12 +73,12 @@ static t_cmd *ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
 	return (head);
 }
 
-t_cmd *ft_setup_nodes(char **cmds, char **redirect)
+t_cmd	*ft_setup_nodes(char **cmds, char **redirect)
 {
-	int i;
-	t_cmd *current;
-	t_cmd *new_node;
-	t_cmd *head;
+	int		i;
+	t_cmd	*current;
+	t_cmd	*new_node;
+	t_cmd	*head;
 
 	head = NULL;
 	i = -1;
@@ -101,12 +101,12 @@ t_cmd *ft_setup_nodes(char **cmds, char **redirect)
 	return (head);
 }
 
-t_env *ft_parse_env(char **env)
+t_env	*ft_parse_env(char **env)
 {
-	t_env *head;
-	t_env *current;
-	t_env *new_node;
-	int i;
+	int		i;
+	t_env	*head;
+	t_env	*current;
+	t_env	*new_node;
 
 	head = NULL;
 	i = -1;
@@ -121,7 +121,6 @@ t_env *ft_parse_env(char **env)
 			head = new_node;
 		else
 			current->next = new_node;
-
 		current = new_node;
 	}
 	return (head);

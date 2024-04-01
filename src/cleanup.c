@@ -6,15 +6,15 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/28 12:06:06 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/01 10:50:36 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void ft_clean_double_ptr(char **ptr)
+void	ft_clean_double_ptr(char **ptr)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (ptr[++i])
@@ -22,10 +22,10 @@ void ft_clean_double_ptr(char **ptr)
 	free(ptr);
 }
 
-void ft_annihilation(t_data *data)
+void	ft_annihilation(t_data *data)
 {
-	int i;
-	t_cmd *prev;
+	int		i;
+	t_cmd	*prev;
 
 	i = -1;
 	while (++i < data->n_of_cmds)
@@ -40,9 +40,9 @@ void ft_annihilation(t_data *data)
 	}
 }
 
-void ft_cleanup_env(t_env *env)
+void	ft_cleanup_env(t_env *env)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	while (env)
 	{
