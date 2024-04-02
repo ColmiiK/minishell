@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/01 16:11:30 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:59:18 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int		ft_parsing_loop(t_data *data);
 
 // Parses env to the list
 t_env	*ft_parse_env(char **env);
+// Expands enviroment variables
+char	*ft_expand_variables(char *prompt, t_env *env);
 // Parses commands and arguments
 char	**ft_parsing(char *prompt);
 // Parses redirections

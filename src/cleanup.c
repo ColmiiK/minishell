@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/01 16:14:00 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:00:18 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_perror(char *str)
 {
 	perror(str);
-	return(1);
+	return (1);
 }
 
 void	ft_clean_double_ptr(char **ptr)
@@ -38,8 +38,8 @@ void	ft_annihilation(t_data *data)
 	{
 		free(data->cmds->cmd);
 		free(data->cmds->args);
-		close(data->cmds->redirect->in_fd);
-		close(data->cmds->redirect->out_fd);
+		// close(data->cmds->redirect->in_fd);
+		// close(data->cmds->redirect->out_fd);
 		free(data->cmds->redirect);
 		prev = data->cmds;
 		if (data->cmds->next)
