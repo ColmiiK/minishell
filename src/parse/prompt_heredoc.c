@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/01 10:47:06 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:41:43 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,26 @@ static void	ft_here_doc_loop(char *prompt)
 	char	*temp;
 	char	*joined;
 	char	*delimiter;
-	int		len;
 	int		fd;
 
 	delimiter = ft_strtok(prompt, " ");
-	len = ft_strlen(delimiter);
 	joined = ft_calloc(1, 1);
 	if (!joined)
 		return ;
 	temp = readline("> ");
-	while (ft_strncmp(temp, delimiter, len))
+	if (!temp)
+		temp = ft_strdup(delimiter);
+	while (ft_strncmp(temp, delimiter, ft_strlen(delimiter)))
 	{
-		joined = ft_strjoin_ex(joined, temp, 3);
-		joined = ft_strjoin_ex(joined, "\n", 1);
+		joined = ft_strjoin_ex(ft_strjoin_ex(joined, temp, 3), "\n", 1);
 		temp = readline("> ");
+		if (!temp)
+			temp = ft_strdup(delimiter);
 	}
 	free(temp);
 	fd = open(".here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	write(fd, joined, (ft_strlen(joined) - 1) * sizeof(char));
+	if (joined[0] != '\0')
+		write(fd, joined, (ft_strlen(joined) - 1) * sizeof(char));
 	close(fd);
 	free(joined);
 }
@@ -45,6 +47,11 @@ static char	*ft_here_doc_pipe(char *sub, char *str)
 	char	*trimmed;
 
 	input = readline("> ");
+	if (!input)
+	{
+		printf("minishell: syntax error: unexpected end of file\n");
+		return (ft_calloc(1, 1));
+	}
 	trimmed = ft_strtrim(sub, "| ");
 	trimmed = ft_strjoin_ex(trimmed, " < .here_doc | ", 1);
 	str = ft_strjoin_ex(trimmed, input, 3);
@@ -75,7 +82,7 @@ static char	*ft_fix_prompt(char *prompt)
 	return (temp);
 }
 
-static char	*ft_here_doc(char *prompt, bool pipe)
+char	*ft_here_doc(char *prompt, bool pipe)
 {
 	char	*str;
 	char	*before;
@@ -93,33 +100,4 @@ static char	*ft_here_doc(char *prompt, bool pipe)
 	free(before);
 	free(prompt);
 	return (str);
-}
-
-char	**ft_parsing(char *prompt)
-{
-	char	**cmds;
-	char	*temp;
-	char	*str;
-	int		i;
-
-	if (ft_strnstr(prompt, "<<", ft_strlen(prompt)))
-	{
-		if (ft_strrchr(prompt, '|'))
-			str = ft_here_doc(prompt, true);
-		else
-			str = ft_here_doc(prompt, false);
-		cmds = ft_split(str, '|');
-		free (str);
-	}
-	else
-		cmds = ft_split(prompt, '|');
-	i = -1;
-	while (cmds[++i])
-	{
-		temp = cmds[i];
-		cmds[i] = ft_strtrim(temp, " ");
-		free(temp);
-	}
-	cmds[i] = NULL;
-	return (cmds);
 }

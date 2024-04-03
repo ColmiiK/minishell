@@ -23,7 +23,7 @@ WHITE = $(shell tput setaf 7)
 
 #Sources
 	
-SRC_FILES = main cleanup \
+SRC_FILES = main cleanup signal \
 			parse/loop \
 			parse/expansion \
 			parse/prompt_heredoc \
