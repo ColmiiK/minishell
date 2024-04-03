@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/02 14:59:18 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:00:23 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <libft.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+
+int	g_signal;
 
 typedef struct s_env
 {
@@ -43,6 +45,10 @@ typedef struct s_data
 	int				n_of_cmds;
 	t_env			*env;
 }	t_data;
+
+// Signals
+void	ft_handle_sigint(int signum);
+void	ft_handle_sigquit(int signum);
 
 // Main parsing loop
 int		ft_parsing_loop(t_data *data);

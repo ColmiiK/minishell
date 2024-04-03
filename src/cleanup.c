@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/02 15:00:18 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:54:25 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,17 @@ void	ft_annihilation(t_data *data)
 	{
 		free(data->cmds->cmd);
 		free(data->cmds->args);
-		// close(data->cmds->redirect->in_fd);
-		// close(data->cmds->redirect->out_fd);
+		if (data->cmds->redirect->in_fd > 2)
+			close(data->cmds->redirect->in_fd);
+		if (data->cmds->redirect->out_fd > 2)
+			close(data->cmds->redirect->out_fd);
 		free(data->cmds->redirect);
 		prev = data->cmds;
 		if (data->cmds->next)
 			data->cmds = data->cmds->next;
 		free(prev);
 	}
-	// if (unlink(".here_doc") == -1)
-	// 	ft_perror("Error unlinking file");
+	unlink(".here_doc");
 }
 
 void	ft_cleanup_env(t_env *env)
