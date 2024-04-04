@@ -1,6 +1,6 @@
-#include "minishell.h"
+#include <minishell.h>
 
-void		ft_echo(t_cmd data, t_redirect address)
+void		ft_echo(t_cmd *data, t_redirect *address)
 {
 	int		i;
 

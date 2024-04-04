@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/03 16:42:57 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/04 22:24:17 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	
 	g_signal = 0;
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, ft_handle_sigquit);
+	
 	data.env = ft_parse_env(env);
+	
 	while (true)
 	{
 		if (ft_parsing_loop(&data))

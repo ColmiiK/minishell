@@ -29,6 +29,14 @@ SRC_FILES = main cleanup signal \
 			parse/prompt_heredoc \
 			parse/redirections \
 			parse/setup_nodes \
+			builtin/cd \
+			builtin/echo \
+			builtin/env \
+			builtin/export \
+			builtin/pwd \
+			builtin/unset \
+			builtin/get_cmd \
+			builtin/utils \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

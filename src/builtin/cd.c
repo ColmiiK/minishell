@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include <minishell.h>
 #include <stdlib.h>
 
 static char		*get_env_path(t_env *env, const char *var, size_t len)
@@ -10,17 +10,17 @@ static char		*get_env_path(t_env *env, const char *var, size_t len)
 
 	while (env && env->next != NULL)
 	{
-		if (ft_strncmp(env->value, var, len) == 0)
+		if (ft_strncmp(env->var, var, len) == 0)
 		{
-			s_alloc = ft_strlen(env->value) - len;
+			s_alloc = ft_strlen(env->var) - len;
 			if (!(oldpwd = malloc(sizeof(char) * s_alloc + 1)))
 				return (NULL);
 			i = 0;
 			j = 0;
-			while (env->value[i++])
+			while (env->var[i++])
 			{
 				if (i > (int)len)
-					oldpwd[j++] = env->value[i];
+					oldpwd[j++] = env->var[i];
 			}
 			oldpwd[j] = '\0';
 			return (oldpwd);
@@ -70,7 +70,7 @@ static int		go_to_path(int option, t_env *env)
 	return (ret);
 }
 
-int				ft_cd(t_cmd *data, t_env *env, t_redirect address)
+int				ft_cd(t_cmd *data, t_env *env, t_redirect *address)
 {
 	int		cd_ret;
 

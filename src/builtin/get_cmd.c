@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include <minishell.h>
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -20,7 +20,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int call_buildins(t_data data)
+int call_buildins(t_data *data)
 {
     if(!ft_strncmp(data->cmds[0], "env", 3))
         ft_env(data->env);
