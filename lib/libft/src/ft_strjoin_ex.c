@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_ex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/14 11:22:24 by alvega-g          #+#    #+#             */
-/*   Updated: 2023/12/14 11:42:12 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/03/26 18:36:00 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/03/26 19:08:02 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-void	*ft_realloc(void *ptr, size_t size)
+char	*ft_strjoin_ex(char *s1, char *s2, int del)
 {
-	void	*new_ptr;
+	char	*joined;
+	size_t	len;
 
-	new_ptr = NULL;
-	if (size == 0)
-		return (free(ptr), NULL);
-	if (ptr == NULL)
-		new_ptr = malloc(size);
-	else
-	{
-		new_ptr = malloc(size);
-		if (new_ptr)
-		{
-			ft_memcpy(new_ptr, ptr, size);
-			free(ptr);
-		}
-	}
-	return (new_ptr);
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	joined = (char *)malloc(len * sizeof(char));
+	if (!joined)
+		return (NULL);
+	ft_strlcpy(joined, s1, ft_strlen(s1) + 1);
+	ft_strlcat(joined, s2, len);
+	if (del == 1 || del == 3)
+		free(s1);
+	if (del == 2 || del == 3)
+		free(s2);
+	return (joined);
 }

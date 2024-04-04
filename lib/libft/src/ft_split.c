@@ -3,80 +3,103 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: frangome <frangome@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 13:11:01 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/01/18 17:55:47 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/04/23 21:48:53 by fran              #+#    #+#             */
+/*   Updated: 2023/04/26 19:31:35 by frangome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-static int	word_count(const char *s, char c)
-{
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		if (s[i] != c)
-		{
-			while (s[i] && s[i] != c)
-				i++;
-			count++;
-		}
-		else
-			i++;
-	}
-	return (count);
-}
-
-static char	*fill(const char *s, int start, int end)
+int	word_counter(char const *s, char c)
 {
 	int		i;
-	char	*dest;
+	int		flag;
+	int		n;
 
 	i = 0;
-	dest = (char *)malloc((end - start + 1) * sizeof(char));
-	if (!dest)
-		return (0);
-	while (start < end)
+	flag = 0;
+	n = 0;
+	while (s[i])
 	{
-		dest[i] = s[start];
+		if (s[i] != c && !flag)
+		{
+			n++;
+			flag = 1;
+		}
+		if (s[i] == c)
+			flag = 0;
+	i++;
+	}
+	return (n);
+}
+
+char	*insert_word(char const *s, int start, int finish)
+{
+	char	*word;
+	int		i;
+
+	word = malloc(finish - start + 1);
+	if (!word)
+		return (0);
+	i = 0;
+	while (start < finish)
+	{
+		word[i] = s[start];
 		i++;
 		start++;
 	}
-	dest[i] = 0;
-	return (dest);
+	word[i] = '\0';
+	return (word);
 }
 
-char	**ft_split(char const *s, char c)
+void	free_res(char **res)
 {
-	unsigned int	i;
-	unsigned int	j;
-	int				index;
-	char			**split;
+	int	i;
+
+	i = 0;
+	while (res[i] != NULL)
+	{
+		free(res[i]);
+		i++;
+	}
+}
+
+char	**get_res(char **res, int flag, char const *s, char c)
+{
+	unsigned int		i;
+	unsigned int		j;
 
 	i = 0;
 	j = 0;
-	index = -1;
-	split = (char **)malloc((word_count(s, c) + 1) * sizeof(char *));
-	if (!s || !split)
-		return (0);
 	while (i <= ft_strlen(s))
 	{
-		if (s[i] != c && index < 0)
-			index = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		if (s[i] != c && flag < 0 && i != (unsigned int)ft_strlen(s))
+			flag = i;
+		if ((s[i] == c || i == ft_strlen(s)) && flag >= 0)
 		{
-			split[j] = fill(s, index, i);
-			index = -1;
+			res[j] = insert_word(s, flag, i);
+			if (!res[j])
+				return (free_res(res), free(res), NULL);
+			flag = -1;
 			j++;
 		}
 		i++;
 	}
-	split[j] = 0;
-	return (split);
+	res[j] = 0;
+	return (res);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char				**res;
+	int					flag;
+
+	res = malloc((word_counter(s, c) + 1) * sizeof(char *));
+	if (!s || !res)
+		return (0);
+	flag = -1;
+	res = get_res(res, flag, s, c);
+	return (res);
 }

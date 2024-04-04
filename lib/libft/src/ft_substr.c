@@ -3,36 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: frangome <frangome@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 13:12:11 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/01/18 17:56:29 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/04/23 11:37:22 by fran              #+#    #+#             */
+/*   Updated: 2023/04/26 18:00:39 by frangome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	unsigned int	i;
-	unsigned int	j;
-	char			*subs;
+	char	*result;
+	int		flag;
 
-	i = 0;
-	j = 0;
-	if (ft_strlen(s) < len)
-		len = ft_strlen(s);
-	subs = (char *)malloc(sizeof(char) * len + 1);
-	if (!subs)
+	flag = 0;
+	if (!s)
 		return (0);
-	while (s[i] && i < start)
-		i++;
-	while (s[i] && j < len)
+	if ((unsigned int)ft_strlen(s) < start)
 	{
-		subs[j] = s[i];
-		i++;
-		j++;
+		len = 0;
+		start = 0;
+		flag = 1;
 	}
-	subs[j] = 0;
-	return (subs);
+	if ((unsigned int)ft_strlen(s + start) < len && !flag)
+		len = (unsigned int)ft_strlen(s + start);
+	result = malloc((len + 1) * sizeof(char));
+	if (!result)
+		return (0);
+	ft_strlcpy(result, (char *)(s + start), len + 1);
+	return (result);
 }

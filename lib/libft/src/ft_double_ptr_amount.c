@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_double_ptr_amount.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 11:33:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/01/18 17:54:52 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/03/28 11:28:11 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/03/28 11:28:31 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_double_ptr_amount(char **ptr)
 {
-	t_list	*last;
+	int	i;
 
-	last = *lst;
-	if (!lst)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	while (last->next)
-		last = last->next;
-	last->next = new;
+	i = 0;
+	while (ptr[i])
+		i++;
+	return (i);
 }

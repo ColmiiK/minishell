@@ -23,7 +23,20 @@ WHITE = $(shell tput setaf 7)
 
 #Sources
 	
-SRC_FILES = main read token parsing
+SRC_FILES = main cleanup signal \
+			parse/loop \
+			parse/expansion \
+			parse/prompt_heredoc \
+			parse/redirections \
+			parse/setup_nodes \
+			builtin/cd \
+			builtin/echo \
+			builtin/env \
+			builtin/export \
+			builtin/pwd \
+			builtin/unset \
+			builtin/get_cmd \
+			builtin/utils \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -39,6 +52,7 @@ $(NAME):	$(OBJ)
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
+			@mkdir -p $(dir $@)
 			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
 			@$(CC) -I./$(INCLUDE) $(CFLAGS) -c $< -o $@
 
@@ -53,6 +67,7 @@ clean:
 fclean:		
 			@rm -rf $(OBJ_DIR)
 			@rm -f $(NAME)
+			@rm -rf $(NAME).dSYM
 			@make fclean -C $(LIBFT)
 			@echo "$(BLUE)$(NAME) executable cleaned!$(DEF_COLOR)"
 
@@ -63,6 +78,6 @@ norm:
 			@norminette $(SRC) $(INCLUDE) $(LIBFT)
 
 test:
-			@make && ./minishell
+			@make && ./valgrind.sh
 
 .PHONY: all clean fclean re norm

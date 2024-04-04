@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/17 11:15:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/01/18 17:55:07 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/04/03 13:59:36 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/04/03 14:00:00 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <minishell.h>
 
-t_list	*ft_lstlast(t_list *lst)
+void	ft_handle_sigint(int signum)
 {
-	if (!lst)
-		return (0);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	(void)signum;
+	g_signal = SIGINT;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	ft_handle_sigquit(int signum)
+{
+	(void)signum;
+	g_signal = SIGQUIT;
 }
