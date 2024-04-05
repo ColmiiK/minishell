@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/05 11:58:40 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:55:46 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
 		current->redirect->out_fd = ft_determine_out_fd(redirect[i]);
 		current = current->next;
 	}
+
 	return (head);
 }
 
@@ -91,6 +92,7 @@ t_cmd	*ft_setup_nodes(char **cmds, char **redirect)
 			current->next = new_node;
 		current = new_node;
 	}
+
 	head = ft_fill_nodes(head, cmds, redirect);
 	return (head);
 }

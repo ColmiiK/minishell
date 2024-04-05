@@ -6,13 +6,13 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/03 16:39:23 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:09:24 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	**ft_parsing(char *prompt)
+static char	**ft_parsing(char *prompt, t_data *data)
 {
 	char	**cmds;
 	char	*temp;
@@ -22,9 +22,9 @@ static char	**ft_parsing(char *prompt)
 	if (ft_strnstr(prompt, "<<", ft_strlen(prompt)))
 	{
 		if (ft_strrchr(prompt, '|'))
-			str = ft_here_doc(prompt, true);
+			str = ft_here_doc(prompt, true, data);
 		else
-			str = ft_here_doc(prompt, false);
+			str = ft_here_doc(prompt, false, data);
 		cmds = ft_split(str, '|');
 		free (str);
 	}
@@ -57,7 +57,7 @@ int	ft_parsing_loop(t_data *data)
 		add_history(prompt);
 	while (ft_strnstr(prompt, "$", ft_strlen(prompt)))
 		prompt = ft_expand_variables(prompt, data->env);
-	cmds = ft_parsing(prompt);
+	cmds = ft_parsing(prompt, data);
 	redirect = ft_redirections(cmds);
 	cmds = ft_clean_cmds(cmds);
 	data->cmds = ft_setup_nodes(cmds, redirect);

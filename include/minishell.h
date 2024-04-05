@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/05 11:51:13 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:20:43 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <libft.h>
 # include <signal.h>
+# include <termios.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 
@@ -45,6 +46,7 @@ typedef struct s_data
 	t_cmd			*cmds;
 	int				n_of_cmds;
 	t_env			*env;
+	struct termios termios;
 }	t_data;
 
 // Signals
@@ -59,7 +61,7 @@ t_env	*ft_parse_env(char **env);
 // Expands enviroment variables
 char	*ft_expand_variables(char *prompt, t_env *env);
 // Parses here doc
-char	*ft_here_doc(char *prompt, bool pipe);
+char	*ft_here_doc(char *prompt, bool pipe, t_data *data);
 // Parses redirections
 char	**ft_redirections(char **cmds);
 // Cleans commands

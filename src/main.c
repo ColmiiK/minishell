@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/05 11:58:24 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:42:40 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int ac, char **av, char **env)
 	g_signal = 0;
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, ft_handle_sigquit);
-	
+	tcgetattr(STDIN_FILENO, &data.termios);
 	data.env = ft_parse_env(env);
 	
 	while (true)
@@ -51,6 +51,8 @@ int	main(int ac, char **av, char **env)
 
 
 		ft_annihilation(&data);
+		// break ;
+		g_signal = 0;
 	}
 	rl_clear_history();
 	ft_cleanup_env(data.env);
