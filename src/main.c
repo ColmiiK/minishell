@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/04 22:24:17 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:58:24 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_debug(t_data data)
 	while (current)
 	{
 		printf("\ncmd: %s\n", current->cmd);
-		printf("args: %s\n", current->args);
+		for (int i = 0; current->args[i]; i++)
+			printf("arg[%d]: %s\n", i, current->args[i]);
 		printf("in_fd: %d\n", current->redirect->in_fd);
 		printf("out_fd: %d\n\n", current->redirect->out_fd);
 		current = current->next;

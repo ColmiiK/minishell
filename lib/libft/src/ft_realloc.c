@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 11:31:28 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/01/18 17:55:53 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/12/14 11:22:24 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/12/14 11:42:12 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	*ft_strdup(const char *s)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	int		i;
-	char	*dest;
+	void	*new_ptr;
 
-	i = 0;
-	dest = (char *)malloc(sizeof(*s) * (ft_strlen(s) + 1));
-	if (!dest)
-		return (0);
-	while (s[i])
+	new_ptr = NULL;
+	if (size == 0)
+		return (free(ptr), NULL);
+	if (ptr == NULL)
+		new_ptr = malloc(size);
+	else
 	{
-		dest[i] = s[i];
-		i++;
+		new_ptr = malloc(size);
+		if (new_ptr)
+		{
+			ft_memcpy(new_ptr, ptr, size);
+			free(ptr);
+		}
 	}
-	dest[i] = 0;
-	return (dest);
+	return (new_ptr);
 }

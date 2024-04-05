@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   print_characters.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frangome <frangome@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 20:04:36 by frangome          #+#    #+#             */
-/*   Updated: 2023/04/25 20:19:34 by frangome         ###   ########.fr       */
+/*   Created: 2023/09/20 21:23:52 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/12/14 11:34:32 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-int	ft_lstsize(t_list *lst)
+int	print_char(char c)
 {
-	int	c;
+	ft_putchar_fd(c, 1);
+	return (1);
+}
 
-	c = 0;
-	while (lst)
+int	print_string(char *str)
+{
+	if (!str)
 	{
-		lst = lst->next;
-		c++;
+		ft_putstr_fd("(null)", 1);
+		return (6);
 	}
-	return (c);
+	ft_putstr_fd(str, 1);
+	return (ft_strlen(str));
 }

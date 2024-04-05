@@ -3,25 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frangome <frangome@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 17:33:40 by frangome          #+#    #+#             */
-/*   Updated: 2023/04/24 16:09:52 by frangome         ###   ########.fr       */
+/*   Created: 2023/09/12 13:54:00 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/01/18 17:56:21 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-char	*ft_strrchr(const char *str, int c)
+static int	overflow(int c)
 {
-	int	len;
+	while (c > 255)
+		c -= 256;
+	return (c);
+}
 
-	len = ft_strlen(str);
-	while (len >= 0)
+char	*ft_strrchr(const char *s, int c)
+{
+	int		i;
+	char	*temp;
+
+	i = 0;
+	temp = 0;
+	c = overflow(c);
+	if (!s[i] && c == '\0')
+		return ((char *)&s[i]);
+	while (s[i])
 	{
-		if (str[len] == (char)c)
-			return ((char *) &str[len]);
-		len--;
+		if (c == s[i])
+		{
+			temp = (char *)&s[i];
+			i++;
+		}
+		else if (c == '\0')
+		{
+			while (s[i])
+				i++;
+			return ((char *)&s[i]);
+		}
+		else
+			i++;
 	}
-	return (0);
+	return (temp);
 }

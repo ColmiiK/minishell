@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/04 22:26:23 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:51:13 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_redirect
 typedef struct s_cmd
 {
 	char			*cmd;
-	char			*args;
+	char			**args;
 	t_redirect		*redirect;
 	struct s_cmd	*next;
 }	t_cmd;

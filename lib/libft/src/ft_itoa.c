@@ -3,78 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frangome <frangome@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 18:36:36 by frangome          #+#    #+#             */
-/*   Updated: 2023/04/25 20:32:08 by frangome         ###   ########.fr       */
+/*   Created: 2023/09/15 14:35:46 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/01/18 17:54:49 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <libft.h>
 
-int	get_size(int n)
+int	digit_count(int n)
 {
-	int	c;
+	int	i;
 
-	if (n == 0)
-		return (1);
-	c = 0;
-	while (n > 0)
+	i = 0;
+	if (n <= 0)
+		i++;
+	while (n != 0)
 	{
 		n /= 10;
-		c++;
+		i++;
 	}
-	return (c);
+	return (i);
 }
 
-char	*fill_str(char *str, int n, int neg, int min)
+static void	fill_number(int j, int i, int n, char *s)
 {
-	int	size;
-	int	c;
-
-	size = get_size(n);
-	if (neg)
-		size = get_size(n) + 1;
-	str[size] = 0;
-	c = 0;
-	while (c < size)
+	while (j > i)
 	{
-		if (min && c == 0)
-			str[size - c - 1] = (n % 10) + 49;
-		else
-			str[size - c - 1] = (n % 10) + 48;
+		s[j - 1] = n % 10 + '0';
 		n /= 10;
-		c++;
+		j--;
 	}
-	if (neg)
-		str[0] = '-';
-	return (str);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*str;
-	int		size;
-	int		neg;
-	int		min;
+	int		i;
+	int		j;
+	char	*s;
 
-	neg = 0;
-	min = 0;
+	i = 0;
+	j = digit_count(n);
+	s = (char *)malloc(sizeof(char) * j + 1);
+	if (!s)
+		return (0);
 	if (n == -2147483648)
 	{
-		n++;
-		min = 1;
+		s[0] = '-';
+		s[1] = '2';
+		n = 147483648;
+		i = 2;
 	}
-	size = get_size(n);
 	if (n < 0)
 	{
-		n *= -1;
-		size = get_size(n) + 1;
-		neg = 1;
+		s[0] = '-';
+		i = 1;
+		n = -n;
 	}
-	str = (char *)malloc((size + 1) * sizeof(char));
-	if (!str)
-		return (0);
-	str = fill_str(str, n, neg, min);
-	return (str);
+	fill_number(j, i, n, s);
+	s[j] = 0;
+	return (s);
 }

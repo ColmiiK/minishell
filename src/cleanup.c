@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/03 16:42:29 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:59:52 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_annihilation(t_data *data)
 	while (++i < data->n_of_cmds)
 	{
 		free(data->cmds->cmd);
-		free(data->cmds->args);
+		ft_clean_double_ptr(data->cmds->args);
 		if (data->cmds->redirect->in_fd > 2)
 			close(data->cmds->redirect->in_fd);
 		if (data->cmds->redirect->out_fd > 2)

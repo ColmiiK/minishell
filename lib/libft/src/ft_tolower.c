@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fran <fran@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 14:53:25 by frangome          #+#    #+#             */
-/*   Updated: 2023/04/23 10:13:34 by fran             ###   ########.fr       */
+/*   Created: 2023/09/11 18:32:45 by alvega-g          #+#    #+#             */
+/*   Updated: 2023/12/14 11:34:24 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_tolower(int upper)
+#include <libft.h>
+
+int	ft_tolower(int c)
 {
-	if (upper >= 65 && upper <= 90)
-		return (upper + 32);
+	if (c < 65 || c > 90)
+		return (c);
 	else
-		return (upper);
+		return (c + 32);
 }
