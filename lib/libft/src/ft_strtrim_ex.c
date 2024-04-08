@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim_ex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 11:35:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 16:29:14 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/04/08 16:29:04 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/04/08 16:30:26 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim_ex(char *s1, char const *set, bool del)
 {
 	int		i;
 	int		start;
@@ -36,5 +36,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		start++;
 	}
 	trim[i] = 0;
+	if (del == true)
+		free(s1);
 	return (trim);
 }

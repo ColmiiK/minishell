@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 13:37:19 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:30:48 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,6 +314,17 @@ char				*ft_strjoin_ex(char *s1, char *s2, int del);
  */
 char				*ft_strtrim(char const *s1, char const *set);
 
+/**
+ * @brief Removes selected characters from the beginning and end of a string,
+ * returning the new dynamically allocated trimmed string, possibly
+ * freeing s1
+ *
+ * @param s1 String to trim
+ * @param set Characters to remove
+ * @param del If true, will free s1
+ * @return char*
+*/
+char	*ft_strtrim_ex(char *s1, char const *set, bool del);
 /**
 
  * @brief Separates a string into substrings when encountering a 
