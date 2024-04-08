@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 11:12:24 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:44:57 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	ft_here_doc_loop(char *prompt, t_data *data)
 		return ;
 	if (ft_hd_after_first(&joined, &temp, &delimiter, data))
 		return ;
+	while (ft_strnstr(joined, "$", ft_strlen(joined)))
+		joined = ft_expand_variables(joined, data->env);
 	ft_hd_finish(temp, joined);
 }
 

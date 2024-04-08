@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 10:54:14 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 11:10:39 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:07:46 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_hd_finish(char *temp, char *joined)
 	free(temp);
 	fd = open(".here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (joined[0] != '\0')
-		write(fd, joined, (ft_strlen(joined) - 1) * sizeof(char));
+		write(fd, joined, (ft_strlen(joined)) * sizeof(char));
 	close(fd);
 	free(joined);
 }
