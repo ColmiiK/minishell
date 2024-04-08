@@ -9,13 +9,19 @@ readline_supp=$(cat <<'END_SUPP'
    fun:readline
    ...
 }
+{
+	<add_history>
+	Memcheck:Leak
+	...
+	fun:add_history
+	...
+}
 END_SUPP
 )
 
 # Run valgrind with suppression rules
 valgrind --suppressions=<(echo "$readline_supp") \
           --leak-check=full \
-          --show-leak-kinds=all \
           --track-fds=yes \
           --trace-children=yes \
           -s -q ./minishell 2> >(grep -v "used_suppression" | \

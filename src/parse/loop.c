@@ -6,28 +6,36 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/05 17:09:24 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:09:04 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+static char	**ft_here_doc_capture(char *prompt, t_data *data)
+{
+	char	*str;
+	char	**cmds;
+
+	if (ft_strrchr(prompt, '|'))
+		str = ft_here_doc(prompt, true, data);
+	else
+		str = ft_here_doc(prompt, false, data);
+	while (ft_strnstr(str, "$", ft_strlen(str)))
+		str = ft_expand_variables(str, data->env);
+	cmds = ft_split(str, '|');
+	free (str);
+	return (cmds);
+}
+
 static char	**ft_parsing(char *prompt, t_data *data)
 {
 	char	**cmds;
 	char	*temp;
-	char	*str;
 	int		i;
 
 	if (ft_strnstr(prompt, "<<", ft_strlen(prompt)))
-	{
-		if (ft_strrchr(prompt, '|'))
-			str = ft_here_doc(prompt, true, data);
-		else
-			str = ft_here_doc(prompt, false, data);
-		cmds = ft_split(str, '|');
-		free (str);
-	}
+		cmds = ft_here_doc_capture(prompt, data);
 	else
 		cmds = ft_split(prompt, '|');
 	i = -1;

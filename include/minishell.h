@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/05 13:20:43 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:07:55 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 	t_cmd			*cmds;
 	int				n_of_cmds;
 	t_env			*env;
-	struct termios termios;
+	struct termios	termios;
 }	t_data;
 
 // Signals
@@ -60,8 +60,10 @@ int		ft_parsing_loop(t_data *data);
 t_env	*ft_parse_env(char **env);
 // Expands enviroment variables
 char	*ft_expand_variables(char *prompt, t_env *env);
-// Parses here doc
+// Heredoc
 char	*ft_here_doc(char *prompt, bool pipe, t_data *data);
+char	*ft_hd_process(struct termios termios);
+void	ft_hd_finish(char *temp, char *joined);
 // Parses redirections
 char	**ft_redirections(char **cmds);
 // Cleans commands

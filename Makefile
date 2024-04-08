@@ -26,7 +26,8 @@ WHITE = $(shell tput setaf 7)
 SRC_FILES = main cleanup signal \
 			parse/loop \
 			parse/expansion \
-			parse/prompt_heredoc \
+			parse/heredoc_main \
+			parse/heredoc_sub \
 			parse/redirections \
 			parse/setup_nodes \
 			# builtin/cd \
