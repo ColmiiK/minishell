@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 12:44:19 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:52:42 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	ft_parsing_loop(t_data *data)
 	}
 	if (prompt[0] != '\0')
 		add_history(prompt);
+	prompt = ft_handle_quotes(prompt);
 	while (ft_strnstr(prompt, "$", ft_strlen(prompt)))
 		prompt = ft_expand_variables(prompt, data->env);
 	cmds = ft_parsing(prompt, data);

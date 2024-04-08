@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/28 11:30:13 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:37:19 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,5 +540,20 @@ char				*ft_strtok(char *str, char *del);
  * @return The number of elements in the array.
  */
 int					ft_double_ptr_amount(char **ptr);
+
+/**
+ * @brief Inserts a string into another string at a specified position.
+ * 
+ * This function takes a string, a position, a string to insert, and a flag
+ * as input and inserts the string to insert into the string at the specified
+ * position.
+ * 
+ * @param str The string to insert into.
+ * @param pos The position at which to insert the string.
+ * @param insert The string to insert.
+ * @param del A flag indicating which strings to free.
+ * @return The modified string.
+*/
+char	*ft_strinsert(char *str, int pos, char *insert, int del);
 
 #endif

@@ -31,7 +31,7 @@ SRC_FILES = ft_isalpha ft_isdigit ft_isalnum ft_isascii ft_isprint \
 	ft_itoa ft_strmapi ft_striteri ft_putchar_fd ft_putstr_fd \
 	ft_putendl_fd ft_putnbr_fd get_next_line ft_printf print_characters \
 	print_hexes print_numbers ft_realloc ft_strtok ft_strjoin_ex \
-	ft_double_ptr_amount
+	ft_double_ptr_amount ft_strinsert
 	
 B_SRC_FILES = ft_lstnew_bonus ft_lstadd_front_bonus ft_lstsize_bonus ft_lstlast_bonus ft_lstadd_back_bonus \
 	ft_lstdelone_bonus ft_lstclear_bonus ft_lstiter_bonus ft_lstmap_bonus

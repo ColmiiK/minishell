@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 12:07:55 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:48:00 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <readline/readline.h>
 
 int	g_signal;
+
+# define SINGLE_QUOTE "\'"
+# define DOUBLE_QUOTE "\""
 
 typedef struct s_env
 {
@@ -64,6 +67,8 @@ char	*ft_expand_variables(char *prompt, t_env *env);
 char	*ft_here_doc(char *prompt, bool pipe, t_data *data);
 char	*ft_hd_process(struct termios termios);
 void	ft_hd_finish(char *temp, char *joined);
+// Handle quotes
+char	*ft_handle_quotes(char *prompt);
 // Parses redirections
 char	**ft_redirections(char **cmds);
 // Cleans commands
