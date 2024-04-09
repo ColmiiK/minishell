@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 13:20:21 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:50:09 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static int	ft_hd_after_first(char **joined, char **temp,
 	char **delimiter, t_data *data)
 {
-	while (ft_strncmp(*temp, *delimiter, ft_strlen(*temp)))
+	while (!(ft_strncmp(*temp, *delimiter, ft_strlen(*delimiter)) == 0
+			&& ft_strlen(*temp) == ft_strlen(*delimiter)))
 	{
 		*joined = ft_strjoin_ex(ft_strjoin_ex(*joined, *temp, 3), "\n", 1);
 		*temp = ft_hd_process(data->termios);

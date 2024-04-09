@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 13:48:00 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:05:08 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	**ft_redirections(char **cmds);
 // Cleans commands
 char	**ft_clean_cmds(char **cmds);
 // Setup nodes for the list
-t_cmd	*ft_setup_nodes(char **cmds, char **redirect);
+t_cmd	*ft_setup_nodes(char **cmds, char **redirect, t_env *env);
 
 // Free double pointer used in parsing
 void	ft_clean_double_ptr(char **ptr);

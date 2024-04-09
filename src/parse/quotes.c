@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:54:41 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 12:06:26 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:16:53 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*ft_single_quotes(char *str, char quotes)
 	if (flag == true)
 	{
 		free(result);
-		return (NULL);
+		return (ft_calloc(1, 1));
 	}
 	return (result);
 }
@@ -82,7 +82,7 @@ static char	*ft_double_quotes(char *str, char quotes)
 	if (flag == true)
 	{
 		free(result);
-		return (NULL);
+		return (ft_calloc(1, 1));
 	}
 	return (result);
 }
@@ -96,11 +96,10 @@ char	*ft_handle_quotes(char *prompt)
 		str = ft_single_quotes(str, '\'');
 	if (ft_strnstr(str, "\"", ft_strlen(str)))
 		str = ft_double_quotes(str, '\"');
-	if (!str)
+	if (!str[0])
 	{
-		free(prompt);
 		printf("Unclosed quotes not implemented\n");
-		return (ft_calloc(1, 1));
+		return (str);
 	}
 	return (str);
 }

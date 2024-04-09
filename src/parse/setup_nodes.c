@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 13:01:28 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:33:54 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,21 @@ static int	ft_determine_out_fd(char *redirect)
 	return (fd);
 }
 
-static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
+static char	*ft_argument_fix(char *str, t_env *env)
+{
+	while (ft_strnstr(str, "$", ft_strlen(str))
+		&& !ft_strnstr(str, "\\$", ft_strlen(str)))
+		str = ft_expand_variables(str, env);
+	str = ft_strtrim_ex(str, "\'\"\\", true);
+	if (ft_strnstr(str, "<\\<", 3))
+		str = ft_strdup_ex("<<", str);
+	if (ft_strnstr(str, ">\\>", 3))
+		str = ft_strdup_ex(">>", str);
+	return (str);
+}
+
+static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds,
+	char **redirect, t_env *env)
 {
 	int		i;
 	int		j;
@@ -64,11 +78,7 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
 		j = -1;
 		while (current->args[++j])
 		{
-			current->args[j] = ft_strtrim_ex(current->args[j], "\'\"\\", true);
-			if (ft_strnstr(current->args[j], "<\\<", 3))
-				current->args[j] = ft_strdup_ex("<<", current->args[j]);
-			if (ft_strnstr(current->args[j], ">\\>", 3))
-				current->args[j] = ft_strdup_ex(">>", current->args[j]);
+			current->args[j] = ft_argument_fix(current->args[j], env);
 		}
 		current->cmd = ft_strtrim_ex(current->cmd, "\'\"\\", true);
 		current = current->next;
@@ -76,7 +86,7 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
 	return (head);
 }
 
-t_cmd	*ft_setup_nodes(char **cmds, char **redirect)
+t_cmd	*ft_setup_nodes(char **cmds, char **redirect, t_env *env)
 {
 	int		i;
 	t_cmd	*current;
@@ -100,31 +110,6 @@ t_cmd	*ft_setup_nodes(char **cmds, char **redirect)
 			current->next = new_node;
 		current = new_node;
 	}
-	head = ft_fill_nodes(head, cmds, redirect);
-	return (head);
-}
-
-t_env	*ft_parse_env(char **env)
-{
-	int		i;
-	t_env	*head;
-	t_env	*current;
-	t_env	*new_node;
-
-	head = NULL;
-	i = -1;
-	while (env[++i])
-	{
-		new_node = malloc(sizeof(t_env));
-		if (!new_node)
-			return (NULL);
-		new_node->var = ft_strdup(env[i]);
-		new_node->next = NULL;
-		if (head == NULL)
-			head = new_node;
-		else
-			current->next = new_node;
-		current = new_node;
-	}
+	head = ft_fill_nodes(head, cmds, redirect, env);
 	return (head);
 }

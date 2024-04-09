@@ -31,6 +31,7 @@ SRC_FILES = main cleanup signal \
 			parse/heredoc_sub \
 			parse/redirections \
 			parse/setup_nodes \
+			parse/env \
 			# builtin/cd \
 			# builtin/echo \
 			# builtin/env \

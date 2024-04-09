@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 13:21:54 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:29:48 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,10 @@ int	ft_parsing_loop(t_data *data)
 	if (prompt[0] != '\0')
 		add_history(prompt);
 	prompt = ft_handle_quotes(prompt);
-	while (ft_strnstr(prompt, "$", ft_strlen(prompt))
-		&& !ft_strnstr(prompt, "\\$", ft_strlen(prompt)))
-		prompt = ft_expand_variables(prompt, data->env);
 	cmds = ft_parsing(prompt, data);
 	redirect = ft_redirections(cmds);
 	cmds = ft_clean_cmds(cmds);
-	data->cmds = ft_setup_nodes(cmds, redirect);
+	data->cmds = ft_setup_nodes(cmds, redirect, data->env);
 	data->n_of_cmds = ft_double_ptr_amount(cmds);
 	ft_clean_double_ptr(cmds);
 	ft_clean_double_ptr(redirect);
