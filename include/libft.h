@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 13:02:20 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 16:53:59 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -588,5 +588,18 @@ int					ft_double_ptr_amount(char **ptr);
  * @return The modified string.
 */
 char				*ft_strinsert(char *str, int pos, char *insert, int del);
+
+/**
+ * @brief Removes a character from a string.
+ * 
+ * This function takes a string and a character as input and removes all
+ * occurrences of the character from the string.
+ * 
+ * @param str The string to remove the character from.
+ * @param c The character to remove.
+ * @param del A flag indicating whether to free the original string.
+ * @return The modified string.
+*/
+char				*ft_pop(char *str, char c, bool del);
 
 #endif

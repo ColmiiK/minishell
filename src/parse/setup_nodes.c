@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 16:33:54 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:09:10 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds,
 		while (current->args[++j])
 		{
 			current->args[j] = ft_argument_fix(current->args[j], env);
+			current->args[j] = ft_pop(current->args[j], '\\', true);
 		}
 		current->cmd = ft_strtrim_ex(current->cmd, "\'\"\\", true);
 		current = current->next;
