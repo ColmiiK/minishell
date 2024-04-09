@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 16:24:17 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:21:54 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static char	**ft_here_doc_capture(char *prompt, t_data *data)
 		str = ft_here_doc(prompt, true, data);
 	else
 		str = ft_here_doc(prompt, false, data);
-	while (ft_strnstr(str, "$", ft_strlen(str)) && !ft_strnstr(str, "\\$", ft_strlen(str)))
+	while (ft_strnstr(str, "$", ft_strlen(str))
+		&& !ft_strnstr(str, "\\$", ft_strlen(str)))
 		str = ft_expand_variables(str, data->env);
 	cmds = ft_split(str, '|');
 	free (str);
@@ -66,7 +67,8 @@ int	ft_parsing_loop(t_data *data)
 	if (prompt[0] != '\0')
 		add_history(prompt);
 	prompt = ft_handle_quotes(prompt);
-	while (ft_strnstr(prompt, "$", ft_strlen(prompt)) && !ft_strnstr(prompt, "\\$", ft_strlen(prompt)))
+	while (ft_strnstr(prompt, "$", ft_strlen(prompt))
+		&& !ft_strnstr(prompt, "\\$", ft_strlen(prompt)))
 		prompt = ft_expand_variables(prompt, data->env);
 	cmds = ft_parsing(prompt, data);
 	redirect = ft_redirections(cmds);

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 16:30:48 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:02:20 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,16 @@ void				*ft_calloc(size_t n, size_t size);
 char				*ft_strdup(const char *s);
 
 /**
+ * @brief Duplicates a string from stack memory to heap memory,
+ * allocating as needed and returning a pointer to said heap memory,
+ * deleting the old string given
+ *
+ * @param s String to duplicate
+ * @param old String to delete
+ * @return char*
+ */
+char				*ft_strdup_ex(const char *s, char *old);
+/**
  * @brief Copies a set amount of characters from a string given
  * a starting position, duplicating and allocating it, returning
  * said subsection
@@ -324,7 +334,8 @@ char				*ft_strtrim(char const *s1, char const *set);
  * @param del If true, will free s1
  * @return char*
 */
-char	*ft_strtrim_ex(char *s1, char const *set, bool del);
+char				*ft_strtrim_ex(char *s1, char const *set, bool del);
+
 /**
 
  * @brief Separates a string into substrings when encountering a 
@@ -336,6 +347,17 @@ char	*ft_strtrim_ex(char *s1, char const *set, bool del);
  */
 char				**ft_split(char const *s, char c);
 
+/**
+ * @brief Separates a string into substrings when encountering a 
+ * given character, returning a 2D array of said substrings, not
+ * splitting when prev is before c
+ *
+ * @param s String to separate
+ * @param c Character that delimitates the strings
+ * @param prev Will not split when c is after this
+ * @return char**
+ */
+char				**ft_split_prev(char const *s, char c, char prev);
 /**
  * @brief Transforms an integer into a string, allocating and
  * returning said string
@@ -565,6 +587,6 @@ int					ft_double_ptr_amount(char **ptr);
  * @param del A flag indicating which strings to free.
  * @return The modified string.
 */
-char	*ft_strinsert(char *str, int pos, char *insert, int del);
+char				*ft_strinsert(char *str, int pos, char *insert, int del);
 
 #endif

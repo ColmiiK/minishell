@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strdup_ex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 11:31:28 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 12:28:33 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/04/09 12:28:42 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/04/09 12:28:49 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup_ex(const char *s, char *old)
 {
 	int		i;
 	char	*dest;
@@ -27,5 +27,6 @@ char	*ft_strdup(const char *s)
 		i++;
 	}
 	dest[i] = 0;
+	free(old);
 	return (dest);
 }

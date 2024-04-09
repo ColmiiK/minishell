@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 16:31:33 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:01:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,20 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds, char **redirect)
 	current = head;
 	while (current)
 	{
-		current->args = ft_split(cmds[++i], ' ');
+		current->args = ft_split_prev(cmds[++i], ' ', '\\');
 		current->cmd = ft_strdup(ft_strtok(cmds[i], " "));
 		current->redirect->in_fd = ft_determine_in_fd(redirect[i]);
 		current->redirect->out_fd = ft_determine_out_fd(redirect[i]);
 		j = -1;
 		while (current->args[++j])
-			current->args[j] = ft_strtrim_ex(current->args[j], "\'\"", true);
-		current->cmd = ft_strtrim_ex(current->cmd, "\'\"", true);
+		{
+			current->args[j] = ft_strtrim_ex(current->args[j], "\'\"\\", true);
+			if (ft_strnstr(current->args[j], "<\\<", 3))
+				current->args[j] = ft_strdup_ex("<<", current->args[j]);
+			if (ft_strnstr(current->args[j], ">\\>", 3))
+				current->args[j] = ft_strdup_ex(">>", current->args[j]);
+		}
+		current->cmd = ft_strtrim_ex(current->cmd, "\'\"\\", true);
 		current = current->next;
 	}
 	return (head);
