@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 16:05:08 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:33:04 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include <readline/readline.h>
 
 int	g_signal;
-
-# define SINGLE_QUOTE "\'"
-# define DOUBLE_QUOTE "\""
 
 typedef struct s_env
 {

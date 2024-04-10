@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 15:50:09 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:54:53 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,28 @@ static char	*ft_fix_prompt(char *prompt)
 	return (temp);
 }
 
+static char *ft_fix_hd_outfile(char *s1)
+{
+	char *str;
+	char *token;
+	char *temp;
+	int len;
+
+	str = ft_strdup(s1);
+	token = ft_strtok(str, " ");
+	temp = ft_strdup(token);
+	token = ft_strtok(NULL, " ");
+	temp = ft_strjoin_ex(temp, " ", 1);
+	temp = ft_strjoin_ex(temp, token, 1);
+	len = ft_strlen(temp);
+	s1 = ft_strjoin_ex(s1, " ", 1);
+	s1 = ft_strjoin_ex(s1, temp, 3);
+	free(str);
+	temp = ft_strdup(s1 + len);
+	free(s1);
+	return (temp);
+}
+
 char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 {
 	char	*str;
@@ -110,10 +132,14 @@ char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 	before = ft_strdup(prompt);
 	ft_here_doc_loop(ft_strnstr(prompt, "<<", ft_strlen(prompt)) + 3, data);
 	sub = ft_strnstr(before, ft_strtok(NULL, " "), ft_strlen(before));
-	if (pipe)
-		str = ft_here_doc_pipe(sub, str, data);
-	else
+	if (!pipe)
+	{
 		str = ft_strjoin(sub, " < .here_doc");
+		if (ft_strchr(str, '>'))
+			str = ft_fix_hd_outfile(str);
+	}
+	else if (pipe)
+		str = ft_here_doc_pipe(sub, str, data);
 	free(before);
 	free(prompt);
 	if (g_signal == SIGINT)
