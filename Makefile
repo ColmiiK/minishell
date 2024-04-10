@@ -29,6 +29,7 @@ SRC_FILES = main cleanup signal \
 			parse/expansion \
 			parse/heredoc_main \
 			parse/heredoc_sub \
+			parse/heredoc_utils \
 			parse/redirections \
 			parse/setup_nodes \
 			parse/env \

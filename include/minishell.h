@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 17:33:04 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:47:13 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ char	*ft_expand_variables(char *prompt, t_env *env);
 char	*ft_here_doc(char *prompt, bool pipe, t_data *data);
 char	*ft_hd_process(struct termios termios);
 void	ft_hd_finish(char *temp, char *joined);
+char	*ft_fix_hd_outfile(char *s1);
+char	*ft_fix_prompt(char *prompt);
 // Handle quotes
 char	*ft_handle_quotes(char *prompt);
 // Parses redirections
