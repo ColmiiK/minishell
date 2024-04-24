@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:45:02 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 16:59:39 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:36:38 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_pop(char *str, char c, bool del)
 	j = -1;
 	while (++i <= len)
 	{
-		if (str[i] != c)
+		if (str[i] != c || (i > 0 && str[i - 1] == '\\' && c != '\\'))
 			new_str[++j] = str[i];
 	}
 	new_str[j] = '\0';

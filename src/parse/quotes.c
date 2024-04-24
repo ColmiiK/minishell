@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:54:41 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 16:16:53 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:24:23 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*ft_single_quotes(char *str, char quotes)
 	flag = false;
 	while (result[++i])
 	{
-		if (result[i] == quotes)
+		if (result[i - 1] != '\\' && result[i] == quotes)
 			flag = !flag;
 		if (ft_check_metachars(result, i, flag, false) == true)
 			result = ft_strinsert(result, i++, "\\", 1);
@@ -74,7 +74,7 @@ static char	*ft_double_quotes(char *str, char quotes)
 	flag = false;
 	while (result[++i])
 	{
-		if (result[i] == quotes)
+		if (result[i - 1] != '\\' && result[i] == quotes)
 			flag = !flag;
 		if (ft_check_metachars(result, i, flag, true) == true)
 			result = ft_strinsert(result, i++, "\\", 1);

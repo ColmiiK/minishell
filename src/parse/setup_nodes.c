@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 17:09:10 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:38:14 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,18 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds,
 	{
 		current->args = ft_split_prev(cmds[++i], ' ', '\\');
 		current->cmd = ft_strdup(ft_strtok(cmds[i], " "));
+		current->cmd = ft_pop(current->cmd, '\"', true);
+		current->cmd = ft_pop(current->cmd, '\'', true);
 		current->redirect->in_fd = ft_determine_in_fd(redirect[i]);
 		current->redirect->out_fd = ft_determine_out_fd(redirect[i]);
 		j = -1;
 		while (current->args[++j])
 		{
 			current->args[j] = ft_argument_fix(current->args[j], env);
+			current->args[j] = ft_pop(current->args[j], '\"', true);
+			current->args[j] = ft_pop(current->args[j], '\'', true);
 			current->args[j] = ft_pop(current->args[j], '\\', true);
 		}
-		current->cmd = ft_strtrim_ex(current->cmd, "\'\"\\", true);
 		current = current->next;
 	}
 	return (head);
