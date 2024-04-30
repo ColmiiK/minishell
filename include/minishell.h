@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/10 13:47:13 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:11:30 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # include <termios.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <wait.h>
 
-int	g_signal;
+extern int	g_signal;
 
 typedef struct s_env
 {
