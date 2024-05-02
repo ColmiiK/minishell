@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/24 17:38:14 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:11:32 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ static char	*ft_argument_fix(char *str, t_env *env)
 	while (ft_strnstr(str, "$", ft_strlen(str))
 		&& !ft_strnstr(str, "\\$", ft_strlen(str)))
 		str = ft_expand_variables(str, env);
-	str = ft_strtrim_ex(str, "\'\"\\", true);
+	str = ft_pop(str, '\"', true);
+	str = ft_pop(str, '\'', true);
+	str = ft_pop(str, '\\', true);
 	if (ft_strnstr(str, "<\\<", 3))
 		str = ft_strdup_ex("<<", str);
 	if (ft_strnstr(str, ">\\>", 3))
@@ -73,18 +75,12 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds,
 	{
 		current->args = ft_split_prev(cmds[++i], ' ', '\\');
 		current->cmd = ft_strdup(ft_strtok(cmds[i], " "));
-		current->cmd = ft_pop(current->cmd, '\"', true);
-		current->cmd = ft_pop(current->cmd, '\'', true);
+		current->cmd = ft_argument_fix(current->cmd, env);
 		current->redirect->in_fd = ft_determine_in_fd(redirect[i]);
 		current->redirect->out_fd = ft_determine_out_fd(redirect[i]);
 		j = -1;
 		while (current->args[++j])
-		{
 			current->args[j] = ft_argument_fix(current->args[j], env);
-			current->args[j] = ft_pop(current->args[j], '\"', true);
-			current->args[j] = ft_pop(current->args[j], '\'', true);
-			current->args[j] = ft_pop(current->args[j], '\\', true);
-		}
 		current = current->next;
 	}
 	return (head);

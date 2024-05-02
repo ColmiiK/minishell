@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/10 11:17:15 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:26:06 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ int	ft_parsing_loop(t_data *data)
 		printf("\033[1Aminishell$ exit\n");
 		return (1);
 	}
-	if (prompt[0] != '\0')
-		add_history(prompt);
+	add_history(prompt);
 	prompt = ft_handle_quotes(prompt);
+	if (ft_all_same(prompt, ' ') || ft_all_same(prompt, '\t'))
+		prompt = ft_strdup_ex("", prompt);
 	cmds = ft_parsing(prompt, data);
 	redirect = ft_redirections(cmds);
 	cmds = ft_clean_cmds(cmds);

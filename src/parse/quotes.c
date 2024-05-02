@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:54:41 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/24 17:24:23 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:26:22 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	ft_check_metachars(char *result, int i, bool flag, bool double_quote)
 		if (flag && (result[i] == '\\' || result[i] == '|' || result[i] == '<'
 				|| result[i] == '>' || result[i] == ' ' || result[i] == '\t'
 				|| result[i] == '\n' || result[i] == '(' || result[i] == ')'
-				|| result[i] == ';' || result[i] == '&' ))
+				|| result[i] == ';' || result[i] == '&' || result[i] == '\''))
 			return (true);
 	}
 	else if (double_quote == false)
@@ -27,7 +27,8 @@ bool	ft_check_metachars(char *result, int i, bool flag, bool double_quote)
 		if (flag && (result[i] == '$' || result[i] == '\\' || result[i] == '|'
 				|| result[i] == '<' || result[i] == '>' || result[i] == ' '
 				|| result[i] == '\t' || result[i] == '\n' || result[i] == '('
-				|| result[i] == ')' || result[i] == ';' || result[i] == '&' ))
+				|| result[i] == ')' || result[i] == ';' || result[i] == '&'
+				|| result[i] == '\"'))
 			return (true);
 	}
 	return (false);
@@ -36,18 +37,17 @@ bool	ft_check_metachars(char *result, int i, bool flag, bool double_quote)
 static char	*ft_single_quotes(char *str, char quotes)
 {
 	bool	flag;
-	char	*temp;
 	char	*result;
 	int		i;
 
-	temp = str;
-	result = ft_strdup(str);
-	free(temp);
+	result = ft_strdup_ex(str, str);
 	i = -1;
 	flag = false;
 	while (result[++i])
 	{
-		if (result[i - 1] != '\\' && result[i] == quotes)
+		if (i == 0 && result[i] == quotes)
+			flag = !flag;
+		else if (i != 0 && result[i - 1] != '\\' && result[i] == quotes)
 			flag = !flag;
 		if (ft_check_metachars(result, i, flag, false) == true)
 			result = ft_strinsert(result, i++, "\\", 1);
@@ -63,18 +63,17 @@ static char	*ft_single_quotes(char *str, char quotes)
 static char	*ft_double_quotes(char *str, char quotes)
 {
 	bool	flag;
-	char	*temp;
 	char	*result;
 	int		i;
 
-	temp = str;
-	result = ft_strdup(str);
-	free(temp);
+	result = ft_strdup_ex(str, str);
 	i = -1;
 	flag = false;
 	while (result[++i])
 	{
-		if (result[i - 1] != '\\' && result[i] == quotes)
+		if (i == 0 && result[i] == quotes)
+			flag = !flag;
+		else if (i != 0 && result[i - 1] != '\\' && result[i] == quotes)
 			flag = !flag;
 		if (ft_check_metachars(result, i, flag, true) == true)
 			result = ft_strinsert(result, i++, "\\", 1);
@@ -91,6 +90,8 @@ char	*ft_handle_quotes(char *prompt)
 {
 	char	*str;
 
+	if (!*prompt)
+		return (prompt);
 	str = prompt;
 	if (ft_strnstr(str, "\'", ft_strlen(str)))
 		str = ft_single_quotes(str, '\'');

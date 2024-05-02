@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 16:53:59 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:56:51 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -601,5 +601,16 @@ char				*ft_strinsert(char *str, int pos, char *insert, int del);
  * @return The modified string.
 */
 char				*ft_pop(char *str, char c, bool del);
+/**
+ * @brief Checks if all character of a string are equal to a char.
+ * 
+ * This function takes a string and a character as input and checks
+ * if all characters of the string are equal to said character.
+ * 
+ * @param str The string to check.
+ * @param c The character to compare to.
+ * @return True if all characters are equal, false otherwise.
+*/
+bool				ft_all_same(char *str, char c);
 
 #endif
