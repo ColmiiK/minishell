@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:40:17 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:00:39 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*adjust_location(char *arg)
 	return (settled);
 }
 
-int	ft_rel_cd(char **arg)
+int	ft_rel_cd(char *arg)
 {
 	char	*location;
 	char	*dest;
@@ -49,44 +49,50 @@ int	ft_rel_cd(char **arg)
 	int		total_size;
 
 	location = init_location();
-	adjust = adjust_location(arg[1]);
+	adjust = adjust_location(arg);
 	if (location != NULL)
 	{
-		total_size = ft_strlen(arg[1]) + ft_strlen(location);
+		total_size = ft_strlen(arg) + ft_strlen(location);
 		dest = (char *)malloc(total_size * sizeof(char *));
 		if (!dest)
 			return (-1);
 		dest = ft_strjoin(location, adjust);
 		if (chdir(dest) != 0)
-			return (printf("error_manag\n"), -1);
+			return (printf("folder does not exist\n"), -1);
 		return (0);
 	}
 	else
 		return (-1);
 }
 
-int	ft_abs_cd(char **arg)
+int	ft_abs_cd(char *arg)
 {
-	if (chdir(arg[1]) != 0)
-		return (printf("error_manag\n"), -1);
+	if (chdir(arg) != 0)
+		return (printf("folder does not exist\n"), -1);
 	return (0);
 }
 
 int	ft_cd(char **arg, t_env **node)
 {
 	char	*location;
+	char	*path;
 	int		size;
 
-	/* if (arg[1] != 0)
-		arg[1] = $HOME; */ //(Mirar en el expande como mandar la dirección de home)
 	location = init_location();
+	if (arg[1] == NULL)
+	{
+		path = empty_cd(node);
+		ft_abs_cd(path);
+		update_location(node, init_location(), location);
+		return (0);
+	}
 	if (location != NULL)
 	{
 		size = ft_strlen(location);
 		if (!ft_strncmp(location, arg[1], size))
-			ft_abs_cd(arg);
+			ft_abs_cd(arg[1]);
 		else
-			ft_rel_cd(arg);
+			ft_rel_cd(arg[1]);
 		update_location(node, init_location(), location);
 		return (0);
 	}
