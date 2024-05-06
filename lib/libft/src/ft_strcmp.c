@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 11:35:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 16:29:14 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/27 10:31:33 by alvaquer          #+#    #+#             */
+/*   Updated: 2024/05/06 15:23:43 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	*ft_strtrim(char const *s1, char const *set)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int		i;
-	int		start;
-	int		end;
-	char	*trim;
+	int	i;
+	int	res;
 
 	i = 0;
-	start = 0;
-	end = ft_strlen(s1);
-	while (s1[start] && ft_strchr(set, s1[start]) != 0)
-		start++;
-	while (end > start && ft_strchr(set, s1[end - 1]) != 0)
-		end--;
-	trim = (char *)malloc(sizeof(char) * (end - start + 1));
-	if (!trim)
-		return (0);
-	while (start < end)
+	res = 0;
+	while ((s1[i] == s2[i]) && (s1[i] != '\0' && s2[i] != '\0'))
 	{
-		trim[i] = s1[start];
 		i++;
-		start++;
 	}
-	trim[i] = 0;
-	return (trim);
+	res = s1[i] - s2[i];
+	return (res);
 }
+
+/* int	main(void)
+{
+	char primera[] = "hole";
+	char segunda[] = "hola";
+	printf("%d", ft_strcmp(primera, segunda));
+	return (0);
+} 
+ */

@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 11:31:28 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 12:28:33 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/04/16 12:07:50 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <minishell.h>
 
-char	*ft_strdup(const char *s)
+int	update_location(t_env **node, char *new, char *old)
 {
-	int		i;
-	char	*dest;
+	t_env	*tmp;
 
-	i = 0;
-	dest = (char *)malloc(sizeof(*s) * (ft_strlen(s) + 1));
-	if (!dest)
-		return (0);
-	while (s[i])
+	tmp = *node;
+	while (*node)
 	{
-		dest[i] = s[i];
-		i++;
+		if (!ft_strncmp((*node)->name, "PWD", 4))
+			(*node)->content = new;
+		if (!ft_strncmp((*node)->name, "OLDPWD", 7))
+			(*node)->content = old;
+		*node = (*node)->next;
 	}
-	dest[i] = 0;
-	return (dest);
+	*node = tmp;
+	return (0);
 }

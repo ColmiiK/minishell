@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/03/28 11:30:13 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:23:50 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,16 @@ void				*ft_calloc(size_t n, size_t size);
 char				*ft_strdup(const char *s);
 
 /**
+ * @brief Duplicates a string from stack memory to heap memory,
+ * allocating as needed and returning a pointer to said heap memory,
+ * deleting the old string given
+ *
+ * @param s String to duplicate
+ * @param old String to delete
+ * @return char*
+ */
+char				*ft_strdup_ex(const char *s, char *old);
+/**
  * @brief Copies a set amount of characters from a string given
  * a starting position, duplicating and allocating it, returning
  * said subsection
@@ -315,6 +325,18 @@ char				*ft_strjoin_ex(char *s1, char *s2, int del);
 char				*ft_strtrim(char const *s1, char const *set);
 
 /**
+ * @brief Removes selected characters from the beginning and end of a string,
+ * returning the new dynamically allocated trimmed string, possibly
+ * freeing s1
+ *
+ * @param s1 String to trim
+ * @param set Characters to remove
+ * @param del If true, will free s1
+ * @return char*
+*/
+char				*ft_strtrim_ex(char *s1, char const *set, bool del);
+
+/**
 
  * @brief Separates a string into substrings when encountering a 
  * given character, returning a 2D array of said substrings
@@ -325,6 +347,17 @@ char				*ft_strtrim(char const *s1, char const *set);
  */
 char				**ft_split(char const *s, char c);
 
+/**
+ * @brief Separates a string into substrings when encountering a 
+ * given character, returning a 2D array of said substrings, not
+ * splitting when prev is before c
+ *
+ * @param s String to separate
+ * @param c Character that delimitates the strings
+ * @param prev Will not split when c is after this
+ * @return char**
+ */
+char				**ft_split_prev(char const *s, char c, char prev);
 /**
  * @brief Transforms an integer into a string, allocating and
  * returning said string
@@ -541,4 +574,43 @@ char				*ft_strtok(char *str, char *del);
  */
 int					ft_double_ptr_amount(char **ptr);
 
+/**
+ * @brief Inserts a string into another string at a specified position.
+ * 
+ * This function takes a string, a position, a string to insert, and a flag
+ * as input and inserts the string to insert into the string at the specified
+ * position.
+ * 
+ * @param str The string to insert into.
+ * @param pos The position at which to insert the string.
+ * @param insert The string to insert.
+ * @param del A flag indicating which strings to free.
+ * @return The modified string.
+*/
+char				*ft_strinsert(char *str, int pos, char *insert, int del);
+
+/**
+ * @brief Removes a character from a string.
+ * 
+ * This function takes a string and a character as input and removes all
+ * occurrences of the character from the string.
+ * 
+ * @param str The string to remove the character from.
+ * @param c The character to remove.
+ * @param del A flag indicating whether to free the original string.
+ * @return The modified string.
+*/
+char				*ft_pop(char *str, char c, bool del);
+/**
+ * @brief Checks if all character of a string are equal to a char.
+ * 
+ * This function takes a string and a character as input and checks
+ * if all characters of the string are equal to said character.
+ * 
+ * @param str The string to check.
+ * @param c The character to compare to.
+ * @return True if all characters are equal, false otherwise.
+*/
+bool				ft_all_same(char *str, char c);
+int	ft_strcmp(char *s1, char *s2);
 #endif

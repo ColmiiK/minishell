@@ -25,19 +25,28 @@ WHITE = $(shell tput setaf 7)
 	
 SRC_FILES = main cleanup signal \
 			parse/loop \
+			parse/quotes \
 			parse/expansion \
 			parse/heredoc_main \
 			parse/heredoc_sub \
+			parse/heredoc_utils \
 			parse/redirections \
 			parse/setup_nodes \
-			# builtin/cd \
-			# builtin/echo \
-			# builtin/env \
-			# builtin/export \
-			# builtin/pwd \
-			# builtin/unset \
-			# builtin/get_cmd \
-			# builtin/utils \
+			parse/env \
+			builtin/built_ins \
+			builtin/echo \
+			builtin/cd \
+			builtin/cd_utils \
+			builtin/pwd \
+			builtin/export \
+			builtin/export_utils \
+			builtin/unset \
+			builtin/env \
+			builtin/exit \
+			builtin/ps_functions \
+			builtin/ft_strjoin_mod \
+			builtin/preset_env_utils \
+			builtin/preset_env \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -49,7 +58,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ)
 			@make -C $(LIBFT)
-			@$(CC) -lreadline -I./$(INCLUDE) $(CFLAGS) $(OBJ) -L$(LIBFT) -lft -o $(NAME)
+			@$(CC) -I./$(INCLUDE) $(CFLAGS) $(OBJ) -L$(LIBFT) -lft -o $(NAME) -lreadline 
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)

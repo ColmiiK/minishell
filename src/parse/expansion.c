@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:58:01 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 12:45:08 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:32:25 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char	*ft_expand_variables(char *prompt, t_env *env)
 	if (var)
 	{
 		str = ft_strjoin_ex(str, var, 1);
-		while ((prompt[i] != ' ' && prompt[i] != '\n') && prompt[i])
+		while ((prompt[i] != ' ' && prompt[i] != '\n'
+				&& prompt[i] != '\"' && prompt[i] != '\'') && prompt[i])
 			i++;
 		str = ft_strjoin_ex(str, prompt + i, 1);
 		free(prompt);

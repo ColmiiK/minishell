@@ -1,86 +1,109 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/16 12:43:24 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/06 15:23:57 by alvega-g         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-
-void			env_add(const char *value, t_env *env)
+void	free_node(t_env **node)
 {
-	t_env	*new;
-	t_env	*tmp;
-
-	if (env && env->var == NULL)
-	{
-		env->var = ft_strdup(value);
-		return;
-	}
-	if (!(new = malloc(sizeof(t_env))))
-		return;
-	new->var = ft_strdup(value);
-	while (env && env->next && env->next->next)
-		env = env->next;
-	tmp = env->next;
-	env->next = new;
-	new->next = tmp;
-	return;
+	free((*node)->name);
+	if ((*node)->content)
+		free((*node)->content);
+	free(*node);
 }
 
-char		*get_env_name(char *dest, const char *src)
+t_env	*create_single_cpy(char *name, char *content)
 {
+	t_env	*node;
+
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	node->name = ft_strdup(name);
+	if (content != NULL)
+		node->content = ft_strdup(content);
+	node->next = NULL;
+	return (node);
+}
+
+t_env	*ft_cpy_list(t_env **env)
+{
+	t_env	*tmp;
+	t_env	*cpy_head;
+	t_env	*cpy_tail;
+
+	tmp = *env;
+	cpy_head = create_single_cpy((*env)->name, (*env)->content);
+	*env = (*env)->next;
+	while (*env)
+	{
+		cpy_tail = create_single_cpy((*env)->name, (*env)->content);
+		add_back(&cpy_head, cpy_tail);
+		*env = (*env)->next;
+	}
+	*env = tmp;
+	return (cpy_head);
+}
+
+void	ft_order_alpha(t_env **env, int size)
+{
+	t_env	*node;
+	t_env	*tmp;
 	int		i;
 
-	i = 0;
-	while (src[i] && src[i] != '=' && ft_strlen(src) < BUFF_SIZE)
+	tmp = ft_cpy_list(env);
+	while (tmp->next)
 	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-int			is_in_env(t_env *env, char *args)
-{
-	char	var_name[BUFF_SIZE];
-	char	env_name[BUFF_SIZE];
-
-	get_env_name(var_name, args);
-	while (env && env->next)
-	{
-		get_env_name(env_name, env->var);
-		if (ft_strcmp(var_name, env_name) == 0)
+		i = 0;
+		while (i < size)
 		{
-			ft_memdel(env->var);
-			env->var = ft_strdup(args);
-			return (1);
+			if (ft_strcmp(tmp->name, tmp->next->name) < 0)
+				swap(&tmp);
+			else
+			{
+				node = pop_first(&tmp);
+				add_back(&tmp, node);
+				i++;
+			}
 		}
-		env = env->next;
+		size--;
+		smart_print(tmp);
+		node = pop_first(&tmp);
+		free_node(&node);
 	}
-	return (1);
+	smart_print(tmp);
 }
 
-int			ft_export(char **args, t_env *env, t_env *secret)
+int	ft_export(t_env **env, char *argv)
 {
-	int		new_env;
-	int		error_ret;
+	char	*name;
+	char	*content;
+	int		size;
 
-	new_env = 0;
-	if (!args[1])
+	if (argv == NULL)
 	{
-		print_sorted_env(secret);
-		return (1);
+		size = list_length(env);
+		ft_order_alpha(env, size);
 	}
 	else
 	{
-		error_ret = is_valid_env(args[1]);
-		if (args[1][0] == '=')
-			error_ret = -3;
-		if (error_ret <= 0)
-			return (print_error(error_ret, args[1]));
-		new_env = error_ret == 2 ? 1 : is_in_env(env, args[1]);
-		if (new_env == 0)
+		if (check_correct_input(argv) == 0)
 		{
-			if (error_ret == 1)
-				env_add(args[1], env);
-			env_add(args[1], secret);
+			name = get_name_env(argv);
+			content = get_content_env(argv);
+			if (check_existent_var(env, name, content) != 1)
+				create_new_var(env, name, content);
 		}
+		else
+			return (1);
 	}
-	return (1);
+	return (0);
 }

@@ -1,19 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pwd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/16 15:28:49 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
-#include <limits.h>
-#include <unistd.h>
 
-//PATH_MAX comes from limits.h
-//getcwd comes from unistd.h
-
-
-void		ft_pwd(t_redirect address)
+int	ft_pwd(void)
 {
-	char	cwd[PATH_MAX];
-
-	if (getcwd(cwd, PATH_MAX))
-	{
-		ft_putendl_fd(cwd, address);
-		return;
-	}
-	return;
+	printf("%s\n", init_location());
+	return (0);
 }

@@ -6,11 +6,13 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 11:10:55 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:40:11 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	g_signal;
 
 void	ft_debug(t_data data)
 {
@@ -39,20 +41,19 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, ft_handle_sigquit);
 	tcgetattr(STDIN_FILENO, &data.termios);
-	data.env = ft_parse_env(env);
+	data.env = ft_getenv(env);
 	
 	while (true)
 	{
 		if (ft_parsing_loop(&data))
 			break ;
-
-
 		ft_debug(data);
+		built_in_selector(&data.env, data.cmds->args);
 
 
 		ft_annihilation(&data);
-		// break ;
 		g_signal = 0;
+		// break;
 	}
 	rl_clear_history();
 	ft_cleanup_env(data.env);

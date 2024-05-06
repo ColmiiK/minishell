@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 11:31:28 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 12:28:33 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/04/10 17:26:49 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <minishell.h>
 
-char	*ft_strdup(const char *s)
+int	ft_exit(char **arg)
 {
-	int		i;
-	char	*dest;
+	(void)arg;
 
-	i = 0;
-	dest = (char *)malloc(sizeof(*s) * (ft_strlen(s) + 1));
-	if (!dest)
-		return (0);
-	while (s[i])
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = 0;
-	return (dest);
+	printf("me cierro\n");
+	exit(-1);
 }

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:59:36 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/03 14:00:00 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:29:39 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ void	ft_handle_sigint(int signum)
 {
 	(void)signum;
 	g_signal = SIGINT;
+	// rl_on_new_line();
+	// rl_redisplay()
+	// printf("   \n");
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

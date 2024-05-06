@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_pop.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 11:35:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 16:29:14 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/04/09 16:45:02 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/04/24 17:36:38 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_pop(char *str, char c, bool del)
 {
 	int		i;
-	int		start;
-	int		end;
-	char	*trim;
+	int		j;
+	int		len;
+	char	*new_str;
 
-	i = 0;
-	start = 0;
-	end = ft_strlen(s1);
-	while (s1[start] && ft_strchr(set, s1[start]) != 0)
-		start++;
-	while (end > start && ft_strchr(set, s1[end - 1]) != 0)
-		end--;
-	trim = (char *)malloc(sizeof(char) * (end - start + 1));
-	if (!trim)
-		return (0);
-	while (start < end)
+	len = ft_strlen(str);
+	new_str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!new_str)
+		return (NULL);
+	i = -1;
+	j = -1;
+	while (++i <= len)
 	{
-		trim[i] = s1[start];
-		i++;
-		start++;
+		if (str[i] != c || (i > 0 && str[i - 1] == '\\' && c != '\\'))
+			new_str[++j] = str[i];
 	}
-	trim[i] = 0;
-	return (trim);
+	new_str[j] = '\0';
+	if (del == true)
+		free(str);
+	return (new_str);
 }
