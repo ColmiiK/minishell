@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/06 15:40:11 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:17:56 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ int	main(int ac, char **av, char **env)
 	{
 		if (ft_parsing_loop(&data))
 			break ;
-		ft_debug(data);
+		// ft_debug(data);
 		built_in_selector(&data.env, data.cmds->args);
-
+		ft_find_path(&data);
+		ft_executor(&data);
 
 		ft_annihilation(&data);
 		g_signal = 0;

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/06 15:29:53 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:53:42 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_data
 	int				n_of_cmds;
 	t_env			*env;
 	struct termios	termios;
+	int				exit_status;
+	
 }	t_data;
 
 // typedef enum e_tokens
@@ -159,6 +161,8 @@ void	swap(t_env **env);
 char	*ft_strjoin_mod(char *s1, char *s2);
 
 
+
+
 // Signals
 void	ft_handle_sigint(int signum);
 void	ft_handle_sigquit(int signum);
@@ -193,5 +197,12 @@ void	ft_annihilation(t_data *data);
 void	ft_cleanup_env(t_env *env);
 // Write given error message and return error (1)
 int		ft_perror(char *str);
+
+
+// EXECUTION
+int ft_executor(t_data *data);
+int ft_find_path(t_data *data);
+
+
 
 #endif
