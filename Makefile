@@ -33,14 +33,20 @@ SRC_FILES = main cleanup signal \
 			parse/redirections \
 			parse/setup_nodes \
 			parse/env \
-			# builtin/cd \
-			# builtin/echo \
-			# builtin/env \
-			# builtin/export \
-			# builtin/pwd \
-			# builtin/unset \
-			# builtin/get_cmd \
-			# builtin/utils \
+			builtin/built_ins \
+			builtin/echo \
+			builtin/cd \
+			builtin/cd_utils \
+			builtin/pwd \
+			builtin/export \
+			builtin/export_utils \
+			builtin/unset \
+			builtin/env \
+			builtin/exit \
+			builtin/ps_functions \
+			builtin/ft_strjoin_mod \
+			builtin/preset_env_utils \
+			builtin/preset_env \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

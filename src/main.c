@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/02 12:12:01 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:40:11 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,14 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, ft_handle_sigquit);
 	tcgetattr(STDIN_FILENO, &data.termios);
-	data.env = ft_parse_env(env);
+	data.env = ft_getenv(env);
 	
 	while (true)
 	{
 		if (ft_parsing_loop(&data))
 			break ;
-
-
 		ft_debug(data);
+		built_in_selector(&data.env, data.cmds->args);
 
 
 		ft_annihilation(&data);

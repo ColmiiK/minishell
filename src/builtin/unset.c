@@ -1,52 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/16 15:46:40 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/06 15:48:55 by alvega-g         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-static size_t	env_size(char *env)
+int		ft_unset(t_env **env, char *str)
 {
-	size_t		i;
-
-	i = 0;
-	while (env[i] && env[i] != '=')
-		i++;
-	return (i);
-}
-
-static void		free_node(t_mini *mini, t_env *env)
-{
-	if (mini->env == env && env->next == NULL)
-	{
-		ft_memdel(mini->env->value);
-		mini->env->value = NULL;
-		mini->env->next = NULL;
-		return ;
-	}
-	ft_memdel(env->value);
-	ft_memdel(env);
-}
-
-int				ft_unset(char **args, t_env *env, )
-{
-	t_env	*env;
 	t_env	*tmp;
 
-	env = mini->env;
-	if (!(a[1]))
-		return (1);
-	if (ft_strncmp(args[1], env->value, env_size(env->value)) == 0)
+	tmp = *env;
+	while (*env)
 	{
-		mini->env = (env->next) ? env->next : mini->env;
-		free_node(mini, env);
-		return (1);
-	}
-	while (env && env->next)
-	{
-		if (ft_strncmp(a[1], env->next->value, env_size(env->next->value)) == 0)
+		if (!ft_strncmp((*env)->next->name, str, ft_strlen((*env)->next->name)))
 		{
-			tmp = env->next->next;
-			free_node(mini, env->next);
-			env->next = tmp;
-			return (1);
+			free((*env)->next->name);
+			if ((*env)->next->content)
+				free((*env)->next->content);
+			(*env)->next = (*env)->next->next;
+			free((*env)->next);
+			break ;
 		}
-		env = env->next;
+		*env = (*env)->next;
 	}
-	return (1);
+	*env = tmp;
+	return (0);
 }

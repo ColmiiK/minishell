@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 12:15:58 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
+/*   Created: 2023/09/27 10:31:33 by alvaquer          #+#    #+#             */
+/*   Updated: 2024/05/06 15:23:43 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <libft.h>
 
-// Empieza en el 1 porque la posicion 0 deberia contener el comando echo
-int	ft_echo(char **arg)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
+	int	res;
 
-	i = 1;
-	if (!arg[1])
-		return (ft_printf("\n"), 0);
-	if (ft_strncmp(arg[1], "-n", 3) == 0)
-		i = 2;
-	while (arg[i] != NULL)
+	i = 0;
+	res = 0;
+	while ((s1[i] == s2[i]) && (s1[i] != '\0' && s2[i] != '\0'))
 	{
-		ft_printf("%s", arg[i]);
-		if (arg[i + 1])
-			ft_printf(" ");
 		i++;
 	}
-	if (ft_strncmp(arg[1], "-n", 3) != 0)
-		ft_printf("\n");
-	return (0);
+	res = s1[i] - s2[i];
+	return (res);
 }
+
+/* int	main(void)
+{
+	char primera[] = "hole";
+	char segunda[] = "hola";
+	printf("%d", ft_strcmp(primera, segunda));
+	return (0);
+} 
+ */

@@ -1,43 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_strjoin_mod.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/10 17:51:20 by albagar4          #+#    #+#             */
+/*   Created: 2024/04/24 15:52:44 by albagar4          #+#    #+#             */
 /*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_list(t_env **link_list)
+char	*ft_strjoin_mod(char *s1, char *s2)
 {
-	t_env	*tmp;
+	char	*s3;
+	size_t	i;
+	size_t	j;
 
-	while (*link_list != NULL)
+	i = 0;
+	j = 0;
+	s3 = (char *)malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (s3 == NULL)
+		return (NULL);
+	while (s1[i] != '\0')
 	{
-		tmp = *link_list;
-		*link_list = (*link_list)->next;
-		free(tmp->name);
-		if (tmp->content)
-			free(tmp->content);
-		free(tmp);
+		s3[i] = s1[i];
+		i++;
 	}
-}
-
-int	ft_env(t_env **link_list)
-{
-	t_env	*tmp;
-
-	tmp = *link_list;
-	while (*link_list)
+	while (s2[j] != '\0')
 	{
-		if ((*link_list)->content)
-			printf("%s=%s\n", (*link_list)->name, (*link_list)->content);
-		*link_list = (*link_list)->next;
+		s3[i] = s2[j];
+		i++;
+		j++;
 	}
-	*link_list = tmp;
-	return (0);
+	s3[i] = '\0';
+	free(s1);
+	free(s2);
+	return (s3);
 }

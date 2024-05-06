@@ -1,87 +1,95 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 17:40:17 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
-#include <stdlib.h>
 
-static char		*get_env_path(t_env *env, const char *var, size_t len)
+char	*init_location(void)
 {
-	char	*oldpwd;
-	int		i;
-	int		j;
-	int		s_alloc;
+	char	*location;
 
-	while (env && env->next != NULL)
-	{
-		if (ft_strncmp(env->var, var, len) == 0)
-		{
-			s_alloc = ft_strlen(env->var) - len;
-			if (!(oldpwd = malloc(sizeof(char) * s_alloc + 1)))
-				return (NULL);
-			i = 0;
-			j = 0;
-			while (env->var[i++])
-			{
-				if (i > (int)len)
-					oldpwd[j++] = env->var[i];
-			}
-			oldpwd[j] = '\0';
-			return (oldpwd);
-		}
-		env = env->next;
-	}
-	return (NULL);
+	location = (char *)malloc(_PC_PATH_MAX * sizeof(char *));
+	if (!location)
+		return (NULL);
+	location = getcwd(location, sizeof(location));
+	location = getcwd(location, sizeof(location));
+	return (location);
 }
 
-static int		update_oldpwd(t_env *env)
+char	*adjust_location(char *arg)
 {
-	char	cwd[PATH_MAX];
-	char	*oldpwd;
+	char	*settled;
+	char	*slash;
 
-	if (getcwd(cwd, PATH_MAX) == NULL)
+	slash = (char *)malloc(2 * sizeof(char *));
+	if (!slash)
+		return (NULL);
+	slash[0] = 47;
+	slash[1] = '\0';
+	settled = (char *)malloc((ft_strlen(arg) + 1) * sizeof(char *));
+	if (!settled)
+		return (NULL);
+	settled = ft_strjoin(slash, arg);
+	return (settled);
+}
+
+int	ft_rel_cd(char **arg)
+{
+	char	*location;
+	char	*dest;
+	char	*adjust;
+	int		total_size;
+
+	location = init_location();
+	adjust = adjust_location(arg[1]);
+	if (location != NULL)
+	{
+		total_size = ft_strlen(arg[1]) + ft_strlen(location);
+		dest = (char *)malloc(total_size * sizeof(char *));
+		if (!dest)
+			return (-1);
+		dest = ft_strjoin(location, adjust);
+		if (chdir(dest) != 0)
+			return (printf("error_manag\n"), -1);
 		return (0);
-	if (!(oldpwd = ft_strjoin("OLDPWD=", cwd)))
-		return (0);
-	if (is_in_env(env, oldpwd) == 0)
-		env_add(oldpwd, env);
-	ft_memdel(oldpwd);
-	return (1);
-}
-
-static int		go_to_path(int option, t_env *env)
-{
-	int		ret;
-	char	*env_path;
-
-	env_path = NULL;
-	if (option == 0)
-	{
-		update_oldpwd(env);
-		env_path = get_env_path(env, "HOME", 4);
-		if (!env_path)
-			return (0);
 	}
-	else if (option == 1)
-	{
-		env_path = get_env_path(env, "OLDPWD", 6);
-		if (!env_path)
-			return (0);
-		update_oldpwd(env);
-	}
-	ret = chdir(env_path);
-	ft_memdel(env_path);
-	return (ret);
-}
-
-int				ft_cd(t_cmd *data, t_env *env, t_redirect *address)
-{
-	int		cd_ret;
-
-	if (!data->args[1])
-		return (go_to_path(address->in_fd, env));
 	else
+		return (-1);
+}
+
+int	ft_abs_cd(char **arg)
+{
+	if (chdir(arg[1]) != 0)
+		return (printf("error_manag\n"), -1);
+	return (0);
+}
+
+int	ft_cd(char **arg, t_env **node)
+{
+	char	*location;
+	int		size;
+
+	/* if (arg[1] != 0)
+		arg[1] = $HOME; */ //(Mirar en el expande como mandar la dirección de home)
+	location = init_location();
+	if (location != NULL)
 	{
-		update_oldpwd(env);
-		cd_ret = chdir(data->args[1]);
-		if (cd_ret < 0)
-			cd_ret *= -1;
+		size = ft_strlen(location);
+		if (!ft_strncmp(location, arg[1], size))
+			ft_abs_cd(arg);
+		else
+			ft_rel_cd(arg);
+		update_location(node, init_location(), location);
+		return (0);
 	}
-	return (cd_ret);
+	else
+		return (-1);
 }
