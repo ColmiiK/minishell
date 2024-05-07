@@ -60,13 +60,13 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ)
 			@make -C $(LIBFT)
-			@$(CC) -I./$(INCLUDE) $(CFLAGS) $(OBJ) -L$(LIBFT) -lft -o $(NAME) -lreadline
+			@$(CC) -I./$(INCLUDE) $(CFLAGS) $(OBJ) -L$(LIBFT) -lft -o $(NAME) -lreadline -L/Users/albagar4/.brew/opt/readline/lib 
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 			@mkdir -p $(dir $@)
 			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-			@$(CC) -I./$(INCLUDE) $(CFLAGS) -c $< -o $@
+			@$(CC) -I./$(INCLUDE) -I/Users/albagar4/.brew/opt/readline/include $(CFLAGS) -c $< -o $@ 
 
 $(OBJF):
 			@mkdir -p $(OBJ_DIR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 11:35:26 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:58:23 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,12 @@ int		ft_echo(char **arg);
 //cd
 char	*init_location(void);
 char	*adjust_location(char *arg);
-int		ft_rel_cd(char **arg);
-int		ft_abs_cd(char **arg);
+int		ft_rel_cd(char *arg);
+int		ft_abs_cd(char *arg);
 int		ft_cd(char **arg, t_env **node);
 //cd_utils
+char	*empty_cd(t_env **env);
+void	ft_create_pwd(t_env **env, char *str);
 int		update_location(t_env **node, char *new, char *old);
 //exit
 int		ft_exit(char **arg);
