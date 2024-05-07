@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/06 18:53:42 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/07 11:35:26 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,8 @@ int		ft_perror(char *str);
 
 
 // EXECUTION
-int ft_executor(t_data *data);
-int ft_find_path(t_data *data);
+void	ft_execute(t_data *data);
+int		ft_find_path(t_data data);
 
 
 
