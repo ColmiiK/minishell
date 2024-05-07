@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 13:39:34 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:54:22 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	ft_determine_out_fd(char *redirect)
 	redirect++;
 	if (ft_isdigit(*redirect))
 		fd = ft_atoi(redirect);
-	else if (ft_strnstr(redirect, "(A)", ft_strlen(redirect)))
+	else if (ft_strnstr(redirect - 4, "(A)", ft_strlen(redirect)))
 		fd = open(redirect, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		fd = open(redirect, O_WRONLY | O_CREAT | O_TRUNC, 0644);

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 13:55:27 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:54:26 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ int	ft_parsing_loop(t_data *data)
 	char	**cmds;
 	char	**redirect;
 
-	prompt = ft_strdup("ls | cat -e");
-	// prompt = readline("minishell$ ");
+	prompt = readline("minishell$ ");
 	if (!prompt)
 	{
 		printf("\033[1Aminishell$ exit\n");

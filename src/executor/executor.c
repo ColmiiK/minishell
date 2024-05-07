@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 13:19:07 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:14:18 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int ft_fork(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 		exit(1);
 	}
 	waitpid(pid, &status, 0);
-	return (0);
+	return (status);
 }
 
 void	ft_execute(t_data *data)
@@ -70,15 +70,16 @@ void	ft_execute(t_data *data)
 	int in_fd;
 	int fd[2];
 
-	in_fd = 0;
+	in_fd = data->cmds->redirect->in_fd;
 	while (data->cmds->next)
 	{
 		pipe(fd);
-		ft_fork(data->cmds, data->env, in_fd, fd[1]);
+		data->exit_status = ft_fork(data->cmds, data->env, in_fd, fd[1]);
 		close(fd[1]);
 		in_fd = fd[0];
 		data->cmds = data->cmds->next;
 	}
-	ft_fork(data->cmds, data->env, in_fd, fd[1]);
+	fd[1] = data->cmds->redirect->out_fd;
+	data->exit_status = ft_fork(data->cmds, data->env, in_fd, fd[1]);
 	return ;
 }

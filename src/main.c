@@ -6,11 +6,19 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 13:45:54 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:54:30 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+/*
+	TESTS:
+	exit sin argumentos
+	
+
+*/
+
 
 int	g_signal;
 
@@ -49,11 +57,11 @@ int	main(int ac, char **av, char **env)
 			break ;
 		ft_find_path(data);
 		ft_debug(data);
-		ft_execute(&data);
-
+		if (data.cmds)
+			ft_execute(&data);
 		ft_annihilation(&data);
 		g_signal = 0;
-		break;
+		// break;
 	}
 	rl_clear_history();
 	ft_cleanup_env(data.env);
