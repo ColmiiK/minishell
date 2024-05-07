@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/06 15:39:23 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:55:01 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,41 @@ void	ft_clean_double_ptr(char **ptr)
 	free(ptr);
 }
 
+/*
+	t_list	*node;
+	t_list	*next_node;
+
+	if (!lst || !del)
+		return ;
+	node = *lst;
+	while (node)
+	{
+		del(node->content);
+		next_node = node->next;
+		free(node);
+		node = next_node;
+	}
+	*lst = 0;
+*/
+
 void	ft_annihilation(t_data *data)
 {
 	int		i;
-	t_cmd	*prev;
+	t_cmd *node;
+	t_cmd *next_node;
 
 	i = -1;
-	while (++i < data->n_of_cmds)
+	node = data->cmds;
+	while (node)
 	{
-		free(data->cmds->cmd);
-		ft_clean_double_ptr(data->cmds->args);
-		if (data->cmds->redirect->in_fd > 2)
-			close(data->cmds->redirect->in_fd);
-		if (data->cmds->redirect->out_fd > 2)
-			close(data->cmds->redirect->out_fd);
-		free(data->cmds->redirect);
-		prev = data->cmds;
-		if (data->cmds->next)
-			data->cmds = data->cmds->next;
-		free(prev);
+		free(node->cmd);
+		ft_clean_double_ptr(node->args);
+		if (node->redirect)
+			free(node->redirect);
+		next_node = node->next;
+		free(node);
+		node = next_node;
+		
 	}
 	unlink(".here_doc");
 }
@@ -59,6 +75,9 @@ void	ft_cleanup_env(t_env *env)
 	{
 		temp = env;
 		env = env->next;
+		free(temp->name);
+		if (temp->content)
+			free(temp->content);
 		free(temp->var);
 		free(temp);
 	}

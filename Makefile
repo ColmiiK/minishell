@@ -47,6 +47,8 @@ SRC_FILES = main cleanup signal \
 			builtin/ft_strjoin_mod \
 			builtin/preset_env_utils \
 			builtin/preset_env \
+			executor/path \
+			executor/executor \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

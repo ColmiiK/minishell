@@ -12,6 +12,14 @@
 
 #include <minishell.h>
 
+/*
+	TESTS:
+	exit sin argumentos
+	
+
+*/
+
+
 int	g_signal;
 
 void	ft_debug(t_data data)
@@ -47,10 +55,10 @@ int	main(int ac, char **av, char **env)
 	{
 		if (ft_parsing_loop(&data))
 			break ;
+		ft_find_path(data);
 		ft_debug(data);
-		built_in_selector(&data.env, data.cmds->args);
-
-
+		if (data.cmds)
+			ft_execute(&data);
 		ft_annihilation(&data);
 		g_signal = 0;
 		// break;
