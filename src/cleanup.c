@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 13:55:01 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:42:18 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ void	ft_clean_double_ptr(char **ptr)
 
 void	ft_annihilation(t_data *data)
 {
-	int		i;
 	t_cmd *node;
 	t_cmd *next_node;
 
-	i = -1;
 	node = data->cmds;
 	while (node)
 	{
