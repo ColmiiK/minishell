@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:46:40 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:42:33 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:04:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_unset(t_env **env, char *str)
 			free((*env)->next->name);
 			if ((*env)->next->content)
 				free((*env)->next->content);
+			free((*env)->next->var);
 			(*env)->next = (*env)->next->next;
 			free((*env)->next);
 			*env = tmp;

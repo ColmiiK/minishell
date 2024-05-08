@@ -6,42 +6,104 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 13:21:29 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:51:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*ft_upd(char *redirect, char *new_value)
+static char* ft_add_infile(char *cmd, char *re)
 {
-	free(redirect);
-	return (new_value);
+	char *temp;
+	int i;
+	int j;
+
+	i = -1;
+	while (cmd[++i] != '<')
+		;
+	while (cmd[i] == ' ')
+		i++;
+	if (cmd[i] == '<')
+		i++;
+	while (cmd[i] == ' ')
+		i++;
+	j = 0;
+	while (cmd[i + j] && cmd[i + j] != ' ')
+		j++;
+	temp = ft_substr(cmd, i, j);
+	
+	free(re);
+	return (ft_strjoin("IN:", temp));
+}
+
+static char *ft_add_outfile_append(char *cmd, char *re)
+{
+	char *temp;
+	int i;
+	int j;
+	
+	re = ft_strjoin_ex(re, " OUT(A):", 1);
+	i = 0;
+	while (cmd[i] != '>')
+		i++;
+	while (cmd[i] == ' ')
+		i++;
+	while (cmd[i] == '>')
+		i++;
+	while (cmd[i] == ' ')
+		i++;
+	j = 0;
+	while (cmd[i + j] && cmd[i + j] != ' ')
+		j++;
+	temp = ft_substr(cmd, i, j);
+	re = ft_strjoin_ex(re, temp, 1);
+	return (re);
+}
+
+static char *ft_add_outfile(char *cmd, char *re)
+{
+	char *temp;
+	int i;
+	int j;
+	
+	re = ft_strjoin_ex(re, " OUT:", 1);
+	i = 0;
+	while (cmd[i] != '>')
+		i++;
+	while (cmd[i] == ' ')
+		i++;
+	if (cmd[i] == '>')
+		i++;
+	while (cmd[i] == ' ')
+		i++;
+	j = 0;
+	while (cmd[i + j] && cmd[i + j] != ' ')
+		j++;
+	temp = ft_substr(cmd, i, j);
+	re = ft_strjoin_ex(re, temp, 1);
+	return (re);
 }
 
 static char	*ft_capture_files(char *cmd, char *re)
 {
 	if (ft_strchr(cmd, '<') && !ft_strnstr(cmd, "\\<", ft_strlen(cmd)))
-		re = ft_upd(re, ft_strjoin("IN:",
-					ft_strnstr(cmd, "<", ft_strlen(cmd)) + 2));
+	{
+		re = ft_add_infile(cmd, re);
+	}
 	else
-		re = ft_upd(re, ft_strdup("IN:0"));
+		re = ft_strdup_ex("IN:0", re);
 	if (ft_strchr(cmd, '>') && !ft_strnstr(cmd, "\\>", ft_strlen(cmd)))
 	{
 		if (ft_strnstr(cmd, ">>", ft_strlen(cmd))
 			&& !ft_strnstr(cmd, "\\>>", ft_strlen(cmd)))
-		{
-			re = ft_strjoin_ex(re, " OUT(A):", 1);
-			re = ft_strjoin_ex(re, ft_strnstr(cmd, ">", ft_strlen(cmd)) + 3, 1);
-		}
+			re = ft_add_outfile_append(cmd, re);
 		else
-		{
-			re = ft_strjoin_ex(re, " OUT:", 1);
-			re = ft_strjoin_ex(re, ft_strnstr(cmd, ">", ft_strlen(cmd)) + 2, 1);
-		}
+			re = ft_add_outfile(cmd, re);
 	}
 	else
 		re = ft_strjoin_ex(re, " OUT:1", 1);
 	re[ft_strlen(re)] = 0;
+	printf("re: %s\n", re);
 	return (re);
 }
 
@@ -97,7 +159,7 @@ char	**ft_clean_cmds(char **cmds)
 			cmds[i] = ft_trim_redirect(temp, '<');
 			free(temp);
 		}
-		else if (ft_strrchr(cmds[i], '>')
+		if (ft_strrchr(cmds[i], '>')
 			&& !ft_strnstr(cmds[i], "\\>", ft_strlen(cmds[i])))
 		{
 			temp = cmds[i];

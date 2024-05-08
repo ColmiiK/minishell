@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 12:10:05 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 12:47:39 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,27 @@ static int ft_fork(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 	return (status);
 }
 
+static int ft_execute_last(t_data data, int in_fd, int fd[2])
+{
+	fd[1] = data.cmds->redirect->out_fd;
+	if (built_in_checker(data.cmds->cmd))
+	{
+		if (built_in_checker(data.cmds->cmd) != 2)
+			data.exit_status = ft_builtin_execute(data.cmds, data.env, in_fd, fd[1]);
+		else if (built_in_checker(data.cmds->cmd) == 2 && data.n_of_cmds == 1)
+			data.exit_status = ft_builtin_execute(data.cmds, data.env, in_fd, fd[1]);
+	}
+	else
+		data.exit_status = ft_fork(data.cmds, data.env, in_fd, fd[1]);
+	if (in_fd != data.cmds->redirect->in_fd)
+		close(in_fd);
+	if (data.cmds->redirect->in_fd != 0)
+		close(data.cmds->redirect->in_fd);
+	if (data.cmds->redirect->out_fd != 1)
+		close(data.cmds->redirect->out_fd);
+	return (0);
+}
+
 void	ft_execute(t_data data)
 {
 	int in_fd;
@@ -104,7 +125,10 @@ void	ft_execute(t_data data)
 	{
 		pipe(fd);
 		if (built_in_checker(data.cmds->cmd))
-			data.exit_status = ft_builtin_execute(data.cmds, data.env, in_fd, fd[1]);
+		{
+			if (built_in_checker(data.cmds->cmd) != 2)
+				data.exit_status = ft_builtin_execute(data.cmds, data.env, in_fd, fd[1]);
+		}
 		else
 			data.exit_status = ft_fork(data.cmds, data.env, in_fd, fd[1]);
 		close(fd[1]);
@@ -113,16 +137,6 @@ void	ft_execute(t_data data)
 		in_fd = fd[0];
 		data.cmds = data.cmds->next;
 	}
-	fd[1] = data.cmds->redirect->out_fd;
-	if (built_in_checker(data.cmds->cmd))
-		data.exit_status = ft_builtin_execute(data.cmds, data.env, in_fd, fd[1]);
-	else
-		data.exit_status = ft_fork(data.cmds, data.env, in_fd, fd[1]);
-	if (in_fd != data.cmds->redirect->in_fd)
-		close(in_fd);
-	if (data.cmds->redirect->in_fd != 0)
-		close(data.cmds->redirect->in_fd);
-	if (data.cmds->redirect->out_fd != 1)
-		close(data.cmds->redirect->out_fd);
+	ft_execute_last(data, in_fd, fd);
 	return ;
 }

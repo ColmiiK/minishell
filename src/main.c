@@ -6,19 +6,11 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 11:54:20 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:14:07 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-/*
-	TESTS:
-	exit sin argumentos
-	
-
-*/
-
 
 int	g_signal;
 
@@ -50,7 +42,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, ft_handle_sigquit);
 	tcgetattr(STDIN_FILENO, &data.termios);
 	data.env = ft_getenv(env);
-	
+
 	while (true)
 	{
 		if (ft_parsing_loop(&data))
