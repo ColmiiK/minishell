@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 16:51:28 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:23:23 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ static char	*ft_capture_files(char *cmd, char *re)
 	else
 		re = ft_strjoin_ex(re, " OUT:1", 1);
 	re[ft_strlen(re)] = 0;
-	printf("re: %s\n", re);
 	return (re);
 }
 
