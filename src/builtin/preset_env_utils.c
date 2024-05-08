@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preset_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:07:10 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 15:31:55 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:19:11 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,9 @@ char	*get_name_env(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i] != 61 && str)
+	while (str[i] != 61 && str[i] != '\0')
 		i++;
-	name = (char *)malloc((sizeof(char *) * i) + 1);
-	if (!name)
-		return (free(str), NULL);
-	i = 0;
-	while (str[i] != 61 && str)
-	{
-		name[i] = str[i];
-		i++;
-	}
-	name[i] = '\0';
+	name = ft_substr(str, 0, i);
 	return (name);
 }
 
@@ -56,23 +47,12 @@ char	*get_content_env(char *str)
 
 	i = 0;
 	j = 0;
-	while (str[i] != 61)
-	{
-		if (str[i++] == '\0' && str[i] != 61)
-			return (NULL);
+	while (str[i] != 61 && str[i] != '\0')
 		i++;
-	}
-	content = (char *)malloc(sizeof(char *) * (ft_strlen(str) - i) + 1);
-	if (!content)
-		return (free(str), NULL);
-	i++;
-	while (str[i] != '\0')
-	{
-		content[j] = str[i];
-		j++;
-		i++;
-	}
-	content[i] = '\0';
+	if (str[i] == 61)
+		content = ft_substr(str, (i + 1), ft_strlen(str) - i);
+	else
+		content = NULL;
 	return (content);
 }
 
