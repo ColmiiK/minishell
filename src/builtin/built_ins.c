@@ -35,7 +35,10 @@ void	built_in_selector(t_env **env, char **str)
 	else if (!ft_strncmp(str[0], "export", 7))
 		ft_export(env, str[1]);
 	else if (!ft_strncmp(str[0], "unset", 6))
+	{
 		ft_unset(env, str[1]);
+		printf("*env == %s\n", (*env)->name);	
+	}
 	else if (!ft_strncmp(str[0], "env", 4))
 		ft_env(env);
 	else if (!ft_strncmp(str[0], "exit", 5))

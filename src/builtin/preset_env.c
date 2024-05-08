@@ -27,7 +27,7 @@ t_env	*arr_to_list(char **env_cpy, int size)
 		tmp = next_node(&list, create_node(env_cpy[i]));
 		i++;
 	}
-	/* free_arr(env_cpy, size); */
+	free_arr(env_cpy, size);
 	return (list);
 }
 

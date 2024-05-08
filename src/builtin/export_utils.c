@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:56 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:30:28 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:12:18 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	check_correct_input(char *str)
 		else if ((str[i] > 0 && str[i] < 48) || (str[i] > 57 && str[i] < 65)
 			|| (str[i] > 90 && str[i] < 97) || str[i] > 122)
 		{
-			printf("%s %c %i\n", str, str[i], i);
 			printf("incorrect var nam: must only use alpha-numeric chars\n");
 			return (-1);
 		}
@@ -84,7 +83,7 @@ int	create_new_var(t_env **env, char *name, char *content)
 	if (!node)
 		return (-1);
 	node->name = ft_strdup(name);
-	if (content)
+	if (content != NULL)
 		node->content = ft_strdup(content);
 	else
 		node->content = NULL;
