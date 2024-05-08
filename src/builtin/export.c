@@ -6,19 +6,11 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:24 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:30:20 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:01:24 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	free_node(t_env **node)
-{
-	free((*node)->name);
-	if ((*node)->content)
-		free((*node)->content);
-	free(*node);
-}
 
 t_env	*create_single_cpy(char *name, char *content)
 {
@@ -112,7 +104,6 @@ int	ft_export(t_env **env, char *argv)
 		}
 		else
 			return (1);
-		printf("he guardado \'%s=%s\'\n", name, content);
 	}
 	return (0);
 }

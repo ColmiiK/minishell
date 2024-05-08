@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:56:45 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 17:37:06 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:02:36 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	built_in_selector(t_env **env, char **str)
 	else if (!ft_strncmp(str[0], "export", 7))
 		ft_export(env, str[1]);
 	else if (!ft_strncmp(str[0], "unset", 6))
+	{
 		ft_unset(env, str[1]);
+		printf("*env == %s\n", (*env)->name);	
+	}
 	else if (!ft_strncmp(str[0], "env", 4))
 		ft_env(env);
 	else if (!ft_strncmp(str[0], "exit", 5))

@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:40:17 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 19:00:39 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:06:43 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ int	ft_rel_cd(char *arg)
 			return (-1);
 		dest = ft_strjoin(location, adjust);
 		if (chdir(dest) != 0)
-			return (printf("folder does not exist\n"), -1);
+			return (printf("folder does not exist\n"), 1);
 		return (0);
 	}
 	else
-		return (-1);
+		return (1);
 }
 
 int	ft_abs_cd(char *arg)
 {
 	if (chdir(arg) != 0)
-		return (printf("folder does not exist\n"), -1);
+		return (printf("folder does not exist\n"), 1);
 	return (0);
 }
 
@@ -97,5 +97,5 @@ int	ft_cd(char **arg, t_env **node)
 		return (0);
 	}
 	else
-		return (-1);
+		return (1);
 }

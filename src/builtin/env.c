@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:51:20 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:14:54 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:09:20 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	ft_env(t_env **link_list)
 	tmp = *link_list;
 	while (*link_list)
 	{
+		// printf("\n\n\n%s\n\n\n", (*link_list)->name);
 		if ((*link_list)->content != NULL)
 			printf("%s=%s\n", (*link_list)->name, (*link_list)->content);
 		*link_list = (*link_list)->next;

@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 13:37:52 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:57:26 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ char	*get_content_env(char *str);
 t_env	*create_node(char *str);
 t_env	*next_node(t_env **node, t_env *new);
 //export
-void	free_node(t_env **node);
 t_env	*create_single_cpy(char *name, char *content);
 t_env	*ft_cpy_list(t_env **env);
 void	ft_swap_env(t_env **first, t_env **second);
@@ -155,10 +154,12 @@ int		create_new_var(t_env **env, char *name, char *content);
 //pwd
 int		ft_pwd(void);
 //unset
+void	ft_delete_first(t_env **env);
 int		ft_unset(t_env **env, char *str);
 
 // VARIOUS UTILS
 //ps_functions
+void	free_node(t_env **node);
 void	add_back(t_env **env, t_env *new);
 void	add_front(t_env **env, t_env *node);
 t_env	*pop_first(t_env **env);

@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:06:56 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:03:31 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:08:35 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@ t_env	*arr_to_list(char **env_cpy, int size)
 	tmp = list;
 	while (i < size)
 	{
-		printf("tmp == \'%s\'\n", env_cpy[i]);
 		tmp = next_node(&list, create_node(env_cpy[i]));
 		i++;
 	}
-	printf("%d\n", i);
-	/* free_arr(env_cpy, size); */
+	free_arr(env_cpy, size);
 	return (list);
 }
 
@@ -65,12 +63,10 @@ t_env	*ft_getenv(char **env_info)
 	while (*env_ptr != NULL)
 	{
 		copy_env[i] = ft_strdup(*env_ptr);
-		printf("copy_env == %s\n", copy_env[i]);
 		env_ptr++;
 		i++;
 	}
 	copy_env[i] = NULL;
-	printf("%d\n", i);
 	link_list = arr_to_list(copy_env, i);
 	return (link_list);
 }

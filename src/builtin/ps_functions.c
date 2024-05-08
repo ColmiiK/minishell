@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ps_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:55:35 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:01:36 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	free_node(t_env **node)
+{
+	free((*node)->name);
+	if ((*node)->content)
+		free((*node)->content);
+	free(*node);
+}
 
 void	swap(t_env **env)
 {
