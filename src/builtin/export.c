@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:24 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 15:23:57 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:30:20 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,49 +53,57 @@ t_env	*ft_cpy_list(t_env **env)
 	return (cpy_head);
 }
 
-void	ft_order_alpha(t_env **env, int size)
+void	ft_swap_env(t_env **first, t_env **second)
 {
-	t_env	*node;
-	t_env	*tmp;
-	int		i;
+	(*first)->name = (*second)->name;
+	(*first)->content = (*second)->content;
+	(*first)->var = (*second)->var;
+}
 
-	tmp = ft_cpy_list(env);
+void	ft_order_alpha(t_env **env)
+{
+	t_env	*tmp;
+	t_env	*swap;
+
+	tmp = *env;
+	swap = malloc(sizeof(t_env));
+	if (!swap)
+		return ;
 	while (tmp->next)
 	{
-		i = 0;
-		while (i < size)
+		if (tmp->next && ft_strcmp(tmp->name, tmp->next->name) > 0)
 		{
-			if (ft_strcmp(tmp->name, tmp->next->name) < 0)
-				swap(&tmp);
-			else
-			{
-				node = pop_first(&tmp);
-				add_back(&tmp, node);
-				i++;
-			}
+			ft_swap_env(&swap, &tmp);
+			ft_swap_env(&tmp, &(tmp->next));
+			ft_swap_env(&(tmp->next), &swap);
+			tmp = *env;
 		}
-		size--;
-		smart_print(tmp);
-		node = pop_first(&tmp);
-		free_node(&node);
+		else
+			tmp = tmp->next;
 	}
-	smart_print(tmp);
+	tmp = *env;
+	while (tmp)
+	{
+		smart_print(tmp);
+		tmp = tmp->next;
+	}
 }
 
 int	ft_export(t_env **env, char *argv)
 {
 	char	*name;
 	char	*content;
-	int		size;
+	t_env	*cpy;
 
 	if (argv == NULL)
 	{
-		size = list_length(env);
-		ft_order_alpha(env, size);
+		cpy = ft_cpy_list(env);
+		ft_order_alpha(&cpy);
+		free_list(&cpy);
 	}
 	else
 	{
-		if (check_correct_input(argv) == 0)
+		if (check_correct_input(get_name_env(argv)) == 0)
 		{
 			name = get_name_env(argv);
 			content = get_content_env(argv);
@@ -104,6 +112,7 @@ int	ft_export(t_env **env, char *argv)
 		}
 		else
 			return (1);
+		printf("he guardado \'%s=%s\'\n", name, content);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 11:52:29 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/08 13:37:52 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ t_env	*next_node(t_env **node, t_env *new);
 void	free_node(t_env **node);
 t_env	*create_single_cpy(char *name, char *content);
 t_env	*ft_cpy_list(t_env **env);
-void	ft_order_alpha(t_env **env, int size);
+void	ft_swap_env(t_env **first, t_env **second);
+void	ft_order_alpha(t_env **env);
 int		ft_export(t_env **env, char *argv);
 //export_utils
 int		list_length(t_env **env);
