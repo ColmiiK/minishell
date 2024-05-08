@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:56:45 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 18:02:36 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:44:29 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int	built_in_checker(char *str)
 {
 	if (!ft_strncmp(str, "echo", 5) || !ft_strncmp(str, "cd", 3)
 		|| !ft_strncmp(str, "pwd", 4) || !ft_strncmp(str, "export", 7)
-		|| !ft_strncmp(str, "unset", 6) || !ft_strncmp(str, "env", 4)
-		|| !ft_strncmp(str, "exit", 5))
+		|| !ft_strncmp(str, "unset", 6) || !ft_strncmp(str, "env", 4))
 		return (1);
+	else if (!ft_strncmp(str, "exit", 5))
+		return (2);
 	else
 		return (0);
 }
