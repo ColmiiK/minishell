@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/06 17:39:03 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/08 11:54:20 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_debug(t_data data)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-
+ 
 	(void)ac;
 	(void)av;
 	
@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **env)
 		ft_find_path(data);
 		ft_debug(data);
 		if (data.cmds)
-			ft_execute(&data);
+			ft_execute(data);
 		ft_annihilation(&data);
 		g_signal = 0;
 		// break;

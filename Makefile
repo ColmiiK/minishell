@@ -91,6 +91,6 @@ norm:
 			@norminette $(SRC) $(INCLUDE) $(LIBFT)
 
 test:
-			@make && ./valgrind.sh
+			@make && valgrind --leak-check=full --track-fds=yes ./minishell
 
 .PHONY: all clean fclean re norm
