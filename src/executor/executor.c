@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 13:11:50 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:54:11 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static int ft_builtin_execute(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 
 	if (ft_fd_juggling(in_fd, out_fd))
 		return (1);
-
 	if (built_in_checker(cmd->cmd))
 		built_in_selector(&env, cmd->args);
 
@@ -73,7 +72,6 @@ static int ft_builtin_execute(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 	dup2(saved_out_fd, 1);
 	close(saved_in_fd);
 	close(saved_out_fd);
-	printf("hey????\n");
 
 	return (0);
 	// return (exit_value);

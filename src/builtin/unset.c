@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:46:40 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 12:57:55 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 14:27:09 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,20 @@ void	ft_free_node(t_env *node)
 
 int	ft_unset(t_env **env, char *str)
 {
-	t_env	*prev;
-	t_env	*node_to_delete;
+    t_env	*prev;
+    t_env	*node_to_delete;
 
-	prev = *env;
-	if (!strcmp((*env)->name, str))
-	{
-		*env = (*env)->next;
-		ft_free_node(prev);
-		return (0);
-	}
-	while (prev->next != NULL && (strcmp(prev->next->name, str)))
+    prev = *env;
+    printf("Before unset: %p\n", (void *)*env);
+
+    if (!ft_strcmp((*env)->name, str))
+    {
+        *env = prev->next;
+        ft_free_node(prev);
+        printf("After unset: %p\n", (void *)*env);
+        return (0);
+    }
+	while (prev->next != NULL && (ft_strcmp(prev->next->name, str)))
 		prev = prev->next;
 	if (prev->next == NULL)
 		return (printf("variable not found: check it\n"), 0);
