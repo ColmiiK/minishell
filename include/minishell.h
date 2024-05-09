@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 16:15:09 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:59:07 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		search_existing_var(char *str);
 // BUILT-INS
 // built-ins
 int		built_in_checker(char *str);
-void	built_in_selector(t_data *data, char **str);
+int		built_in_selector(t_data *data, char **str);
 // echo
 int		ft_echo(char **arg);
 //cd
