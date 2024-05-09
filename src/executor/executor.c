@@ -12,7 +12,6 @@
 
 #include <minishell.h>
 
-
 static char	**ft_get_variables(t_env *env)
 {
 	int		i;
@@ -95,6 +94,7 @@ static int ft_fork(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 		if (ft_fd_juggling(in_fd, out_fd))
 			return (1);
 		variables = ft_get_variables(env);
+		printf("-> %s\n", cmd->cmd);
 		if (execve(cmd->cmd, cmd->args, variables) == -1)
 			free(variables);
 		exit(1);

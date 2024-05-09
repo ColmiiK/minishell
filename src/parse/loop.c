@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 11:54:29 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:37:19 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_parsing_loop(t_data *data)
 	char	**cmds;
 	char	**redirect;
 
-	// prompt = ft_strdup("echo hey | cat -e >> outfile.txt");
+	// prompt = ft_strdup("cat -e << EOF");
 	prompt = readline(MINI_PROMPT);
 	if (!prompt)
 	{

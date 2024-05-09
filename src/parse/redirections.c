@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 18:23:23 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:46:03 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ static char* ft_add_infile(char *cmd, char *re)
 	while (cmd[i + j] && cmd[i + j] != ' ')
 		j++;
 	temp = ft_substr(cmd, i, j);
-	
 	free(re);
-	return (ft_strjoin("IN:", temp));
+	return (ft_strjoin_ex("IN:", temp, 2));
 }
 
 static char *ft_add_outfile_append(char *cmd, char *re)
@@ -56,7 +55,7 @@ static char *ft_add_outfile_append(char *cmd, char *re)
 	while (cmd[i + j] && cmd[i + j] != ' ')
 		j++;
 	temp = ft_substr(cmd, i, j);
-	re = ft_strjoin_ex(re, temp, 1);
+	re = ft_strjoin_ex(re, temp, 3);
 	return (re);
 }
 
@@ -80,7 +79,7 @@ static char *ft_add_outfile(char *cmd, char *re)
 	while (cmd[i + j] && cmd[i + j] != ' ')
 		j++;
 	temp = ft_substr(cmd, i, j);
-	re = ft_strjoin_ex(re, temp, 1);
+	re = ft_strjoin_ex(re, temp, 3);
 	return (re);
 }
 
