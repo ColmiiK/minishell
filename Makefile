@@ -35,6 +35,7 @@ SRC_FILES = main cleanup signal \
 			parse/setup_nodes \
 			parse/env \
 			builtin/built_ins \
+			builtin/exit_status \
 			builtin/echo \
 			builtin/cd \
 			builtin/cd_utils \

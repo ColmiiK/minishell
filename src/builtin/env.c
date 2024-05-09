@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:51:20 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 16:23:18 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:50:15 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_env(t_env **link_list)
 	while (*link_list)
 	{
 		// printf("\n\n\n%s\n\n\n", (*link_list)->name);
-		if ((*link_list)->content != NULL)
+		if ((*link_list)->content != NULL && ft_strcmp((*link_list)->name, "?"))
 			printf("%s=%s\n", (*link_list)->name, (*link_list)->content);
 		*link_list = (*link_list)->next;
 	}
