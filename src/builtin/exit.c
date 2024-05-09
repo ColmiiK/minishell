@@ -6,16 +6,28 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 17:26:49 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:26:37 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:09:00 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_exit(char **arg)
+int	ft_exit(t_data *data, int infd, int outfd)
 {
-	(void)arg;
+	int	exit_status;
 
+	if (data->cmds->args[1] != NULL
+		&& ft_isalpha_loop(data->cmds->args[1]) == 0)
+		exit_status = ft_atoi(data->cmds->args[1]) % 256;
+	else if (data->cmds->args[1] != NULL
+		&& ft_isalpha_loop(data->cmds->args[1]) != 0)
+		exit_status = 255;
+	else
+		exit_status = data->exit_status;
+	close(infd);
+	close(outfd);
+	ft_cleanup_env(data->env);
+	ft_annihilation(data);
 	printf("me cierro\n");
-	exit(-1);
+	exit(exit_status);
 }

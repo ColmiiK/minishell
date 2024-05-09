@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 16:59:07 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:52:48 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		search_existing_var(char *str);
 // BUILT-INS
 // built-ins
 int		built_in_checker(char *str);
-int		built_in_selector(t_data *data, char **str);
+int		built_in_selector(t_data *data, char **str, int infd, int outfd);
 // echo
 int		ft_echo(char **arg);
 //cd
@@ -123,7 +123,10 @@ char	*empty_cd(t_env **env);
 void	ft_create_pwd(t_env **env, char *str);
 int		update_location(t_env **node, char *new, char *old);
 //exit
-int		ft_exit(char **arg);
+int		ft_exit(t_data *data, int infd, int outfd);
+//exit_status
+void	exit_status(t_env **env);
+void	status_update(t_env **env, int exit_sts);
 //env
 void	free_list(t_env **link_list);
 int		ft_env(t_env **link_list);

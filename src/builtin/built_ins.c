@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:56:45 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 16:58:56 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:30:50 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	built_in_checker(char *str)
 		return (0);
 }
 
-int	built_in_selector(t_data *data, char **str)
+int	built_in_selector(t_data *data, char **str, int infd, int outfd)
 {
 	if (!ft_strncmp(str[0], "echo", 5))
 		data->exit_status = ft_echo(str);
@@ -39,6 +39,6 @@ int	built_in_selector(t_data *data, char **str)
 	else if (!ft_strncmp(str[0], "env", 4))
 		data->exit_status = ft_env(&data->env);
 	else if (!ft_strncmp(str[0], "exit", 5))
-		data->exit_status = ft_exit(str);
+		data->exit_status = ft_exit(data, infd, outfd);
 	return (data->exit_status);
 }

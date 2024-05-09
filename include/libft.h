@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/06 15:23:50 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:00:34 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -612,5 +612,6 @@ char				*ft_pop(char *str, char c, bool del);
  * @return True if all characters are equal, false otherwise.
 */
 bool				ft_all_same(char *str, char c);
-int	ft_strcmp(char *s1, char *s2);
+int					ft_strcmp(char *s1, char *s2);
+int					ft_isalpha_loop(char *str);
 #endif

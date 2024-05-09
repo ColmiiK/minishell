@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 16:17:04 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:52:59 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,17 @@ void	ft_debug(t_data data)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
- 
+
 	(void)ac;
 	(void)av;
-	
+
 	data.exit_status = 0;
 	g_signal = 0;
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, ft_handle_sigquit);
 	tcgetattr(STDIN_FILENO, &data.termios);
 	data.env = ft_getenv(env);
+	exit_status(&data.env);
 
 	while (true)
 	{
