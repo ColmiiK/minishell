@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:10:59 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 13:44:43 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:44:26 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char **ft_find_path_env(t_env *env)
 	while (env)
 	{
 		if (ft_strnstr(env->name, "PATH", 4))
-			return (ft_split(env->var + 5, ':'));
+			return (ft_split(env->content + 5, ':'));
 		env = env->next;
 	}
 	return (NULL);
