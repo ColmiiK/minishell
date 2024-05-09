@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/10 13:46:10 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:43:04 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ static int	ft_hd_after_first(char **joined, char **temp,
 	return (0);
 }
 
+static char *ft_find_delimiter(char *prompt)
+{
+	char *temp;
+	int i;
+	int j;
+
+	i = 0;
+	while (prompt[i] == ' ')
+		i++;
+	j = 0;
+	while (prompt[i + j] && prompt[i + j] != ' ')
+		j++;
+	temp = ft_substr(prompt, i, j);
+	return (temp);
+}
+
 static void	ft_here_doc_loop(char *prompt, t_data *data)
 {
 	char	*temp;
@@ -39,7 +55,7 @@ static void	ft_here_doc_loop(char *prompt, t_data *data)
 	char	*delimiter;
 
 	g_signal = 0;
-	delimiter = ft_strtok(prompt, " ");
+	delimiter = ft_find_delimiter(prompt + 2);
 	temp = ft_hd_process(data->termios);
 	if (g_signal == SIGINT)
 	{
@@ -55,6 +71,7 @@ static void	ft_here_doc_loop(char *prompt, t_data *data)
 		return ;
 	while (ft_strnstr(joined, "$", ft_strlen(joined)))
 		joined = ft_expand_variables(joined, data->env);
+	free(delimiter);
 	ft_hd_finish(temp, joined);
 }
 
@@ -75,17 +92,31 @@ static char	*ft_here_doc_pipe(char *sub, char *str, t_data *data)
 	return (str);
 }
 
+static char *ft_find_command_after(char *prompt)
+{
+	char *temp;
+	int i;
+
+	i = 0;
+	while (prompt[i] == ' ')
+		i++;
+	while (prompt[i] != ' ')
+		i++;
+	while (prompt[i] == ' ')
+		i++;
+	temp = ft_substr(prompt, i, ft_strlen(prompt + i));
+	return (temp);
+}
+
 char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 {
 	char	*str;
-	char	*before;
 	char	*sub;
 
 	str = NULL;
 	prompt = ft_fix_prompt(prompt);
-	before = ft_strdup(prompt);
-	ft_here_doc_loop(ft_strnstr(prompt, "<<", ft_strlen(prompt)) + 3, data);
-	sub = ft_strnstr(before, ft_strtok(NULL, " "), ft_strlen(before));
+	ft_here_doc_loop(ft_strnstr(prompt, "<<", ft_strlen(prompt)), data);
+	sub = ft_find_command_after(prompt + 2);
 	if (!pipe)
 	{
 		str = ft_strjoin(sub, " < .here_doc");
@@ -94,7 +125,7 @@ char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 	}
 	else if (pipe)
 		str = ft_here_doc_pipe(sub, str, data);
-	free(before);
+	free(sub);
 	free(prompt);
 	if (g_signal == SIGINT)
 	{

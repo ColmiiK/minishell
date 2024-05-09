@@ -6,27 +6,34 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 12:47:39 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:00:48 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-
 static char **ft_get_variables(t_env *env)
 {
-	char *temp;
+	int i;
+	int len;
 	char **variables;
 
-	temp = ft_strdup("");
-	while (env)
+	i = -1;
+	len = list_length(&env);
+	variables = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!variables)
+		return (NULL);
+	while (++i < len)
 	{
-		temp = ft_strjoin_ex(temp, env->var, 1);
-		temp = ft_strjoin_ex(temp, "\n", 1);
+		variables[i] = ft_strdup(env->name);
+		if (env->content)
+		{
+			variables[i] = ft_strjoin_ex(variables[i], "=", 1);
+			variables[i] = ft_strjoin_ex(variables[i], env->content, 1);
+		}
 		env = env->next;
 	}
-	variables = ft_split(temp, '\n');
-	free(temp);
+	variables[i] = NULL;
 	return (variables);
 }
 
@@ -86,6 +93,7 @@ static int ft_fork(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 		if (ft_fd_juggling(in_fd, out_fd))
 			return (1);
 		variables = ft_get_variables(env);
+		printf("-> %s\n", cmd->cmd);
 		if (execve(cmd->cmd, cmd->args, variables) == -1)
 			free(variables);
 		exit(1);

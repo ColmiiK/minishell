@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 17:14:07 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:03:20 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	
+	data.exit_status = 0;
 	g_signal = 0;
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, ft_handle_sigquit);
@@ -53,6 +54,9 @@ int	main(int ac, char **av, char **env)
 			ft_execute(data);
 		ft_annihilation(&data);
 		g_signal = 0;
+		perror("error:");
+		printf("exit: %d\n", data.exit_status);
+		printf("errno: %d\n", errno);
 		// break;
 	}
 	clear_history();

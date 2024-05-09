@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:46:40 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 17:04:28 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:34:39 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	ft_delete_first(t_env **env)
 	free(tmp->name);
 	if (tmp->content != NULL)
 		free(tmp->content);
-	if (tmp->var != NULL)
-		free(tmp->var);
 	tmp->next = NULL;
 	free(tmp);
 	printf("*env == %s\n", (*env)->name);
@@ -47,8 +45,6 @@ int	ft_unset(t_env **env, char *str)
 			free((*env)->next->name);
 			if ((*env)->next->content != NULL)
 				free((*env)->next->content);
-			if ((*env)->next->var != NULL)
-				free((*env)->next->var);
 			if ((*env)->next != NULL)
 				free((*env)->next);
 			(*env)->next = (*env)->next->next;

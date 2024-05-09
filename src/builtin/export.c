@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:24 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 17:01:24 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:34:24 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_swap_env(t_env **first, t_env **second)
 {
 	(*first)->name = (*second)->name;
 	(*first)->content = (*second)->content;
-	(*first)->var = (*second)->var;
 }
 
 void	ft_order_alpha(t_env **env)

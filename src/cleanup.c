@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 20:42:18 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:33:55 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	ft_cleanup_env(t_env *env)
 		free(temp->name);
 		if (temp->content)
 			free(temp->content);
-		free(temp->var);
 		free(temp);
 	}
 }
