@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:58:01 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 18:00:43 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:06:33 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*ft_loop_var(t_env *env, char *token, char *str)
 {
-	while (env->next)
+	while (env)
 	{
 		if (!ft_strncmp(env->name, token + 1, ft_strlen(token)))
 		{

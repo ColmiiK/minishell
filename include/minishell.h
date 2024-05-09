@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/08 17:57:26 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:49:50 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct s_env
 {
 	char			*name;
 	char			*content;
-	char			*var;
 	struct s_env	*next;
 }	t_env;
 
@@ -54,7 +53,6 @@ typedef struct s_data
 	t_env			*env;
 	struct termios	termios;
 	int				exit_status;
-	
 }	t_data;
 
 // typedef enum e_tokens
@@ -154,7 +152,7 @@ int		create_new_var(t_env **env, char *name, char *content);
 //pwd
 int		ft_pwd(void);
 //unset
-void	ft_delete_first(t_env **env);
+void	ft_free_node(t_env *node);
 int		ft_unset(t_env **env, char *str);
 
 // VARIOUS UTILS

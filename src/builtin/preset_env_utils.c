@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:07:10 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:19:11 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:39:20 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_env	*create_node(char *str)
 		return (NULL);
 	node->name = get_name_env(str);
 	node->content = get_content_env(str);
-	node->var = ft_strdup(str);
 	node->next = NULL;
 	i++;
 	return (node);
