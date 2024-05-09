@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:58:01 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 12:06:33 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:01:11 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static char	*ft_loop_var(t_env *env, char *token, char *str)
 		{
 			free(token);
 			free(str);
-			return(env->content);
+			if (env->content)
+				return(env->content);
+			return (NULL);
 		}
 		env = env->next;
 	}
@@ -45,8 +47,6 @@ static char	*ft_find_variable(char *prompt, t_env *env)
 	temp = ft_loop_var(env, token, str);
 	if (temp)
 		return (temp);
-	free(token);
-	free(str);
 	return (NULL);
 }
 
