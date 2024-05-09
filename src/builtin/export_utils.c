@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:56 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 17:01:49 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:18:55 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	smart_print(t_env *node)
 {
-	if (node->content)
-		printf("%s=%s\n", node->name, node->content);
-	else
-		printf("%s\n", node->name);
+	while (node)
+	{
+		if (node->content)
+			printf("%s=%s\n", node->name, node->content);
+		else
+			printf("%s\n", node->name);
+		node = node->next;
+	}
 }
 
 int	list_length(t_env **env)
