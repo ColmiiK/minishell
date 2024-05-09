@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 13:02:13 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:49:50 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_data
 	t_env			*env;
 	struct termios	termios;
 	int				exit_status;
-	
 }	t_data;
 
 // typedef enum e_tokens
@@ -154,7 +153,7 @@ int		create_new_var(t_env **env, char *name, char *content);
 //pwd
 int		ft_pwd(void);
 //unset
-void	ft_delete_first(t_env **env);
+void	ft_free_node(t_env *node);
 int		ft_unset(t_env **env, char *str);
 
 // VARIOUS UTILS

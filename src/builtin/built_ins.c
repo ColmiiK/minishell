@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:56:45 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:44:29 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:02:15 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,18 @@ void	built_in_selector(t_env **env, char **str)
 	else if (!ft_strncmp(str[0], "unset", 6))
 	{
 		ft_unset(env, str[1]);
-		printf("*env == %s\n", (*env)->name);	
+		printf("estoy saliendo\n\n");
+		// while (*env)
+		// {
+		// 	printf("*env == %s\n", (*env)->name);
+		// 	*env = (*env)->next;
+		// }
 	}
 	else if (!ft_strncmp(str[0], "env", 4))
+	{
+		printf("\n\n\naquiiiiiii\n");
 		ft_env(env);
+	}
 	else if (!ft_strncmp(str[0], "exit", 5))
 		ft_exit(str);
 }

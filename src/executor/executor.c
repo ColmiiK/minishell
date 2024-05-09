@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 13:00:48 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:11:50 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char **ft_get_variables(t_env *env)
+static char	**ft_get_variables(t_env *env)
 {
-	int i;
-	int len;
-	char **variables;
+	int		i;
+	int		len;
+	char	**variables;
 
 	i = -1;
 	len = list_length(&env);
@@ -37,7 +37,7 @@ static char **ft_get_variables(t_env *env)
 	return (variables);
 }
 
-static int ft_fd_juggling(int in_fd, int out_fd)
+static int	ft_fd_juggling(int in_fd, int out_fd)
 {
 	if (in_fd != 0)
 	{
@@ -73,6 +73,7 @@ static int ft_builtin_execute(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 	dup2(saved_out_fd, 1);
 	close(saved_in_fd);
 	close(saved_out_fd);
+	printf("hey????\n");
 
 	return (0);
 	// return (exit_value);
@@ -129,6 +130,7 @@ void	ft_execute(t_data data)
 	int fd[2];
 
 	in_fd = data.cmds->redirect->in_fd;
+	printf("estoy en el ft_execute\n");
 	while (data.cmds->next)
 	{
 		pipe(fd);
@@ -143,6 +145,7 @@ void	ft_execute(t_data data)
 		if (in_fd != data.cmds->redirect->in_fd)
 			close(in_fd);
 		in_fd = fd[0];
+		printf("\n\n\nsaliendo de la builtin\n");
 		data.cmds = data.cmds->next;
 	}
 	ft_execute_last(data, in_fd, fd);
