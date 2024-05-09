@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:46:40 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 14:27:09 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:23:46 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,10 @@ int	ft_unset(t_env **env, char *str)
     t_env	*node_to_delete;
 
     prev = *env;
-    printf("Before unset: %p\n", (void *)*env);
-
     if (!ft_strcmp((*env)->name, str))
     {
-        *env = prev->next;
+        *env = (*env)->next;
         ft_free_node(prev);
-        printf("After unset: %p\n", (void *)*env);
         return (0);
     }
 	while (prev->next != NULL && (ft_strcmp(prev->next->name, str)))

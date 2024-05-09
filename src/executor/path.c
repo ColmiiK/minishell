@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:10:59 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 14:18:37 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:24:51 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 static char **ft_find_path_env(t_env *env)
 {
-
 	while (env)
 	{
 		if (env->name)
 		{
-			write(2, "ey\n", 3);
 			if (ft_strnstr(env->name, "PATH", 4))
-			{
-				
 				return (ft_split(env->content + 5, ':'));
-			}
 		}
 		env = env->next;
 	}

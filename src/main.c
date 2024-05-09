@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 13:56:01 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:17:04 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
 		ft_find_path(data);
 		ft_debug(data);
 		if (data.cmds)
-			ft_execute(data);
+			ft_execute(&data);
 		ft_annihilation(&data);
 		g_signal = 0;
 		// perror("error:");

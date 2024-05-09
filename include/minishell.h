@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 14:08:56 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:15:09 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int		search_existing_var(char *str);
 // BUILT-INS
 // built-ins
 int		built_in_checker(char *str);
-void	built_in_selector(t_env **env, char **str);
+void	built_in_selector(t_data *data, char **str);
 // echo
 int		ft_echo(char **arg);
 //cd
@@ -205,7 +205,7 @@ int		ft_perror(char *str);
 
 
 // EXECUTION
-void	ft_execute(t_data data);
+void	ft_execute(t_data *data);
 int		ft_find_path(t_data data);
 
 
