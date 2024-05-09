@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 14:20:57 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:16:00 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	ft_annihilation(t_data *data)
 		next_node = node->next;
 		free(node);
 		node = next_node;
-		
 	}
 	unlink(".here_doc");
 }

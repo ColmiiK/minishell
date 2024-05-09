@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:24 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 12:39:03 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:13:31 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,13 @@ void	ft_order_alpha(t_env **env)
 			tmp = tmp->next;
 	}
 	tmp = *env;
-	while (tmp)
-	{
-		smart_print(tmp);
-		tmp = tmp->next;
-	}
+	smart_print(tmp);
+	free(swap);
 }
 
 int	ft_export(t_env **env, char *argv)
 {
+	char	*temp;
 	char	*name;
 	char	*content;
 	t_env	*cpy;
@@ -94,15 +92,19 @@ int	ft_export(t_env **env, char *argv)
 	}
 	else
 	{
-		if (check_correct_input(get_name_env(argv)) == 0)
+		temp = get_name_env(argv);
+		if (check_correct_input(temp) == 0)
 		{
+			free(temp);
 			name = get_name_env(argv);
 			content = get_content_env(argv);
 			if (check_existent_var(env, name, content) != 1)
 				create_new_var(env, name, content);
+			free(name);
+			free(content);
 		}
 		else
-			return (1);
+			return(free(temp), 1);
 	}
 	return (0);
 }
