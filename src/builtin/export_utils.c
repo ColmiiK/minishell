@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:56 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 18:12:18 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:01:49 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_existent_var(t_env **env, char *name, char *content)
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen(tmp->name)) && tmp->content)
+		if (!ft_strcmp(tmp->name, name))
 		{
 			tmp->content = ft_strdup(content);
 			return (1);
