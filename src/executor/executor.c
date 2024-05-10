@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 17:53:33 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:56:37 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int	ft_fd_juggling(int in_fd, int out_fd)
 
 static int ft_builtin_execute(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 {
-	// int exit_value;
 	int saved_in_fd;
 	int saved_out_fd;
 
@@ -74,11 +73,9 @@ static int ft_builtin_execute(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 	close(saved_out_fd);
 
 	return (0);
-	// return (exit_value);
-	
 }
 
-static int ft_fork(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
+static int ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 {
 	pid_t pid;
 	int status;
@@ -89,35 +86,41 @@ static int ft_fork(t_cmd *cmd, t_env *env, int in_fd, int out_fd)
 		return (1);
 	if (pid == 0)
 	{
+		status = 127;
 		if (ft_fd_juggling(in_fd, out_fd))
 			return (1);
-		variables = ft_get_variables(env);
-		if (execve(cmd->cmd, cmd->args, variables) == -1)
-			free(variables);
-		exit(1);
+		variables = ft_get_variables(data->env);
+		if (access(cmd->cmd, F_OK) == 0 && access(cmd->cmd, X_OK) == -1)
+			status = 126;
+		else
+			execve(cmd->cmd, cmd->args, variables);
+		ft_clean_double_ptr(variables);
+		ft_cleanup_env(data->env);
+		ft_annihilation(data);
+		exit(status);
 	}
 	waitpid(pid, &status, 0);
 	return (status);
 }
 
-static int ft_execute_last(t_data *data, int in_fd, int fd[2])
+static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 {
-	fd[1] = data->cmds->redirect->out_fd;
-	if (built_in_checker(data->cmds->cmd))
+	fd[1] = temp->redirect->out_fd;
+	if (built_in_checker(temp->cmd))
 	{
-		if (built_in_checker(data->cmds->cmd) != 2)
-			data->exit_status = ft_builtin_execute(data->cmds, data, in_fd, fd[1]);
-		else if (built_in_checker(data->cmds->cmd) == 2 && data->n_of_cmds == 1)
-			data->exit_status = ft_builtin_execute(data->cmds, data, in_fd, fd[1]);
+		if (built_in_checker(temp->cmd) != 2)
+			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
+		else if (built_in_checker(temp->cmd) == 2 && data->n_of_cmds == 1)
+			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
 	}
 	else
-		data->exit_status = ft_fork(data->cmds, data->env, in_fd, fd[1]);
-	if (in_fd != data->cmds->redirect->in_fd)
+		data->exit_status = ft_fork(temp, data, in_fd, fd[1]) % 255;
+	if (in_fd != temp->redirect->in_fd)
 		close(in_fd);
-	if (data->cmds->redirect->in_fd != 0)
-		close(data->cmds->redirect->in_fd);
-	if (data->cmds->redirect->out_fd != 1)
-		close(data->cmds->redirect->out_fd);
+	if (temp->redirect->in_fd != 0)
+		close(temp->redirect->in_fd);
+	if (temp->redirect->out_fd != 1)
+		close(temp->redirect->out_fd);
 	return (0);
 }
 
@@ -125,25 +128,27 @@ void	ft_execute(t_data *data)
 {
 	int in_fd;
 	int fd[2];
+	t_cmd *temp;
 
+	temp = data->cmds;
 	in_fd = data->cmds->redirect->in_fd;
-	while (data->cmds->next)
+	while (temp->next)
 	{
 		pipe(fd);
-		if (built_in_checker(data->cmds->cmd))
+		if (built_in_checker(temp->cmd))
 		{
-			if (built_in_checker(data->cmds->cmd) != 2)
-				data->exit_status = ft_builtin_execute(data->cmds, data, in_fd, fd[1]);
+			if (built_in_checker(temp->cmd) != 2)
+				data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
 		}
 		else
-			data->exit_status = ft_fork(data->cmds, data->env, in_fd, fd[1]);
+			data->exit_status = ft_fork(temp, data, in_fd, fd[1]);
 		close(fd[1]);
-		if (in_fd != data->cmds->redirect->in_fd)
+		if (in_fd != temp->redirect->in_fd)
 			close(in_fd);
 		in_fd = fd[0];
-		data->cmds = data->cmds->next;
+		temp = temp->next;
 	}
-	ft_execute_last(data, in_fd, fd);
+	ft_execute_last(temp, data, in_fd, fd);
 	status_update(&data->env, data->exit_status);
 	return ;
 }

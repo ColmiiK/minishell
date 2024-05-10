@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 17:52:59 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:03:34 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,31 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-
-	data.exit_status = 0;
-	g_signal = 0;
 	signal(SIGINT, ft_handle_sigint);
-	signal(SIGQUIT, ft_handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	tcgetattr(STDIN_FILENO, &data.termios);
 	data.env = ft_getenv(env);
 	exit_status(&data.env);
 
 	while (true)
 	{
+		g_signal = 1;
 		if (ft_parsing_loop(&data))
 			break ;
 		ft_find_path(data);
 		ft_debug(data);
+		g_signal = 3;
+		signal(SIGQUIT, ft_handle_sigquit);
 		if (data.cmds)
 			ft_execute(&data);
+		signal(SIGQUIT, SIG_IGN);
 		ft_annihilation(&data);
-		g_signal = 0;
 		// perror("error:");
 		// printf("exit: %d\n", data.exit_status);
 		// printf("errno: %d\n", errno);
 		// break;
 	}
-	clear_history();
+	rl_clear_history();
 	ft_cleanup_env(data.env);
 	return (0);
 }

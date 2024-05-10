@@ -29,6 +29,7 @@ t_env	*arr_to_list(char **env_cpy, int size)
 		i++;
 	}
 	free_arr(env_cpy, size);
+	(void)tmp;
 	return (list);
 }
 

@@ -28,6 +28,7 @@ SRC_FILES = main cleanup signal \
 			parse/loop \
 			parse/quotes \
 			parse/expansion \
+			parse/expander_alba \
 			parse/heredoc_main \
 			parse/heredoc_sub \
 			parse/heredoc_utils \
