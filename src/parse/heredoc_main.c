@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 13:57:02 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:16:57 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	ft_hd_after_first(char **joined, char **temp,
 	{
 		*joined = ft_strjoin_ex(ft_strjoin_ex(*joined, *temp, 3), "\n", 1);
 		*temp = ft_hd_process(data->termios);
-		if (g_signal == SIGINT)
+		if (g_signal == 4)
 		{
 			free(*joined);
 			free(*temp);
@@ -54,15 +54,13 @@ static void	ft_here_doc_loop(char *prompt, t_data *data)
 	char	*joined;
 	char	*delimiter;
 
-	g_signal = 0;
-	printf("prompt: %s\n", prompt);
 	delimiter = ft_find_delimiter(prompt + 2);
 	temp = ft_hd_process(data->termios);
-	if (g_signal == SIGINT)
-	{
-		free(temp);
-		return ;
-	}
+	// if (g_signal == SIGINT)
+	// {
+	// 	free(temp);
+	// 	return ;
+	// }
 	if (!temp)
 		temp = ft_strdup(delimiter);
 	joined = ft_calloc(1, 1);
@@ -99,6 +97,7 @@ static char *ft_find_command_after(char *prompt)
 	int i;
 
 	i = 0;
+
 	while (prompt[i] == ' ')
 		i++;
 	while (prompt[i] != ' ')
@@ -128,7 +127,7 @@ char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 		str = ft_here_doc_pipe(sub, str, data);
 	free(sub);
 	free(prompt);
-	if (g_signal == SIGINT)
+	if (g_signal == 4)
 	{
 		free(str);
 		return (ft_calloc(1, 1));

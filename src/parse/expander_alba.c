@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:51:19 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/10 13:35:56 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:38:59 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,23 +107,18 @@ char	*ft_expand_var(char *s, t_env **env)
 	start = 0;
 	aux = NULL;
 	var_name = NULL;
-	printf("s: %s\n", s);
-	
 	while (s[i] != '\0')
 	{
 		if (s[i] == 36)
 		{
-			printf("%c ", s[i]);
 			if (start == 0)
 				aux = ft_substr(s, start, i - start);
 			else
 				aux = ft_strjoin_mod(aux, ft_substr(s, start, i - start));
-			printf("aux: %s\n", aux);
 			start = ++i;
 			while (s[i] != 32 && s[i] != 36 && s[i] != '\0' && s[i] != 39)
 				i++;
 			var_name = ft_substr(s, start, i - start);
-			printf("var: %s\n", var_name);
 			var_name = ft_strdup(search_var_name(var_name, env));
 			aux = ft_strjoin_mod(aux, var_name);
 			start = i;
@@ -153,12 +148,12 @@ char	*correct_double_marks(char *content, t_env **env)
 
 char	*ft_expander(char *str, t_env **env)
 {
+	if (mark_search(str) != 0)
+		str = ft_substr(str, 1, (ft_strlen(str) - 2));
 	if (mark_search(str) != 2)
 	{
 		if (search_existing_var(str) > 0)
 			str = ft_expand_var(str, env);
 	}
-	if (mark_search(str) != 0)
-		str = ft_substr(str, 1, (ft_strlen(str) - 2));
 	return (str);
 }

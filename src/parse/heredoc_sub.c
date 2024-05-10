@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 10:54:14 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/08 12:51:20 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:12:07 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static char	*ft_hd_parent_kill(int fd[2], pid_t pid, struct termios termios)
 	close(fd[0]);
 	kill(pid, SIGKILL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &termios);
-	write(STDOUT_FILENO, "\n", 1);
 	return (ft_calloc(1, 1));
 }
 
@@ -77,7 +76,7 @@ char	*ft_hd_process(struct termios termios)
 		close(fd[1]);
 		while (true)
 		{
-			if (g_signal == SIGINT)
+			if (g_signal == 4)
 				return (ft_hd_parent_kill(fd, pid, termios));
 			if (waitpid(pid, &status, WNOHANG) > 0)
 				return (ft_hd_parent_success(fd, status));

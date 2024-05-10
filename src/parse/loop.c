@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 14:00:25 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:39:27 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static char	**ft_here_doc_capture(char *prompt, t_data *data)
 	char	*str;
 	char	**cmds;
 
+	g_signal = 2;
 	if (ft_strrchr(prompt, '|'))
 		str = ft_here_doc(prompt, true, data);
 	else
@@ -41,6 +42,7 @@ static char	**ft_parsing(char *prompt, t_data *data)
 		cmds = ft_split(prompt, '|');
 	else
 		cmds = ft_split(prompt, '\0');
+	g_signal = 1;
 	i = -1;
 	while (cmds[++i])
 	{
@@ -71,11 +73,8 @@ int	ft_parsing_loop(t_data *data)
 		prompt = ft_strdup_ex("", prompt);
 	cmds = ft_parsing(prompt, data);
 	redirect = ft_redirections(cmds);
-
 	cmds = ft_clean_cmds(cmds);
-
 	data->cmds = ft_setup_nodes(cmds, redirect, data->env);
-
 	data->n_of_cmds = ft_double_ptr_amount(cmds);
 	ft_clean_double_ptr(cmds);
 	ft_clean_double_ptr(redirect);
