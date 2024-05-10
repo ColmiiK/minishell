@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 16:16:57 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:17:47 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	ft_hd_after_first(char **joined, char **temp,
 		*temp = ft_hd_process(data->termios);
 		if (g_signal == 4)
 		{
+			free(*delimiter);
 			free(*joined);
 			free(*temp);
 			return (1);
@@ -56,11 +57,12 @@ static void	ft_here_doc_loop(char *prompt, t_data *data)
 
 	delimiter = ft_find_delimiter(prompt + 2);
 	temp = ft_hd_process(data->termios);
-	// if (g_signal == SIGINT)
-	// {
-	// 	free(temp);
-	// 	return ;
-	// }
+	if (g_signal == 4)
+	{
+		free(delimiter);
+		free(temp);
+		return ;
+	}
 	if (!temp)
 		temp = ft_strdup(delimiter);
 	joined = ft_calloc(1, 1);
@@ -98,11 +100,12 @@ static char *ft_find_command_after(char *prompt)
 
 	i = 0;
 
-	while (prompt[i] == ' ')
+	printf("-> %s\n", prompt);
+	while (prompt[i] && prompt[i] == ' ')
 		i++;
-	while (prompt[i] != ' ')
+	while (prompt[i] && prompt[i] != ' ')
 		i++;
-	while (prompt[i] == ' ')
+	while (prompt[i] && prompt[i] == ' ')
 		i++;
 	temp = ft_substr(prompt, i, ft_strlen(prompt + i));
 	return (temp);
@@ -116,6 +119,7 @@ char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 	str = NULL;
 	prompt = ft_fix_prompt(prompt);
 	ft_here_doc_loop(ft_strnstr(prompt, "<<", ft_strlen(prompt)), data);
+	printf("-> %s\n", prompt);
 	sub = ft_find_command_after(prompt + 2);
 	if (!pipe)
 	{

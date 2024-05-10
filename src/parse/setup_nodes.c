@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 16:39:38 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:19:22 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds,
 	while (current)
 	{
 		current->args = ft_split_prev(cmds[++i], ' ', '\\');
-		current->cmd = ft_strdup(ft_strtok(cmds[i], " ")); // TODO THISSSSS!!!!!!!!!!! when <<a
+		if (!*current->args)
+			current->args = ft_split(cmds[i], ' ');
+		current->cmd = ft_strdup(ft_strtok(cmds[i], " "));
 		current->cmd = ft_argument_fix(current->cmd, env);
 		current->redirect->in_fd = ft_determine_in_fd(redirect[i]);
 		current->redirect->out_fd = ft_determine_out_fd(redirect[i]);
