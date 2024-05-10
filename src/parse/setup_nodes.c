@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/07 17:54:22 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:17:33 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ static int	ft_determine_out_fd(char *redirect)
 
 static char	*ft_argument_fix(char *str, t_env *env)
 {
+	// str = ft_expand_variables(str, env);
+
 	while (ft_strnstr(str, "$", ft_strlen(str))
 		&& !ft_strnstr(str, "\\$", ft_strlen(str)))
-		str = ft_expand_variables(str, env);
+			str = ft_expander(str, &env);
 	str = ft_pop(str, '\"', true);
 	str = ft_pop(str, '\'', true);
 	str = ft_pop(str, '\\', true);
@@ -83,6 +85,7 @@ static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds,
 			current->args[j] = ft_argument_fix(current->args[j], env);
 		current = current->next;
 	}
+
 	return (head);
 }
 
@@ -110,6 +113,7 @@ t_cmd	*ft_setup_nodes(char **cmds, char **redirect, t_env *env)
 			current->next = new_node;
 		current = new_node;
 	}
+
 	head = ft_fill_nodes(head, cmds, redirect, env);
 	return (head);
 }

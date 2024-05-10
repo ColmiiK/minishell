@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 17:52:48 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:14:58 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		ft_precheck(char *line);
 // expander
 char	*ft_expand_var(char *str, t_env **env);
 char	*correct_double_marks(char *content, t_env **env);
-int		ft_expander(t_lists **link_list, t_env **env);
+char	*ft_expander(char *str, t_env **env);
 // expander_utils
 int		mark_search(char *content);
 int		nbr_of_marks(char *content, int c);

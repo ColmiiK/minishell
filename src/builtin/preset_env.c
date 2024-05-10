@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:06:56 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:54:33 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 11:59:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_env	*arr_to_list(char **env_cpy, int size)
 		i++;
 	}
 	free_arr(env_cpy, size);
+	(void)tmp;
 	return (list);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 12:43:04 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:57:02 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	ft_here_doc_loop(char *prompt, t_data *data)
 	char	*delimiter;
 
 	g_signal = 0;
+	printf("prompt: %s\n", prompt);
 	delimiter = ft_find_delimiter(prompt + 2);
 	temp = ft_hd_process(data->termios);
 	if (g_signal == SIGINT)

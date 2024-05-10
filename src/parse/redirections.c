@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 12:46:03 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 12:31:23 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ static char	*ft_trim_redirect(char *str, char chr)
 	{
 		len = ptr - str;
 		trimmed = ft_calloc(len + 1, sizeof(char));
-		ft_strlcpy(trimmed, str, len);
+		ft_strlcpy(trimmed, str, len + 1);
 		trimmed[len] = 0;
 		return (trimmed);
 	}

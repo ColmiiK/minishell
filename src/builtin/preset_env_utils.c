@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:07:10 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 12:39:20 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 11:59:31 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ char	*get_content_env(char *str)
 {
 	char	*content;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
 	while (str[i] != 61 && str[i] != '\0')
 		i++;
 	if (str[i] == 61)

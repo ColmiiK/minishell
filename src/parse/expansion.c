@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:58:01 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 17:01:11 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:53:40 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*ft_find_variable(char *prompt, t_env *env)
 
 	str = ft_strdup(prompt);
 	j = -1;
-	while (str[++j] && str[j] != ' ')
+	while (str[++j] && (str[j] != ' '))
 		;
 	token = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
 	if (!token)

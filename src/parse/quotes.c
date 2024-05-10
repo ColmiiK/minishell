@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:54:41 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/02 12:26:22 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:53:19 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ char	*ft_handle_quotes(char *prompt)
 		printf("Unclosed quotes not implemented\n");
 		return (str);
 	}
+	printf("quotes: %s\n", str);
 	return (str);
 }
