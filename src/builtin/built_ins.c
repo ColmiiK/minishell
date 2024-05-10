@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:56:45 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 17:30:50 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:19:51 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int	built_in_checker(char *str)
 
 int	built_in_selector(t_data *data, char **str, int infd, int outfd)
 {
+	int	i;
+
+	i = 0;
 	if (!ft_strncmp(str[0], "echo", 5))
 		data->exit_status = ft_echo(str);
 	else if (!ft_strncmp(str[0], "cd", 3))
@@ -33,9 +36,11 @@ int	built_in_selector(t_data *data, char **str, int infd, int outfd)
 	else if (!ft_strncmp(str[0], "pwd", 4))
 		data->exit_status = ft_pwd();
 	else if (!ft_strncmp(str[0], "export", 7))
-		data->exit_status = ft_export(&data->env, str[1]);
+		while (str[++i] != NULL)
+			data->exit_status = ft_export(&data->env, str[i]);
 	else if (!ft_strncmp(str[0], "unset", 6))
-		data->exit_status = ft_unset(&data->env, str[1]);
+		while (str[++i] != NULL)
+			data->exit_status = ft_unset(&data->env, str[i]);
 	else if (!ft_strncmp(str[0], "env", 4))
 		data->exit_status = ft_env(&data->env);
 	else if (!ft_strncmp(str[0], "exit", 5))

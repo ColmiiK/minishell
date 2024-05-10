@@ -6,10 +6,9 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/09 17:51:40 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:42:28 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <minishell.h>
 
@@ -70,7 +69,7 @@ int	check_correct_input(char *str)
 			return (-1);
 		}
 		else if ((str[i] > 0 && str[i] < 48) || (str[i] > 57 && str[i] < 65)
-			|| (str[i] > 90 && str[i] < 97) || str[i] > 122)
+			|| (str[i] > 90 && str[i] < 95) || (str[i] == 96) || (str[i] > 122))
 		{
 			printf("incorrect var nam: must only use alpha-numeric chars\n");
 			return (-1);
