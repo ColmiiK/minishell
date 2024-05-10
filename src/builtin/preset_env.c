@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preset_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 19:06:56 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 16:54:33 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:36:49 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_env	*arr_to_list(char **env_cpy, int size)
 	tmp = list;
 	while (i < size)
 	{
-		tmp = next_node(&list, create_node(env_cpy[i]));
+		if (ft_strncmp(env_cpy[i], "OLDPWD", 6))
+			tmp = next_node(&list, create_node(env_cpy[i]));
 		i++;
 	}
 	free_arr(env_cpy, size);

@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:40:17 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/08 17:06:43 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:45:13 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_cd(char **arg, t_env **node)
 	int		size;
 
 	location = init_location();
-	if (arg[1] == NULL)
+	if (arg[1] == NULL || !ft_strcmp(arg[1], "~"))
 	{
 		path = empty_cd(node);
 		ft_abs_cd(path);

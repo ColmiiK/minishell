@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 15:46:40 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/09 16:23:46 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/05/10 13:04:31 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/10 15:17:09 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	ft_free_node(t_env *node)
 
 int	ft_unset(t_env **env, char *str)
 {
-    t_env	*prev;
-    t_env	*node_to_delete;
+	t_env	*prev;
+	t_env	*node_to_delete;
 
-    prev = *env;
-    if (!ft_strcmp((*env)->name, str))
-    {
-        *env = (*env)->next;
-        ft_free_node(prev);
-        return (0);
-    }
+	prev = *env;
+	if (!ft_strcmp((*env)->name, str))
+	{
+		*env = (*env)->next;
+		ft_free_node(prev);
+		return (0);
+	}
 	while (prev->next != NULL && (ft_strcmp(prev->next->name, str)))
 		prev = prev->next;
 	if (prev->next == NULL)
