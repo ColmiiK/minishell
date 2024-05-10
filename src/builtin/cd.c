@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:40:17 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/10 14:45:13 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:43:29 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,14 @@ int	ft_abs_cd(char *arg)
 int	ft_cd(char **arg, t_env **node)
 {
 	char	*location;
-	char	*path;
 	int		size;
 
 	location = init_location();
 	if (arg[1] == NULL || !ft_strcmp(arg[1], "~"))
-	{
-		path = empty_cd(node);
-		ft_abs_cd(path);
-		update_location(node, init_location(), location);
-		return (0);
-	}
-	if (location != NULL)
+		homepath_cd(node, location);
+	else if (!strcmp(arg[1], "-"))
+		oldpath_cd(node);
+	else if (location != NULL)
 	{
 		size = ft_strlen(location);
 		if (!ft_strncmp(location, arg[1], size))
@@ -94,8 +90,8 @@ int	ft_cd(char **arg, t_env **node)
 		else
 			ft_rel_cd(arg[1]);
 		update_location(node, init_location(), location);
-		return (0);
 	}
 	else
 		return (1);
+	return (0);
 }

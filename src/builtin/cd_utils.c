@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:07:50 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/10 14:33:50 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:45:14 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*empty_cd(t_env **env)
 			return (path->content);
 		path = path->next;
 	}
-	return (printf("HOME not set\n"), NULL);
+	return (printf("cd: HOME not set\n"), NULL);
 }
 
 void	ft_create_pwd(t_env **env, char *str)

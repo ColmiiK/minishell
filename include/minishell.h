@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 17:52:48 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:42:34 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ int		ft_cd(char **arg, t_env **node);
 char	*empty_cd(t_env **env);
 void	ft_create_pwd(t_env **env, char *str);
 int		update_location(t_env **node, char *new, char *old);
+//cd_utils2
+int		oldpath_cd(t_env **node);
+int		homepath_cd(t_env **node, char *location);
 //exit
 int		ft_exit(t_data *data, int infd, int outfd);
 //exit_status

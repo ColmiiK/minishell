@@ -39,6 +39,7 @@ SRC_FILES = main cleanup signal \
 			builtin/echo \
 			builtin/cd \
 			builtin/cd_utils \
+			builtin/cd_utils2 \
 			builtin/pwd \
 			builtin/export \
 			builtin/export_utils \
