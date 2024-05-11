@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 11:56:19 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/09 18:00:34 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:05:04 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ void				*ft_calloc(size_t n, size_t size);
  * @return char*
  */
 char				*ft_strdup(const char *s);
+char				*ft_strndup(const char *s, int n);
 
 /**
  * @brief Duplicates a string from stack memory to heap memory,

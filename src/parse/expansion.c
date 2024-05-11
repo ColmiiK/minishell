@@ -6,26 +6,26 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:58:01 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 13:53:40 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:17:11 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*ft_loop_var(t_env *env, char *token, char *str)
+static char	*ft_loop_var(t_env *env, char *token)
 {
 	while (env)
 	{
 		if (!ft_strncmp(env->name, token + 1, ft_strlen(token)))
 		{
 			free(token);
-			free(str);
 			if (env->content)
 				return(env->content);
 			return (NULL);
 		}
 		env = env->next;
 	}
+	free(token);
 	return (NULL);
 }
 
@@ -37,14 +37,16 @@ static char	*ft_find_variable(char *prompt, t_env *env)
 	char	*temp;
 
 	str = ft_strdup(prompt);
-	j = -1;
-	while (str[++j] && (str[j] != ' '))
+	j = 0;
+	while (str[++j] && ft_isalpha(str[j]))
 		;
 	token = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
 	if (!token)
 		return (NULL);
 	ft_strlcpy(token, str, j + 1);
-	temp = ft_loop_var(env, token, str);
+	temp = ft_loop_var(env, token);
+	temp = ft_strjoin_ex(temp, str + j, 0);
+	free(str);
 	if (temp)
 		return (temp);
 	return (NULL);
@@ -65,11 +67,7 @@ char	*ft_expand_variables(char *prompt, t_env *env)
 	var = ft_find_variable(prompt + i, env);
 	if (var)
 	{
-		str = ft_strjoin_ex(str, var, 1);
-		while ((prompt[i] != ' ' && prompt[i] != '\n'
-				&& prompt[i] != '\"' && prompt[i] != '\'') && prompt[i])
-			i++;
-		str = ft_strjoin_ex(str, prompt + i, 1);
+		str = ft_strjoin_ex(str, var, 3);
 		free(prompt);
 		return (str);
 	}

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:45:24 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 17:22:55 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:00:43 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,21 @@ char	*ft_fix_prompt(char *prompt)
 	fixed = ft_strjoin_ex(prompt, fixed, 2);
 	temp = ft_strdup(fixed + i);
 	free(fixed);
+	return (temp);
+}
+
+char *ft_find_delimiter(char *prompt)
+{
+	char *temp;
+	int i;
+	int j;
+
+	i = 0;
+	while (prompt[i] == ' ')
+		i++;
+	j = 0;
+	while (prompt[i + j] && ft_isalnum(prompt[i + j]))
+		j++;
+	temp = ft_substr(prompt, i, j);
 	return (temp);
 }

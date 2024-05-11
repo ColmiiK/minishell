@@ -6,36 +6,11 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 12:56:37 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:36:47 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-static char	**ft_get_variables(t_env *env)
-{
-	int		i;
-	int		len;
-	char	**variables;
-
-	i = -1;
-	len = list_length(&env);
-	variables = (char **)malloc(sizeof(char *) * (len + 1));
-	if (!variables)
-		return (NULL);
-	while (++i < len)
-	{
-		variables[i] = ft_strdup(env->name);
-		if (env->content)
-		{
-			variables[i] = ft_strjoin_ex(variables[i], "=", 1);
-			variables[i] = ft_strjoin_ex(variables[i], env->content, 1);
-		}
-		env = env->next;
-	}
-	variables[i] = NULL;
-	return (variables);
-}
 
 static int	ft_fd_juggling(int in_fd, int out_fd)
 {
@@ -61,17 +36,14 @@ static int ft_builtin_execute(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 
 	saved_in_fd = dup(0);
 	saved_out_fd = dup(1);
-
 	if (ft_fd_juggling(in_fd, out_fd))
 		return (1);
 	if (built_in_checker(cmd->cmd))
 		built_in_selector(data, cmd->args, saved_in_fd, saved_out_fd);
-
 	dup2(saved_in_fd, 0);
 	dup2(saved_out_fd, 1);
 	close(saved_in_fd);
 	close(saved_out_fd);
-
 	return (0);
 }
 
@@ -106,11 +78,11 @@ static int ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 {
 	fd[1] = temp->redirect->out_fd;
-	if (built_in_checker(temp->cmd))
+	if (built_in_checker(temp->args[0]))
 	{
-		if (built_in_checker(temp->cmd) != 2)
+		if (built_in_checker(temp->args[0]) != 2)
 			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
-		else if (built_in_checker(temp->cmd) == 2 && data->n_of_cmds == 1)
+		else if (built_in_checker(temp->args[0]) == 2 && data->n_of_cmds == 1)
 			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
 	}
 	else
@@ -135,9 +107,9 @@ void	ft_execute(t_data *data)
 	while (temp->next)
 	{
 		pipe(fd);
-		if (built_in_checker(temp->cmd))
+		if (built_in_checker(temp->args[0]))
 		{
-			if (built_in_checker(temp->cmd) != 2)
+			if (built_in_checker(temp->args[0]) != 2)
 				data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
 		}
 		else

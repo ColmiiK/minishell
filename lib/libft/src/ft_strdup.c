@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:31:28 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/04/09 12:28:33 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:04:44 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,27 @@ char	*ft_strdup(const char *s)
 		i++;
 	}
 	dest[i] = 0;
+	return (dest);
+}
+
+char	*ft_strndup(const char *s, int n)
+{
+	int		i;
+	int		len;
+	char	*dest;
+
+	len = ft_strlen(s);
+	if (n < len)
+		len = n;
+	i = 0;
+	dest = (char *)malloc(sizeof(*s) * (len + 1));
+	if (!dest)
+		return (NULL);
+	while (i < len)
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
 	return (dest);
 }

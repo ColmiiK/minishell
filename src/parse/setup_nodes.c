@@ -6,54 +6,17 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 18:19:22 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:27:14 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	ft_determine_in_fd(char *redirect)
-{
-	int		fd;
-	int		i;
-	char	*str;
-
-	redirect = ft_strchr(redirect, ':');
-	redirect++;
-	i = -1;
-	while (redirect[++i] != ' ')
-		;
-	str = ft_substr(redirect, 0, i);
-	if (ft_isdigit(*redirect))
-		fd = ft_atoi(redirect);
-	else
-		fd = open(str, O_RDONLY);
-	free(str);
-	return (fd);
-}
-
-static int	ft_determine_out_fd(char *redirect)
-{
-	int		fd;
-
-	redirect = ft_strrchr(redirect, ':');
-	redirect++;
-	if (ft_isdigit(*redirect))
-		fd = ft_atoi(redirect);
-	else if (ft_strnstr(redirect - 4, "(A)", ft_strlen(redirect)))
-		fd = open(redirect, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		fd = open(redirect, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	return (fd);
-}
-
 static char	*ft_argument_fix(char *str, t_env *env)
 {
-	// str = ft_expand_variables(str, env);
-
 	while (ft_strnstr(str, "$", ft_strlen(str))
 		&& !ft_strnstr(str, "\\$", ft_strlen(str)))
-			str = ft_expander(str, &env);
+			str = ft_expand_variables(str, env);
 	str = ft_pop(str, '\"', true);
 	str = ft_pop(str, '\'', true);
 	str = ft_pop(str, '\\', true);
@@ -64,30 +27,47 @@ static char	*ft_argument_fix(char *str, t_env *env)
 	return (str);
 }
 
+static void ft_helper_fill(t_cmd *current, char *str, char *redirect, t_env *env)
+{
+	int j;
+
+	current->args = ft_split_prev(str, ' ', '\\');
+	if (!*current->args)
+	{
+		ft_clean_double_ptr(current->args);
+		current->args = ft_split(str, ' ');
+		if (!*current->args)
+		{
+			ft_clean_double_ptr(current->args);
+			current->args = ft_split(" ", '\0');
+		}
+	}
+	if (!*str)
+		current->cmd = ft_strdup("");
+	else
+		current->cmd = ft_strdup(ft_strtok(str, " "));
+	current->cmd = ft_argument_fix(current->cmd, env);
+	current->redirect->in_fd = ft_determine_in_fd(redirect);
+	current->redirect->out_fd = ft_determine_out_fd(redirect);
+	j = -1;
+	while (current->args[++j])
+		current->args[j] = ft_argument_fix(current->args[j], env);
+}
+
 static t_cmd	*ft_fill_nodes(t_cmd *head, char **cmds,
 	char **redirect, t_env *env)
 {
 	int		i;
-	int		j;
 	t_cmd	*current;
 
 	i = -1;
 	current = head;
 	while (current)
 	{
-		current->args = ft_split_prev(cmds[++i], ' ', '\\');
-		if (!*current->args)
-			current->args = ft_split(cmds[i], ' ');
-		current->cmd = ft_strdup(ft_strtok(cmds[i], " "));
-		current->cmd = ft_argument_fix(current->cmd, env);
-		current->redirect->in_fd = ft_determine_in_fd(redirect[i]);
-		current->redirect->out_fd = ft_determine_out_fd(redirect[i]);
-		j = -1;
-		while (current->args[++j])
-			current->args[j] = ft_argument_fix(current->args[j], env);
+		i++;
+		ft_helper_fill(current, cmds[i], redirect[i], env);
 		current = current->next;
 	}
-
 	return (head);
 }
 
@@ -115,7 +95,6 @@ t_cmd	*ft_setup_nodes(char **cmds, char **redirect, t_env *env)
 			current->next = new_node;
 		current = new_node;
 	}
-
 	head = ft_fill_nodes(head, cmds, redirect, env);
 	return (head);
 }

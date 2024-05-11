@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 15:42:34 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:14:03 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,16 +189,20 @@ char	*ft_expand_variables(char *prompt, t_env *env);
 char	*ft_here_doc(char *prompt, bool pipe, t_data *data);
 char	*ft_hd_process(struct termios termios);
 void	ft_hd_finish(char *temp, char *joined);
+char	*ft_find_delimiter(char *prompt);
 char	*ft_fix_hd_outfile(char *s1);
 char	*ft_fix_prompt(char *prompt);
 // Handle quotes
-char	*ft_handle_quotes(char *prompt);
+char	*ft_handle_quotes(char *prompt, bool d_flag, bool s_flag);
+bool	ft_check_metachars(char c, int mode);
 // Parses redirections
 char	**ft_redirections(char **cmds);
 // Cleans commands
 char	**ft_clean_cmds(char **cmds);
 // Setup nodes for the list
 t_cmd	*ft_setup_nodes(char **cmds, char **redirect, t_env *env);
+int		ft_determine_out_fd(char *redirect);
+int		ft_determine_in_fd(char *redirect);
 
 // Free double pointer used in parsing
 void	ft_clean_double_ptr(char **ptr);
@@ -212,6 +216,7 @@ int		ft_perror(char *str);
 
 // EXECUTION
 void	ft_execute(t_data *data);
+char	**ft_get_variables(t_env *env);
 int		ft_find_path(t_data data);
 
 

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 13:00:45 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:19:36 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ void	ft_clean_double_ptr(char **ptr)
 		free(ptr[i]);
 	free(ptr);
 }
-
-/*
-	t_list	*node;
-	t_list	*next_node;
-
-	if (!lst || !del)
-		return ;
-	node = *lst;
-	while (node)
-	{
-		del(node->content);
-		next_node = node->next;
-		free(node);
-		node = next_node;
-	}
-	*lst = 0;
-*/
 
 void	ft_annihilation(t_data *data)
 {

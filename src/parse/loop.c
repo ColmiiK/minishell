@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 16:39:27 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:57:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,45 @@ static char	**ft_here_doc_capture(char *prompt, t_data *data)
 	return (cmds);
 }
 
+static int ft_check_redirects(char *str, bool first, bool d_flag, bool s_flag)
+{
+	while (*str)
+	{
+		if (!s_flag && *str == '\"')
+			d_flag = !d_flag;
+		if (!d_flag && *str == '\'')
+			s_flag = !s_flag;
+		if ((!s_flag || !d_flag ) && first == true && *str == '|')
+			return (1);
+		if ((!s_flag && !d_flag ) && ft_check_metachars(*str, 3))
+		{
+			str++;
+			if (*str == '<' || *str == '>')
+				str++;
+			while (*str && *str == ' ')
+				str++;
+			if (!*str || ft_check_metachars(*str, 3))
+				return (1);
+			return (0);
+		}
+		if (!ft_check_metachars(*str, 3) && *str != ' ')
+			first = false;
+		str++;
+	}
+	return (0);
+}
+
 static char	**ft_parsing(char *prompt, t_data *data)
 {
 	char	**cmds;
 	char	*temp;
 	int		i;
 
+	if (ft_check_redirects(prompt, true, false, false))
+	{
+		ft_putendl_fd("minishell: syntax error near unexpected token", 2);
+		return (ft_split(" ", ' '));
+	}
 	if (ft_strnstr(prompt, "<<", ft_strlen(prompt)))
 		cmds = ft_here_doc_capture(prompt, data);
 	else if (!ft_strnstr(prompt, "\\|", ft_strlen(prompt)))
@@ -68,7 +101,7 @@ int	ft_parsing_loop(t_data *data)
 	}
 	if (prompt[0] != '\0')
 		add_history(prompt);
-	prompt = ft_handle_quotes(prompt);
+	prompt = ft_handle_quotes(prompt, false, false);
 	if (ft_all_same(prompt, ' ') || ft_all_same(prompt, '\t'))
 		prompt = ft_strdup_ex("", prompt);
 	cmds = ft_parsing(prompt, data);

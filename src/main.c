@@ -6,11 +6,18 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 16:03:34 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:10:37 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+/* TODO
+
+	command not found error message
+	pwd seg fault?
+
+*/
 
 int	g_signal;
 
@@ -30,6 +37,19 @@ void	ft_debug(t_data data)
 	}
 }
 
+int ft_check_fds(t_data data)
+{
+	if (data.cmds)
+	{
+		if (data.cmds->redirect->in_fd == -1)
+			return (1);
+		if (data.cmds->redirect->out_fd == -1)
+			return (1);			
+		data.cmds = data.cmds->next;
+	}
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
@@ -41,7 +61,6 @@ int	main(int ac, char **av, char **env)
 	tcgetattr(STDIN_FILENO, &data.termios);
 	data.env = ft_getenv(env);
 	exit_status(&data.env);
-
 	while (true)
 	{
 		g_signal = 1;
@@ -51,14 +70,12 @@ int	main(int ac, char **av, char **env)
 		ft_debug(data);
 		g_signal = 3;
 		signal(SIGQUIT, ft_handle_sigquit);
-		if (data.cmds)
+		if (ft_check_fds(data))
+			ft_putendl_fd("minishell: No such file or directory", 2);
+		else if (data.cmds)
 			ft_execute(&data);
 		signal(SIGQUIT, SIG_IGN);
 		ft_annihilation(&data);
-		// perror("error:");
-		// printf("exit: %d\n", data.exit_status);
-		// printf("errno: %d\n", errno);
-		// break;
 	}
 	rl_clear_history();
 	ft_cleanup_env(data.env);

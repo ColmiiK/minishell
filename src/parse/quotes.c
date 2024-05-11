@@ -6,102 +6,126 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:54:41 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/10 16:46:09 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:15:18 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-bool	ft_check_metachars(char *result, int i, bool flag, bool double_quote)
+bool	ft_check_metachars(char c, int mode)
 {
-	if (double_quote == true)
+	if (mode == 1)
 	{
-		if (flag && (result[i] == '\\' || result[i] == '|' || result[i] == '<'
-				|| result[i] == '>' || result[i] == ' ' || result[i] == '\t'
-				|| result[i] == '\n' || result[i] == '(' || result[i] == ')'
-				|| result[i] == ';' || result[i] == '&' || result[i] == '\''))
+		if (c == '$' || c == '\\' || c == '|' || c == '<' || c == '>'
+			|| c == ' ' || c == '\t' || c == '\n' || c == '(' || c == ')'
+			|| c == ';' || c == '&' || c == '\"')
 			return (true);
 	}
-	else if (double_quote == false)
+	else if (mode == 2)
 	{
-		if (flag && (result[i] == '$' || result[i] == '\\' || result[i] == '|'
-				|| result[i] == '<' || result[i] == '>' || result[i] == ' '
-				|| result[i] == '\t' || result[i] == '\n' || result[i] == '('
-				|| result[i] == ')' || result[i] == ';' || result[i] == '&'
-				|| result[i] == '\"'))
+		if (c == '\\' || c == '|' || c == '<' || c == '>' || c == ' '
+			|| c == '\t' || c == '\n' || c == '(' || c == ')' || c == ';'
+			|| c == '&' || c == '\'')
+			return (true);
+	}
+	else if (mode == 3)
+	{
+		if (c == '\\' || c == '|' || c == '<' || c == '>'
+			|| c == '\t' || c == '\n' || c == '(' || c == ')'
+			|| c == ';' || c == '&')
 			return (true);
 	}
 	return (false);
 }
 
-static char	*ft_single_quotes(char *str, char quotes)
+char *ft_single_quotes(char *str)
 {
-	bool	flag;
-	char	*result;
-	int		i;
+	char *temp;
+	int i;
 
-	result = ft_strdup_ex(str, str);
+	temp = ft_strdup(str);
 	i = -1;
-	flag = false;
-	while (result[++i])
+	while (temp[++i])
 	{
-		if (i == 0 && result[i] == quotes)
-			flag = !flag;
-		else if (i != 0 && result[i - 1] != '\\' && result[i] == quotes)
-			flag = !flag;
-		if (ft_check_metachars(result, i, flag, false) == true)
-			result = ft_strinsert(result, i++, "\\", 1);
+		if (ft_check_metachars(temp[i], 1))
+		{
+			temp = ft_strinsert(temp, i, "\\", 0);
+			i++;
+		}
 	}
-	if (flag == true)
-	{
-		free(result);
-		return (ft_calloc(1, 1));
-	}
-	return (result);
+	
+	return (temp);
 }
 
-static char	*ft_double_quotes(char *str, char quotes)
+char *ft_double_quotes(char *str)
 {
-	bool	flag;
-	char	*result;
-	int		i;
+	char *temp;
+	int i;
 
-	result = ft_strdup_ex(str, str);
+	temp = ft_strdup(str);
 	i = -1;
-	flag = false;
-	while (result[++i])
+	while (temp[++i])
 	{
-		if (i == 0 && result[i] == quotes)
-			flag = !flag;
-		else if (i != 0 && result[i - 1] != '\\' && result[i] == quotes)
-			flag = !flag;
-		if (ft_check_metachars(result, i, flag, true) == true)
-			result = ft_strinsert(result, i++, "\\", 1);
+		if (ft_check_metachars(temp[i], 2))
+		{
+			temp = ft_strinsert(temp, i, "\\", 0);
+			i++;
+		}
 	}
-	if (flag == true)
-	{
-		free(result);
-		return (ft_calloc(1, 1));
-	}
-	return (result);
+	
+	return (temp);
 }
 
-char	*ft_handle_quotes(char *prompt)
+static bool ft_check_amount(char *str, bool flag_single, bool flag_double)
 {
-	char	*str;
+	int i;
+	int counter_single;
+	int counter_double;
 
-	if (!*prompt)
-		return (prompt);
-	str = prompt;
-	if (ft_strnstr(str, "\'", ft_strlen(str))) // FIX QUOTE WITHIN QUOTES echo "'$HOME'"
-		str = ft_single_quotes(str, '\'');
-	if (ft_strnstr(str, "\"", ft_strlen(str)))
-		str = ft_double_quotes(str, '\"');
-	if (!str[0])
+	counter_single = 0;
+	counter_double = 0;
+	i = -1;
+	while (str[++i])
 	{
-		printf("Unclosed quotes not implemented\n");
-		return (str);
+		if (!flag_double && str[i] == '\'')
+		{
+			flag_single = !flag_single;
+			counter_single++;
+		}
+		if (!flag_single && str[i] == '\"')
+		{
+			flag_double = !flag_double;
+			counter_double++;
+		}
 	}
-	printf("quotes: %s\n", str);
-	return (str);
+	if (counter_single % 2 != 0 || counter_double % 2 != 0)
+		return (true);
+	return (false);
+}
+
+char *ft_handle_quotes(char *prompt, bool d_flag, bool s_flag)
+{
+	int i;
+
+	if (ft_check_amount(prompt, false, false))
+		return (printf("Unclosed quotes\n"), ft_strdup(""));
+	i = -1;
+	while (prompt[++i])
+	{
+		if (!s_flag && prompt[i] == '\"')
+			d_flag = !d_flag;
+		if (!d_flag && prompt[i] == '\'')
+			s_flag = !s_flag;
+		if (s_flag)
+		{
+			if (ft_check_metachars(prompt[i], 1))
+				prompt = ft_strinsert(prompt, i++, "\\", 1);
+		}
+		else if (d_flag)
+		{
+			if (ft_check_metachars(prompt[i], 2))
+				prompt = ft_strinsert(prompt, i++, "\\", 1);
+		}
+	}
+	return (prompt);
 }
