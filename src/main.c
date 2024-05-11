@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 18:10:37 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:20:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 	command not found error message
 	pwd seg fault?
+	export a then again export a seg fault?
+	fd leak when multiple commands
 
 */
 
