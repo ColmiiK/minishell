@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 13:59:36 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 17:19:51 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/05/12 12:28:17 by alvega-g          #+#    #+#             */
+/*   Updated: 2024/05/12 12:28:43 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,26 @@ void	ft_handle_sigquit(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+int ft_check_fds(t_data data)
+{
+	if (data.cmds)
+	{
+		if (data.cmds->redirect->in_fd == -1)
+			return (1);
+		if (data.cmds->redirect->out_fd == -1)
+			return (1);			
+		data.cmds = data.cmds->next;
+	}
+	return (0);
+}
+
+void ft_first_setup(t_data *data, char **env)
+{
+	signal(SIGINT, ft_handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	tcgetattr(STDIN_FILENO, &data->termios);
+	data->env = ft_getenv(env);
+	exit_status(&data->env);
 }

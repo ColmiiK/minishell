@@ -24,7 +24,7 @@ WHITE = $(shell tput setaf 7)
 
 #Sources
 	
-SRC_FILES = main cleanup signal \
+SRC_FILES = main cleanup utils \
 			parse/loop \
 			parse/quotes \
 			parse/expansion \

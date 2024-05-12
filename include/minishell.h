@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 17:14:03 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:03:34 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <sys/wait.h>
+# include <errno.h>
 
 # define MINI_PROMPT "\033[0;31mminihell$ \033[0m"
 # define MINI_EXIT "\033[0;31m\033[1Aminihell$ \033[0mexit\n"
@@ -53,6 +54,8 @@ typedef struct s_data
 	t_env			*env;
 	struct termios	termios;
 	int				exit_status;
+	int				fork_status;
+	int 			fd[2];
 }	t_data;
 
 // typedef enum e_tokens
@@ -173,52 +176,36 @@ char	*ft_strjoin_mod(char *s1, char *s2);
 
 
 
-
-// Signals
+// Signal handling
 void	ft_handle_sigint(int signum);
 void	ft_handle_sigquit(int signum);
-
-// Main parsing loop
+// Initialization
+void 	ft_first_setup(t_data *data, char **env);
+// Parser & Lexer
 int		ft_parsing_loop(t_data *data);
-
-// Parses env to the list
-t_env	*ft_parse_env(char **env);
-// Expands enviroment variables
 char	*ft_expand_variables(char *prompt, t_env *env);
-// Heredoc
-char	*ft_here_doc(char *prompt, bool pipe, t_data *data);
-char	*ft_hd_process(struct termios termios);
-void	ft_hd_finish(char *temp, char *joined);
-char	*ft_find_delimiter(char *prompt);
-char	*ft_fix_hd_outfile(char *s1);
 char	*ft_fix_prompt(char *prompt);
-// Handle quotes
 char	*ft_handle_quotes(char *prompt, bool d_flag, bool s_flag);
 bool	ft_check_metachars(char c, int mode);
-// Parses redirections
 char	**ft_redirections(char **cmds);
-// Cleans commands
-char	**ft_clean_cmds(char **cmds);
-// Setup nodes for the list
-t_cmd	*ft_setup_nodes(char **cmds, char **redirect, t_env *env);
+int		ft_check_fds(t_data data);
 int		ft_determine_out_fd(char *redirect);
 int		ft_determine_in_fd(char *redirect);
-
-// Free double pointer used in parsing
-void	ft_clean_double_ptr(char **ptr);
-// Free commands, arguments and redirections for next loop
-void	ft_annihilation(t_data *data);
-// Free env list at the end of execution
-void	ft_cleanup_env(t_env *env);
-// Write given error message and return error (1)
-int		ft_perror(char *str);
-
-
-// EXECUTION
+t_cmd	*ft_setup_nodes(char **cmds, char **redirect, t_env *env);
+char	**ft_clean_cmds(char **cmds);
+// Heredoc
+char	*ft_here_doc(char *prompt, bool pipe, t_data *data);
+char	*ft_find_delimiter(char *prompt);
+void	ft_hd_finish(char *temp, char *joined);
+char	*ft_hd_process(struct termios termios);
+char	*ft_fix_hd_outfile(char *s1);
+// Executor
 void	ft_execute(t_data *data);
-char	**ft_get_variables(t_env *env);
 int		ft_find_path(t_data data);
-
-
+char	**ft_get_variables(t_env *env);
+// Cleanup
+void	ft_clean_double_ptr(char **ptr);
+void	ft_annihilation(t_data *data);
+void	ft_cleanup_env(t_env *env);
 
 #endif

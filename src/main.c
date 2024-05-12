@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 21:20:28 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/12 12:28:37 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 /* TODO
 
-	command not found error message
 	pwd seg fault?
 	export a then again export a seg fault?
-	fd leak when multiple commands
 
 */
 
@@ -39,18 +37,7 @@ void	ft_debug(t_data data)
 	}
 }
 
-int ft_check_fds(t_data data)
-{
-	if (data.cmds)
-	{
-		if (data.cmds->redirect->in_fd == -1)
-			return (1);
-		if (data.cmds->redirect->out_fd == -1)
-			return (1);			
-		data.cmds = data.cmds->next;
-	}
-	return (0);
-}
+
 
 int	main(int ac, char **av, char **env)
 {
@@ -58,22 +45,16 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	signal(SIGINT, ft_handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	tcgetattr(STDIN_FILENO, &data.termios);
-	data.env = ft_getenv(env);
-	exit_status(&data.env);
+	ft_first_setup(&data, env);
 	while (true)
 	{
-		g_signal = 1;
 		if (ft_parsing_loop(&data))
 			break ;
 		ft_find_path(data);
-		ft_debug(data);
-		g_signal = 3;
+		// ft_debug(data);
 		signal(SIGQUIT, ft_handle_sigquit);
 		if (ft_check_fds(data))
-			ft_putendl_fd("minishell: No such file or directory", 2);
+			perror("minihell");
 		else if (data.cmds)
 			ft_execute(&data);
 		signal(SIGQUIT, SIG_IGN);

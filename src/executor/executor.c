@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 18:36:47 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/12 12:22:15 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static int ft_builtin_execute(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 static int ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 {
 	pid_t pid;
-	int status;
 	char **variables;
 	
 	pid = fork();
@@ -58,21 +57,23 @@ static int ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 		return (1);
 	if (pid == 0)
 	{
-		status = 127;
+		data->fork_status = 127;
 		if (ft_fd_juggling(in_fd, out_fd))
 			return (1);
 		variables = ft_get_variables(data->env);
 		if (access(cmd->cmd, F_OK) == 0 && access(cmd->cmd, X_OK) == -1)
-			status = 126;
+			data->fork_status = 126;
 		else
 			execve(cmd->cmd, cmd->args, variables);
+		perror("minihell");
+		close(data->fd[0]);
 		ft_clean_double_ptr(variables);
 		ft_cleanup_env(data->env);
 		ft_annihilation(data);
-		exit(status);
+		exit(data->fork_status);
 	}
-	waitpid(pid, &status, 0);
-	return (status);
+	waitpid(pid, &data->fork_status, 0);
+	return (data->fork_status);
 }
 
 static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
@@ -99,28 +100,28 @@ static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 void	ft_execute(t_data *data)
 {
 	int in_fd;
-	int fd[2];
 	t_cmd *temp;
 
+	g_signal = 3;
 	temp = data->cmds;
 	in_fd = data->cmds->redirect->in_fd;
 	while (temp->next)
 	{
-		pipe(fd);
+		pipe(data->fd);
 		if (built_in_checker(temp->args[0]))
 		{
 			if (built_in_checker(temp->args[0]) != 2)
-				data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
+				data->exit_status = ft_builtin_execute(temp, data, in_fd, data->fd[1]);
 		}
 		else
-			data->exit_status = ft_fork(temp, data, in_fd, fd[1]);
-		close(fd[1]);
+			data->exit_status = ft_fork(temp, data, in_fd, data->fd[1]);
+		close(data->fd[1]);
 		if (in_fd != temp->redirect->in_fd)
 			close(in_fd);
-		in_fd = fd[0];
+		in_fd = data->fd[0];
 		temp = temp->next;
 	}
-	ft_execute_last(temp, data, in_fd, fd);
+	ft_execute_last(temp, data, in_fd, data->fd);
 	status_update(&data->env, data->exit_status);
 	return ;
 }

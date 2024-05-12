@@ -6,17 +6,11 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 17:19:36 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/12 12:25:12 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	ft_perror(char *str)
-{
-	perror(str);
-	return (1);
-}
 
 void	ft_clean_double_ptr(char **ptr)
 {
