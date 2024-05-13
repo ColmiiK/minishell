@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/12 13:03:34 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:11:28 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,8 @@ typedef struct s_data
 	struct termios	termios;
 	int				exit_status;
 	int				fork_status;
-	int 			fd[2];
+	int				fd[2];
 }	t_data;
-
-// typedef enum e_tokens
-// {
-// 	PIPE = 0,
-// 	GREAT,
-// 	DOUBLE_GREAT,
-// 	LESS,
-// 	DOUBLE_LESS,
-// 	FILE,
-// 	COMMAND,
-// 	ARG,
-// }	t_tokens;
 
 typedef struct s_lists
 {
@@ -76,19 +64,6 @@ typedef struct s_lists
 	int				token;
 	struct s_lists	*next;
 }	t_lists;
-
-// typedef struct s_cmd
-// {
-// 	char			**cmd_line;
-// 	bool			delimiter;
-// 	int				input;
-// 	int				output;
-// 	int				heredoc;
-// 	int				append;
-// 	int				builtin;
-// 	struct s_cmd	*next;
-// }	t_cmd;
-
 
 
 // LEXER
@@ -114,6 +89,7 @@ int		search_existing_var(char *str);
 int		built_in_checker(char *str);
 int		built_in_selector(t_data *data, char **str, int infd, int outfd);
 // echo
+int		ft_correct_flag(char *str);
 int		ft_echo(char **arg);
 //cd
 char	*init_location(void);
@@ -128,6 +104,7 @@ int		update_location(t_env **node, char *new, char *old);
 //cd_utils2
 int		oldpath_cd(t_env **node);
 int		homepath_cd(t_env **node, char *location);
+void	ft_swap_env(t_env **first, t_env **second);
 //exit
 int		ft_exit(t_data *data, int infd, int outfd);
 //exit_status
@@ -149,7 +126,7 @@ t_env	*next_node(t_env **node, t_env *new);
 //export
 t_env	*create_single_cpy(char *name, char *content);
 t_env	*ft_cpy_list(t_env **env);
-void	ft_swap_env(t_env **first, t_env **second);
+void	ft_null_option(t_env **env);
 void	ft_order_alpha(t_env **env);
 int		ft_export(t_env **env, char *argv);
 //export_utils
@@ -180,7 +157,7 @@ char	*ft_strjoin_mod(char *s1, char *s2);
 void	ft_handle_sigint(int signum);
 void	ft_handle_sigquit(int signum);
 // Initialization
-void 	ft_first_setup(t_data *data, char **env);
+void	ft_first_setup(t_data *data, char **env);
 // Parser & Lexer
 int		ft_parsing_loop(t_data *data);
 char	*ft_expand_variables(char *prompt, t_env *env);
