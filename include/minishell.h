@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 13:11:28 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:15:52 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_lists
 	int				token;
 	struct s_lists	*next;
 }	t_lists;
-
 
 // LEXER
 // init
@@ -150,9 +149,6 @@ t_env	*pop_first(t_env **env);
 void	swap(t_env **env);
 //ft_strjoin_mod
 char	*ft_strjoin_mod(char *s1, char *s2);
-
-
-
 // Signal handling
 void	ft_handle_sigint(int signum);
 void	ft_handle_sigquit(int signum);
