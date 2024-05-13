@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 10:50:09 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:03:40 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,21 @@ static int ft_check_syntax(char *str, bool first, bool d_flag, bool s_flag)
 	return (0);
 }
 
+int ft_check_for_pipes(char *str, bool s_flag, bool d_flag)
+{
+	while (*str)
+	{
+		if (!s_flag && *str == '\"')
+			d_flag = !d_flag;
+		if (!d_flag && *str == '\'')
+			s_flag = !s_flag;
+		if ((!s_flag && !d_flag ) && *str == '|')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
 static char	**ft_parsing(char *prompt, t_data *data)
 {
 	char	**cmds;
@@ -71,8 +86,8 @@ static char	**ft_parsing(char *prompt, t_data *data)
 	}
 	if (ft_strnstr(prompt, "<<", ft_strlen(prompt)))
 		cmds = ft_here_doc_capture(prompt, data);
-	else if (!ft_strnstr(prompt, "\\|", ft_strlen(prompt)))
-		cmds = ft_split(prompt, '|');
+	else if (ft_check_for_pipes(prompt, false, false))
+		cmds = ft_split_prev(prompt, '|', '\\');
 	else
 		cmds = ft_split(prompt, '\0');
 	g_signal = 1;
