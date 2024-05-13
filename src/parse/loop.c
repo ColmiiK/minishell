@@ -27,6 +27,7 @@ static char	**ft_here_doc_capture(char *prompt, t_data *data)
 		str = ft_expand_variables(str, data->env);
 	cmds = ft_split(str, '|');
 	free (str);
+	printf("cmds: %s\n", cmds[0]);
 	return (cmds);
 }
 
@@ -102,6 +103,64 @@ static char	**ft_parsing(char *prompt, t_data *data)
 	return (cmds);
 }
 
+
+int ft_count_chars(char *str, char c, bool s_flag, bool d_flag)
+{
+	int count;
+
+	count = 0;
+	while (*str)
+	{
+		if (!s_flag && *str == '\"')
+			d_flag = !d_flag;
+		if (!d_flag && *str == '\'')
+			s_flag = !s_flag;
+		if ((!s_flag && !d_flag ) && *str == c)
+			count++;
+		str++;
+	}
+	return (count);
+}
+
+
+char *ft_fix_multiple_out(char *cmd)
+{
+	int i;
+	int j;
+	char **temp;
+	char *str;
+
+	if (ft_count_chars(cmd, '>', false, false))
+	{
+		temp = ft_split(cmd, '>');
+		i = 0;
+		while (temp[++i + 1])
+		{
+			temp[i] = ft_strtrim_ex(temp[i], " ", true);
+			close(open(temp[i], O_WRONLY | O_CREAT | O_TRUNC, 0644));
+		}
+		j = -1;
+		while (cmd[++j] != '>')
+			;
+		str = ft_substr(cmd, 0 , j + 1);
+		str = ft_strjoin_ex(str, temp[i], 1);
+		free(cmd);
+		ft_clean_double_ptr(temp);
+		return (str);
+	}
+	return(cmd);
+}
+
+char **ft_multiple_redirections(char **cmds)
+{
+	int i;
+
+	i = -1;
+	while (cmds[++i])
+		cmds[i] = ft_fix_multiple_out(cmds[i]);
+	return (cmds);
+}
+
 int	ft_parsing_loop(t_data *data)
 {
 	char	*prompt;
@@ -110,18 +169,15 @@ int	ft_parsing_loop(t_data *data)
 
 	g_signal = 1;
 	prompt = readline(MINI_PROMPT);
-	// prompt = ft_strdup("export a");
 	if (!prompt)
-	{
-		printf(MINI_EXIT);
-		return (1);
-	}
+		return (printf(MINI_EXIT));
 	if (prompt[0] != '\0')
 		add_history(prompt);
 	prompt = ft_handle_quotes(prompt, false, false);
 	if (ft_all_same(prompt, ' ') || ft_all_same(prompt, '\t'))
 		prompt = ft_strdup_ex("", prompt);
 	cmds = ft_parsing(prompt, data);
+	cmds = ft_multiple_redirections(cmds);
 	redirect = ft_redirections(cmds);
 	cmds = ft_clean_cmds(cmds);
 	data->cmds = ft_setup_nodes(cmds, redirect, data->env);

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 15:17:50 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 17:10:55 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:06:51 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static char *ft_find_command_after(char *prompt)
 	int i;
 
 	i = 0;
-
 	while (prompt[i] && prompt[i] == ' ')
 		i++;
 	while (prompt[i] && prompt[i] != ' ')
@@ -92,6 +91,35 @@ static char *ft_find_command_after(char *prompt)
 		i++;
 	temp = ft_substr(prompt, i, ft_strlen(prompt + i));
 	return (temp);
+}
+
+char *ft_multiple_hd(char *str)
+{
+	int i;
+
+	i = 2;
+	while (str[i] == ' ')
+		i++;
+	while (str[i] != ' ')
+		i++;
+	while (str[i] == ' ')
+		i++;
+	return (str);
+}
+
+char *ft_hd_recurse(char *sub, t_data *data)
+{
+	char *temp;
+
+	temp = sub;
+	sub = ft_multiple_hd(sub);
+	sub = ft_fix_prompt(sub); 
+	ft_here_doc_loop(ft_strnstr(sub, "<<", ft_strlen(sub)), data);
+	sub = ft_find_command_after(sub + 2);
+	if (ft_strnstr(sub, "<<", ft_strlen(sub)))
+		sub = ft_hd_recurse(sub, data);
+	free(temp);
+	return (sub);
 }
 
 char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
@@ -103,6 +131,8 @@ char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 	prompt = ft_fix_prompt(prompt);
 	ft_here_doc_loop(ft_strnstr(prompt, "<<", ft_strlen(prompt)), data);
 	sub = ft_find_command_after(prompt + 2);
+	if (ft_strnstr(sub, "<<", ft_strlen(sub)))
+		sub = ft_hd_recurse(sub, data);
 	if (!pipe)
 	{
 		str = ft_strjoin(sub, " < .here_doc");
@@ -117,6 +147,6 @@ char	*ft_here_doc(char *prompt, bool pipe, t_data *data)
 	{
 		free(str);
 		return (ft_calloc(1, 1));
-	}
+	}	
 	return (str);
 }
