@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:15:58 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/13 12:49:26 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:29:03 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_echo(char **arg)
 	i = 1;
 	if (!arg[1])
 		return (ft_printf("\n"), 0);
-	while (ft_strncmp(arg[i], "-n", 2) == 0 && ft_correct_flag(arg[i]) == 0)
+	while ((!ft_strncmp(arg[i], "-n", 2)) && ft_correct_flag(arg[i]) == 0)
 		i++;
 	while (arg[i] != NULL)
 	{
@@ -43,7 +43,8 @@ int	ft_echo(char **arg)
 			ft_printf(" ");
 		i++;
 	}
-	if (ft_strncmp(arg[1], "-n", 2) != 0 && ft_correct_flag(arg[1]) == 0)
+	if ((ft_strncmp(arg[1], "-n", 2) && ft_correct_flag(arg[1]) == 0)
+		|| ft_correct_flag(arg[1]) == 1)
 		ft_printf("\n");
 	return (0);
 }

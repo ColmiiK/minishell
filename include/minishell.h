@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 13:11:28 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:27:11 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_lists
 	struct s_lists	*next;
 }	t_lists;
 
-
 // LEXER
 // init
 t_lists	*create_list_node(char *arg);
@@ -86,8 +85,9 @@ int		search_existing_var(char *str);
 
 // BUILT-INS
 // built-ins
+int		exit_checker(char **str);
 int		built_in_checker(char *str);
-int		built_in_selector(t_data *data, char **str, int infd, int outfd);
+void	built_in_selector(t_data *data, char **str, int infd, int outfd);
 // echo
 int		ft_correct_flag(char *str);
 int		ft_echo(char **arg);
@@ -150,9 +150,6 @@ t_env	*pop_first(t_env **env);
 void	swap(t_env **env);
 //ft_strjoin_mod
 char	*ft_strjoin_mod(char *s1, char *s2);
-
-
-
 // Signal handling
 void	ft_handle_sigint(int signum);
 void	ft_handle_sigquit(int signum);
