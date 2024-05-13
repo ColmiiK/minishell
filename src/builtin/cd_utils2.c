@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:40:38 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/10 15:42:37 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:10:21 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ int	homepath_cd(t_env **node, char *location)
 	ft_abs_cd(path);
 	update_location(node, init_location(), location);
 	return (0);
+}
+
+void	ft_swap_env(t_env **first, t_env **second)
+{
+	(*first)->name = (*second)->name;
+	(*first)->content = (*second)->content;
 }

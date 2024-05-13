@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 12:17:08 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:39:38 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_debug(t_data data)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-	
+
 	(void)ac;
 	(void)av;
 	ft_first_setup(&data, env);
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **env)
 		if (ft_parsing_loop(&data))
 			break ;
 		ft_find_path(data);
-		// ft_debug(data);
+		ft_debug(data);
 		signal(SIGQUIT, ft_handle_sigquit);
 		if (ft_check_fds(data))
 			perror("minihell");

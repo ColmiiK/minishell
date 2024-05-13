@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:43:24 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/13 12:01:02 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:10:07 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,6 @@ t_env	*ft_cpy_list(t_env **env)
 	return (cpy_head);
 }
 
-void	ft_swap_env(t_env **first, t_env **second)
-{
-	(*first)->name = (*second)->name;
-	(*first)->content = (*second)->content;
-}
-
 void	ft_order_alpha(t_env **env)
 {
 	t_env	*tmp;
@@ -77,19 +71,23 @@ void	ft_order_alpha(t_env **env)
 	free(swap);
 }
 
+void	ft_null_option(t_env **env)
+{
+	t_env	*cpy;
+
+	cpy = ft_cpy_list(env);
+	ft_order_alpha(&cpy);
+	free_list(&cpy);
+}
+
 int	ft_export(t_env **env, char *argv)
 {
 	char	*temp;
 	char	*name;
 	char	*content;
-	t_env	*cpy;
 
 	if (argv == NULL)
-	{
-		cpy = ft_cpy_list(env);
-		ft_order_alpha(&cpy);
-		free_list(&cpy);
-	}
+		ft_null_option(env);
 	else
 	{
 		temp = get_name_env(argv);
@@ -104,7 +102,7 @@ int	ft_export(t_env **env, char *argv)
 			free(content);
 		}
 		else
-			return(free(temp), 1);
+			return (free(temp), 1);
 	}
 	return (0);
 }
