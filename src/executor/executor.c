@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 16:51:53 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:40:47 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static int	ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 		else
 			execve(cmd->cmd, cmd->args, variables);
 		perror("minihell");
-		close(data->fd[0]);
+		if (data->n_of_cmds != 1)
+			close(data->fd[0]);
 		ft_clean_double_ptr(variables);
 		ft_cleanup_env(data->env);
 		ft_annihilation(data);
