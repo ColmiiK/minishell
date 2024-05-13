@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 16:40:24 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:52:28 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ char	*ft_fix_hd_outfile(char *s1);
 void	ft_execute(t_data *data);
 int		ft_find_path(t_data data);
 char	**ft_get_variables(t_env *env);
+int		ft_error_child(t_data *data);
 // Cleanup
 void	ft_clean_double_ptr(char **ptr);
 void	ft_annihilation(t_data *data);

@@ -53,6 +53,7 @@ SRC_FILES = main cleanup utils \
 			builtin/preset_env \
 			executor/path \
 			executor/executor \
+			executor/executor_utils \
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
