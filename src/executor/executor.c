@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 15:40:33 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:32:17 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 	if (built_in_checker(temp->args[0]))
 	{
 		if (built_in_checker(temp->args[0]) != 2)
-			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
+			ft_builtin_execute(temp, data, in_fd, fd[1]);
 		else if (built_in_checker(temp->args[0]) == 2 && data->n_of_cmds == 1)
-			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
+			ft_builtin_execute(temp, data, in_fd, fd[1]);
 	}
 	else
 		data->exit_status = ft_fork(temp, data, in_fd, fd[1]) % 255;
@@ -94,6 +94,7 @@ static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 		close(temp->redirect->in_fd);
 	if (temp->redirect->out_fd != 1)
 		close(temp->redirect->out_fd);
+	printf("-> %d\n", data->exit_status);
 	return (0);
 }
 
@@ -111,7 +112,7 @@ void	ft_execute(t_data *data)
 		if (built_in_checker(temp->args[0]))
 		{
 			if (built_in_checker(temp->args[0]) != 2)
-				data->exit_status = ft_builtin_execute(temp, data, in_fd, data->fd[1]);
+				ft_builtin_execute(temp, data, in_fd, data->fd[1]);
 		}
 		else
 			data->exit_status = ft_fork(temp, data, in_fd, data->fd[1]);
