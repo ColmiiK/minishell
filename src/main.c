@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/12 12:28:37 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:17:08 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 	pwd seg fault?
 	export a then again export a seg fault?
 
+	system("lsof -c minishell");
 */
 
 int	g_signal;
@@ -42,7 +43,7 @@ void	ft_debug(t_data data)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-
+	
 	(void)ac;
 	(void)av;
 	ft_first_setup(&data, env);

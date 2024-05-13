@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 12:28:17 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/12 12:28:43 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:12:40 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void ft_first_setup(t_data *data, char **env)
 	tcgetattr(STDIN_FILENO, &data->termios);
 	data->env = ft_getenv(env);
 	exit_status(&data->env);
+	data->exit_status = 0;
 }

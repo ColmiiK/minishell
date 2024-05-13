@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/11 18:42:58 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:00:22 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	smart_print(t_env *node)
 {
 	while (node)
 	{
-		if (node->content && ft_strcmp(node->name, "?"))
+		if (node && node->content && ft_strcmp(node->name, "?"))
 			printf("%s=%s\n", node->name, node->content);
-		else if (node->content == NULL && ft_strcmp(node->name, "?"))
+		else if (node && node->content == NULL && ft_strcmp(node->name, "?"))
 			printf("%s\n", node->name);
 		node = node->next;
 	}
@@ -48,7 +48,8 @@ int	check_existent_var(t_env **env, char *name, char *content)
 	{
 		if (!ft_strcmp(tmp->name, name))
 		{
-			tmp->content = ft_strdup(content);
+			if (content)
+				tmp->content = ft_strdup_ex(content, tmp->content);
 			return (1);
 		}
 		tmp = tmp->next;

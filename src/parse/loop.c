@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/12 12:02:57 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:50:09 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**ft_here_doc_capture(char *prompt, t_data *data)
 	return (cmds);
 }
 
-static int ft_check_redirects(char *str, bool first, bool d_flag, bool s_flag)
+static int ft_check_syntax(char *str, bool first, bool d_flag, bool s_flag)
 {
 	while (*str)
 	{
@@ -64,7 +64,7 @@ static char	**ft_parsing(char *prompt, t_data *data)
 	char	*temp;
 	int		i;
 
-	if (ft_check_redirects(prompt, true, false, false))
+	if (ft_check_syntax(prompt, true, false, false))
 	{
 		ft_putendl_fd("minishell: syntax error near unexpected token", 2);
 		return (ft_split(" ", ' '));
@@ -95,6 +95,7 @@ int	ft_parsing_loop(t_data *data)
 
 	g_signal = 1;
 	prompt = readline(MINI_PROMPT);
+	// prompt = ft_strdup("export a");
 	if (!prompt)
 	{
 		printf(MINI_EXIT);

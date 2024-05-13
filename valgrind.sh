@@ -21,6 +21,7 @@ END_SUPP
 
 # Run valgrind with suppression rules
 valgrind --suppressions=<(echo "$readline_supp") \
+		  --track-origins=yes \
           --leak-check=full \
           --track-fds=yes \
           --trace-children=yes \

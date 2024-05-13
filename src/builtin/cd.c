@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:40:17 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/10 15:43:29 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:26:19 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ char	*init_location(void)
 {
 	char	*location;
 
-	location = (char *)malloc(_PC_PATH_MAX * sizeof(char *));
-	if (!location)
-		return (NULL);
-	location = getcwd(location, sizeof(location));
-	location = getcwd(location, sizeof(location));
-	return (location);
+	location = NULL;
+	return (getcwd(location, _PC_PATH_MAX));
 }
 
 char	*adjust_location(char *arg)
@@ -34,10 +30,7 @@ char	*adjust_location(char *arg)
 		return (NULL);
 	slash[0] = 47;
 	slash[1] = '\0';
-	settled = (char *)malloc((ft_strlen(arg) + 1) * sizeof(char *));
-	if (!settled)
-		return (NULL);
-	settled = ft_strjoin(slash, arg);
+	settled = ft_strjoin_ex(slash, arg, 1);
 	return (settled);
 }
 
@@ -53,12 +46,10 @@ int	ft_rel_cd(char *arg)
 	if (location != NULL)
 	{
 		total_size = ft_strlen(arg) + ft_strlen(location);
-		dest = (char *)malloc(total_size * sizeof(char *));
-		if (!dest)
-			return (-1);
-		dest = ft_strjoin(location, adjust);
+		dest = ft_strjoin_ex(location, adjust, 3);
 		if (chdir(dest) != 0)
 			return (printf("folder does not exist\n"), 1);
+		free(dest);
 		return (0);
 	}
 	else
@@ -74,6 +65,7 @@ int	ft_abs_cd(char *arg)
 
 int	ft_cd(char **arg, t_env **node)
 {
+	char	*temp;
 	char	*location;
 	int		size;
 
@@ -89,7 +81,10 @@ int	ft_cd(char **arg, t_env **node)
 			ft_abs_cd(arg[1]);
 		else
 			ft_rel_cd(arg[1]);
-		update_location(node, init_location(), location);
+		temp = init_location();
+		update_location(node, temp, location);
+		free(temp);
+		temp = NULL;
 	}
 	else
 		return (1);
