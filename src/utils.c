@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 12:28:17 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 12:12:40 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:26:00 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,20 @@ void	ft_handle_sigquit(int signum)
 	}
 }
 
-int ft_check_fds(t_data data)
+int	ft_check_fds(t_data data)
 {
 	if (data.cmds)
 	{
 		if (data.cmds->redirect->in_fd == -1)
 			return (1);
 		if (data.cmds->redirect->out_fd == -1)
-			return (1);			
+			return (1);
 		data.cmds = data.cmds->next;
 	}
 	return (0);
 }
 
-void ft_first_setup(t_data *data, char **env)
+void	ft_first_setup(t_data *data, char **env)
 {
 	signal(SIGINT, ft_handle_sigint);
 	signal(SIGQUIT, SIG_IGN);

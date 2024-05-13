@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:45:24 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 18:00:43 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:49:46 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ char	*ft_fix_prompt(char *prompt)
 	return (temp);
 }
 
-char *ft_find_delimiter(char *prompt)
+char	*ft_find_delimiter(char *prompt)
 {
-	char *temp;
-	int i;
-	int j;
+	char	*temp;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (prompt[i] == ' ')
@@ -72,4 +72,36 @@ char *ft_find_delimiter(char *prompt)
 		j++;
 	temp = ft_substr(prompt, i, j);
 	return (temp);
+}
+
+char	*ft_multiple_hd(char *str)
+{
+	int	i;
+
+	i = 2;
+	while (str[i] == ' ')
+		i++;
+	while (str[i] != ' ')
+		i++;
+	while (str[i] == ' ')
+		i++;
+	return (str);
+}
+
+char	*ft_hd_recurse(char *sub, t_data *data)
+{
+	char	*temp;
+	char	*temp2;
+
+	temp2 = sub;
+	sub = ft_multiple_hd(sub);
+	sub = ft_fix_prompt(sub);
+	ft_here_doc_loop(ft_strnstr(sub, "<<", ft_strlen(sub)), data);
+	temp = sub;
+	sub = ft_find_command_after(sub + 2);
+	if (ft_strnstr(sub, "<<", ft_strlen(sub)))
+		sub = ft_hd_recurse(sub, data);
+	free(temp);
+	free(temp2);
+	return (sub);
 }

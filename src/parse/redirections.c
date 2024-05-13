@@ -6,17 +6,17 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:30:20 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 17:46:53 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:07:13 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char* ft_add_infile(char *cmd, char *re)
+static char	*ft_add_infile(char *cmd, char *re)
 {
-	char *temp;
-	int i;
-	int j;
+	char	*temp;
+	int		i;
+	int		j;
 
 	i = -1;
 	while (cmd[++i] != '<')
@@ -35,14 +35,12 @@ static char* ft_add_infile(char *cmd, char *re)
 	return (ft_strjoin_ex("IN:", temp, 2));
 }
 
-static char *ft_add_outfile_append(char *cmd, char *re)
+static char	*ft_add_outfile_append(char *cmd, char *re)
 {
-	char *temp;
-	int i;
-	int j;
-	
+	char	*temp;
+	int		i;
+	int		j;
 
-	
 	re = ft_strjoin_ex(re, " OUT(A):", 1);
 	i = 0;
 	while (cmd[i] != '>')
@@ -61,12 +59,12 @@ static char *ft_add_outfile_append(char *cmd, char *re)
 	return (re);
 }
 
-static char *ft_add_outfile(char *cmd, char *re)
+static char	*ft_add_outfile(char *cmd, char *re)
 {
-	char *temp;
-	int i;
-	int j;
-	
+	char	*temp;
+	int		i;
+	int		j;
+
 	re = ft_strjoin_ex(re, " OUT:", 1);
 	i = 0;
 	while (cmd[i] != '>')

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:12:10 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 18:27:14 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:39:20 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*ft_argument_fix(char *str, t_env *env)
 {
 	while (ft_strnstr(str, "$", ft_strlen(str))
 		&& !ft_strnstr(str, "\\$", ft_strlen(str)))
-			str = ft_expand_variables(str, env);
+		str = ft_expand_variables(str, env);
 	str = ft_pop(str, '\"', true);
 	str = ft_pop(str, '\'', true);
 	str = ft_pop(str, '\\', true);
@@ -27,9 +27,10 @@ static char	*ft_argument_fix(char *str, t_env *env)
 	return (str);
 }
 
-static void ft_helper_fill(t_cmd *current, char *str, char *redirect, t_env *env)
+static void	ft_helper_fill(t_cmd *current, char *str,
+	char *redirect, t_env *env)
 {
-	int j;
+	int	j;
 
 	current->args = ft_split_prev(str, ' ', '\\');
 	if (!*current->args)

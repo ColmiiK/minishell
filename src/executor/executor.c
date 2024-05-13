@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 15:32:17 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:51:53 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static int	ft_fd_juggling(int in_fd, int out_fd)
 	return (0);
 }
 
-static int ft_builtin_execute(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
+static int	ft_builtin_execute(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 {
-	int saved_in_fd;
-	int saved_out_fd;
+	int	saved_in_fd;
+	int	saved_out_fd;
 
 	saved_in_fd = dup(0);
 	saved_out_fd = dup(1);
@@ -47,11 +47,11 @@ static int ft_builtin_execute(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 	return (0);
 }
 
-static int ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
+static int	ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 {
-	pid_t pid;
-	char **variables;
-	
+	pid_t	pid;
+	char	**variables;
+
 	pid = fork();
 	if (pid == -1)
 		return (1);
@@ -76,7 +76,7 @@ static int ft_fork(t_cmd *cmd, t_data *data, int in_fd, int out_fd)
 	return (data->fork_status);
 }
 
-static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
+static int	ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 {
 	fd[1] = temp->redirect->out_fd;
 	if (built_in_checker(temp->args[0]))
@@ -94,14 +94,13 @@ static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 		close(temp->redirect->in_fd);
 	if (temp->redirect->out_fd != 1)
 		close(temp->redirect->out_fd);
-	printf("-> %d\n", data->exit_status);
 	return (0);
 }
 
 void	ft_execute(t_data *data)
 {
-	int in_fd;
-	t_cmd *temp;
+	int		in_fd;
+	t_cmd	*temp;
 
 	g_signal = 3;
 	temp = data->cmds;

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 12:54:41 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 17:15:18 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:31:11 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ bool	ft_check_metachars(char c, int mode)
 	return (false);
 }
 
-char *ft_single_quotes(char *str)
+char	*ft_single_quotes(char *str)
 {
-	char *temp;
-	int i;
+	char	*temp;
+	int		i;
 
 	temp = ft_strdup(str);
 	i = -1;
@@ -53,14 +53,13 @@ char *ft_single_quotes(char *str)
 			i++;
 		}
 	}
-	
 	return (temp);
 }
 
-char *ft_double_quotes(char *str)
+char	*ft_double_quotes(char *str)
 {
-	char *temp;
-	int i;
+	char	*temp;
+	int		i;
 
 	temp = ft_strdup(str);
 	i = -1;
@@ -72,15 +71,14 @@ char *ft_double_quotes(char *str)
 			i++;
 		}
 	}
-	
 	return (temp);
 }
 
-static bool ft_check_amount(char *str, bool flag_single, bool flag_double)
+static bool	ft_check_amount(char *str, bool flag_single, bool flag_double)
 {
-	int i;
-	int counter_single;
-	int counter_double;
+	int	i;
+	int	counter_single;
+	int	counter_double;
 
 	counter_single = 0;
 	counter_double = 0;
@@ -103,9 +101,9 @@ static bool ft_check_amount(char *str, bool flag_single, bool flag_double)
 	return (false);
 }
 
-char *ft_handle_quotes(char *prompt, bool d_flag, bool s_flag)
+char	*ft_handle_quotes(char *prompt, bool d_flag, bool s_flag)
 {
-	int i;
+	int	i;
 
 	if (ft_check_amount(prompt, false, false))
 		return (printf("Unclosed quotes\n"), ft_strdup(""));

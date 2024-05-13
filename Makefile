@@ -26,6 +26,7 @@ WHITE = $(shell tput setaf 7)
 	
 SRC_FILES = main cleanup utils \
 			parse/loop \
+			parse/loop_utils \
 			parse/quotes \
 			parse/expansion \
 			parse/heredoc_main \

@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:10:59 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/11 17:27:37 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:24:47 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**ft_get_variables(t_env *env)
 	return (variables);
 }
 
-static char **ft_find_path_env(t_env *env)
+static char	**ft_find_path_env(t_env *env)
 {
 	while (env)
 	{
@@ -51,9 +51,9 @@ static char **ft_find_path_env(t_env *env)
 	return (NULL);
 }
 
-static char *ft_find_access(char *path, char *cmd)
+static char	*ft_find_access(char *path, char *cmd)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_strjoin(path, "/");
 	temp = ft_strjoin_ex(temp, cmd, 1);
@@ -98,7 +98,7 @@ int	ft_find_path(t_data data)
 		if (data.cmds->next)
 			data.cmds = data.cmds->next;
 		else
-			break;
+			break ;
 	}
 	ft_clean_double_ptr(path);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:48 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 15:52:10 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:40:24 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ t_env	*pop_first(t_env **env);
 void	swap(t_env **env);
 //ft_strjoin_mod
 char	*ft_strjoin_mod(char *s1, char *s2);
+
 // Signal handling
 void	ft_handle_sigint(int signum);
 void	ft_handle_sigquit(int signum);
@@ -161,6 +162,13 @@ int		ft_parsing_loop(t_data *data);
 char	*ft_expand_variables(char *prompt, t_env *env);
 char	*ft_fix_prompt(char *prompt);
 char	*ft_handle_quotes(char *prompt, bool d_flag, bool s_flag);
+char	**ft_multiple_redirections(char **cmds);
+char	*ft_fix_multiple_out(char *cmd);
+int		ft_count_chars(char *str, char c, bool s_flag, bool d_flag);
+char	*ft_multiple_hd(char *str);
+char	*ft_hd_recurse(char *sub, t_data *data);
+void	ft_here_doc_loop(char *prompt, t_data *data);
+char	*ft_find_command_after(char *prompt);
 bool	ft_check_metachars(char c, int mode);
 char	**ft_redirections(char **cmds);
 int		ft_check_fds(t_data data);

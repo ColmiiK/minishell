@@ -6,7 +6,7 @@
 /*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:15:22 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 16:03:40 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:57:36 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ static char	**ft_here_doc_capture(char *prompt, t_data *data)
 		str = ft_expand_variables(str, data->env);
 	cmds = ft_split(str, '|');
 	free (str);
-	printf("cmds: %s\n", cmds[0]);
 	return (cmds);
 }
 
-static int ft_check_syntax(char *str, bool first, bool d_flag, bool s_flag)
+static int	ft_check_syntax(char *str, bool first, bool d_flag, bool s_flag)
 {
 	while (*str)
 	{
@@ -39,9 +38,9 @@ static int ft_check_syntax(char *str, bool first, bool d_flag, bool s_flag)
 			d_flag = !d_flag;
 		if (!d_flag && *str == '\'')
 			s_flag = !s_flag;
-		if ((!s_flag || !d_flag ) && first == true && *str == '|')
+		if ((!s_flag || !d_flag) && first == true && *str == '|')
 			return (1);
-		if ((!s_flag && !d_flag ) && ft_check_metachars(*str, 3))
+		if ((!s_flag && !d_flag) && ft_check_metachars(*str, 3))
 		{
 			str++;
 			if (*str == '<' || *str == '>')
@@ -59,7 +58,7 @@ static int ft_check_syntax(char *str, bool first, bool d_flag, bool s_flag)
 	return (0);
 }
 
-int ft_check_for_pipes(char *str, bool s_flag, bool d_flag)
+int	ft_check_for_pipes(char *str, bool s_flag, bool d_flag)
 {
 	while (*str)
 	{
@@ -67,7 +66,7 @@ int ft_check_for_pipes(char *str, bool s_flag, bool d_flag)
 			d_flag = !d_flag;
 		if (!d_flag && *str == '\'')
 			s_flag = !s_flag;
-		if ((!s_flag && !d_flag ) && *str == '|')
+		if ((!s_flag && !d_flag) && *str == '|')
 			return (1);
 		str++;
 	}
@@ -100,64 +99,6 @@ static char	**ft_parsing(char *prompt, t_data *data)
 		free(temp);
 	}
 	cmds[i] = NULL;
-	return (cmds);
-}
-
-
-int ft_count_chars(char *str, char c, bool s_flag, bool d_flag)
-{
-	int count;
-
-	count = 0;
-	while (*str)
-	{
-		if (!s_flag && *str == '\"')
-			d_flag = !d_flag;
-		if (!d_flag && *str == '\'')
-			s_flag = !s_flag;
-		if ((!s_flag && !d_flag ) && *str == c)
-			count++;
-		str++;
-	}
-	return (count);
-}
-
-
-char *ft_fix_multiple_out(char *cmd)
-{
-	int i;
-	int j;
-	char **temp;
-	char *str;
-
-	if (ft_count_chars(cmd, '>', false, false))
-	{
-		temp = ft_split(cmd, '>');
-		i = 0;
-		while (temp[++i + 1])
-		{
-			temp[i] = ft_strtrim_ex(temp[i], " ", true);
-			close(open(temp[i], O_WRONLY | O_CREAT | O_TRUNC, 0644));
-		}
-		j = -1;
-		while (cmd[++j] != '>')
-			;
-		str = ft_substr(cmd, 0 , j + 1);
-		str = ft_strjoin_ex(str, temp[i], 1);
-		free(cmd);
-		ft_clean_double_ptr(temp);
-		return (str);
-	}
-	return(cmd);
-}
-
-char **ft_multiple_redirections(char **cmds)
-{
-	int i;
-
-	i = -1;
-	while (cmds[++i])
-		cmds[i] = ft_fix_multiple_out(cmds[i]);
 	return (cmds);
 }
 
