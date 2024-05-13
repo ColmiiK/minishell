@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/13 12:00:22 by alvega-g         ###   ########.fr       */
+/*   Created: 2024/05/13 13:12:06 by albagar4          #+#    #+#             */
+/*   Updated: 2024/05/13 13:12:10 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	create_new_var(t_env **env, char *name, char *content)
 		return (-1);
 	node->name = ft_strdup(name);
 	if (content != NULL)
-		node->content = ft_strdup(content); // This "sometimes" leaks
+		node->content = ft_strdup(content);
 	else
 		node->content = NULL;
 	node->next = NULL;

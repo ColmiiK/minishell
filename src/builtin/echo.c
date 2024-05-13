@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:15:58 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/06 15:19:50 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:49:26 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// Empieza en el 1 porque la posicion 0 deberia contener el comando echo
+int	ft_correct_flag(char *str)
+{
+	int	i;
+
+	i = 1;
+	while (str[i] != '\0')
+	{
+		if (str[i] == 'n')
+			i++;
+		else
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_echo(char **arg)
 {
 	int	i;
@@ -20,8 +34,8 @@ int	ft_echo(char **arg)
 	i = 1;
 	if (!arg[1])
 		return (ft_printf("\n"), 0);
-	if (ft_strncmp(arg[1], "-n", 3) == 0)
-		i = 2;
+	while (ft_strncmp(arg[i], "-n", 2) == 0 && ft_correct_flag(arg[i]) == 0)
+		i++;
 	while (arg[i] != NULL)
 	{
 		ft_printf("%s", arg[i]);
@@ -29,7 +43,7 @@ int	ft_echo(char **arg)
 			ft_printf(" ");
 		i++;
 	}
-	if (ft_strncmp(arg[1], "-n", 3) != 0)
+	if (ft_strncmp(arg[1], "-n", 2) != 0 && ft_correct_flag(arg[1]) == 0)
 		ft_printf("\n");
 	return (0);
 }

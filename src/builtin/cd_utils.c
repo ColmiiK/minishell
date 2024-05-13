@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:07:50 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/13 11:38:11 by alvega-g         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:05:31 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,23 @@ int	update_location(t_env **node, char *new, char *old)
 
 	tmp = *node;
 	flag = 0;
-	while (*node && strcmp(new, old))
+	while (tmp && strcmp(new, old))
 	{
-		if (!ft_strncmp((*node)->name, "PWD", 4))
+		if (!ft_strcmp(tmp->name, "PWD"))
 		{
-			if ((*node)->content)
-				free((*node)->content);
-			(*node)->content = ft_strdup(new);
+			if (tmp->content)
+				free(tmp->content);
+			tmp->content = ft_strdup(new);
 		}
-		if (!ft_strncmp((*node)->name, "OLDPWD", 7))
+		if (!ft_strcmp(tmp->name, "OLDPWD"))
 		{
-			if ((*node)->content)
-				free((*node)->content);
-			(*node)->content = old;
+			if (tmp->content)
+				free(tmp->content);
+			tmp->content = old;
 			flag = 1;
 		}
-		*node = (*node)->next;
+		tmp = tmp->next;
 	}
-	*node = tmp;
 	if (flag == 0 && strcmp(new, old))
 		ft_create_pwd(node, old);
 	return (0);
