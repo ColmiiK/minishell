@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:10:25 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 15:24:36 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:40:33 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ static int ft_execute_last(t_cmd *temp, t_data *data, int in_fd, int fd[2])
 			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
 		else if (built_in_checker(temp->args[0]) == 2 && data->n_of_cmds == 1)
 			data->exit_status = ft_builtin_execute(temp, data, in_fd, fd[1]);
-		printf("data->exit_status == %d\n", data->exit_status);
 	}
 	else
 		data->exit_status = ft_fork(temp, data, in_fd, fd[1]) % 255;
