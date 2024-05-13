@@ -6,7 +6,7 @@
 /*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:32:38 by alvega-g          #+#    #+#             */
-/*   Updated: 2024/05/13 15:15:24 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:39:38 by albagar4         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_debug(t_data data)
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-	
+
 	(void)ac;
 	(void)av;
 	ft_first_setup(&data, env);
