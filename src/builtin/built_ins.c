@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:56:45 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/13 15:52:04 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:07:07 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	exit_checker(char **str)
 {
-	int	i;
-
-	i = 1;
 	if (str[1] != NULL && ft_isalpha_loop(str[1]) == 0 && str[2] != NULL)
 		return (printf("exit: too many arguments\n"), 1);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: albagar4 <albagar4@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvega-g <alvega-g@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:40:17 by albagar4          #+#    #+#             */
-/*   Updated: 2024/05/13 13:02:15 by albagar4         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:19:32 by alvega-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 char	*init_location(void)
 {
 	char	*location;
+	long	size;
 
-	location = NULL;
-	return (getcwd(location, _PC_PATH_MAX));
+	size = pathconf(".", _PC_PATH_MAX);
+	location = NULL; 
+	return (getcwd(location, size));
 }
 
 char	*adjust_location(char *arg)
@@ -39,13 +41,11 @@ int	ft_rel_cd(char *arg)
 	char	*location;
 	char	*dest;
 	char	*adjust;
-	int		total_size;
 
 	location = init_location();
 	adjust = adjust_location(arg);
 	if (location != NULL)
 	{
-		total_size = ft_strlen(arg) + ft_strlen(location);
 		dest = ft_strjoin_ex(location, adjust, 3);
 		if (chdir(dest) != 0)
 			return (printf("folder does not exist\n"), 1);
