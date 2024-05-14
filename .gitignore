@@ -4,8 +4,3 @@
 *.a
 minishell
 .dSYM
-README.md
-src/main.dSYM/Contents/Resources/DWARF/main
-src/routine.dSYM/Contents/Info.plist
-src/routine.dSYM/Contents/Resources/DWARF/routine
-src/main.dSYM/Contents/Info.plist
